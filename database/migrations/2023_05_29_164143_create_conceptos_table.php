@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_tipo_contrato', function (Blueprint $table) {
-            $table->id("TipoContratoID");
-            $table->string("Nombre");
+        Schema::create('conceptos', function (Blueprint $table) {
+            $table->id("id_concepto");
+            $table->string("descripcion");
+            $table->float("precio");
+            $table->integer("activo");
+            $table->timestamps();
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_tipo_contrato');
+        Schema::dropIfExists('conceptos');
     }
 };

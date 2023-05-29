@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_condonacion', function (Blueprint $table) {
-            $table->id("CondoonID");
-            $table->boolean("Descuento");
-            $table->float("Porcentaje");
-            $table->date("InicioVigencia");
-            $table->date("FinVigencia");
+        Schema::create('condonaciones', function (Blueprint $table) {
+            $table->id("id_condonacion");
+            $table->boolean("descuento");
+            $table->float("porcentaje");
+            $table->date("inicio_vigencia");
+            $table->date("fin_vigencia");
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_condonacion');
+        Schema::dropIfExists('condonaciones');
     }
 };

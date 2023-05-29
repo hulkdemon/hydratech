@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_conceptos', function (Blueprint $table) {
-            $table->id("ConceptoID");
-            $table->string("Descripcion");
-            $table->float("Precio");
-            $table->integer("Activo");
+        Schema::create('uma', function (Blueprint $table) {
+            $table->id("id_uma");
+            $table->float("valor");
+            $table->date("fecha_aplicacion");
+            $table->date("fecha_vigencia");
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_conceptos');
+        Schema::dropIfExists('uma');
     }
 };
