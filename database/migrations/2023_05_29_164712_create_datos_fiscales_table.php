@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('datos_fiscales', function (Blueprint $table) {
-            $table->id("id_datos_fiscales");
-            $table->unsignedInteger("id_contrato");
-            $table->string("rfc");
-            $table->string("razon_social");
-            $table->foreign("id_contrato")->references("id_contrato")->on("contratos")->onDelete("cascade");
+            $table->id('id_datos_fiscales');
+            $table->unsignedInteger('id_contrato');
+            $table->string('rfc');
+            $table->string('razon_social');
+            $table->foreign('id_contrato')->references('id_contrato')->on('contratos')->onDelete('cascade');
             $table->timestamps();
         });
     }

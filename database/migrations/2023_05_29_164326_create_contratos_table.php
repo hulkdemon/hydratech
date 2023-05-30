@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contratos', function (Blueprint $table) {
-            $table->id("id_contrato");
-            $table->unsignedInteger("id_tipo_contrato");
-            $table->integer("numero_contrato")->unique();
-            $table->string("nombre");
-            $table->string("apellido");
-            $table->string("domicilio");
-            $table->string("corrreo_electronico");
-            $table->date("fecha_vigencia");
-            $table->foreign("id_tipo_contrato")->references("id_tipo_contrato")->on("tipos_contratos")->onDelete("cascade");
+            $table->id('id_contrato');
+            $table->unsignedInteger('id_tipo_contrato');
+            $table->integer('numero_contrato')->unique();
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->string('domicilio');
+            $table->string('corrreo_electronico');
+            $table->date('fecha_vigencia');
+            $table->foreign('id_tipo_contrato')->references('id_tipo_contrato')->on('tipos_contratos')->onDelete('cascade');
             $table->timestamps();
         });
     }

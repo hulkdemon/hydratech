@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipos_contratos', function (Blueprint $table) {
-            $table->id("id_tipo_contrato");
-            $table->string("nombre");
+            $table->id('id_tipo_contrato');
+            $table->string('nombre');
         });
     }
 

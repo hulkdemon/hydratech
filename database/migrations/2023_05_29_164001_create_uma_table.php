@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('uma', function (Blueprint $table) {
-            $table->id("id_uma");
-            $table->float("valor");
-            $table->date("fecha_aplicacion");
-            $table->date("fecha_vigencia");
+            $table->id('id_uma');
+            $table->float('valor');
+            $table->date('fecha_aplicacion');
+            $table->date('fecha_vigencia');
             $table->timestamps();
         });
     }

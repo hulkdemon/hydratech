@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('creditos', function (Blueprint $table) {
-            $table->id("id_credito");
-            $table->unsignedInteger("id_contrato");
-            $table->float("monto");
-            $table->integer("activo");
-            $table->foreign("id_contrato")->references("id_contrato")->on("contratos")->onDelete("cascade");
+            $table->id('id_credito');
+            $table->unsignedInteger('id_contrato');
+            $table->float('monto');
+            $table->integer('activo');
+            $table->foreign('id_contrato')->references('id_contrato')->on('contratos')->onDelete('cascade');
             $table->timestamps();
         });
     }

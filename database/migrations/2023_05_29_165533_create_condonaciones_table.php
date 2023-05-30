@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('condonaciones', function (Blueprint $table) {
-            $table->id("id_condonacion");
-            $table->boolean("descuento");
-            $table->float("porcentaje");
-            $table->date("inicio_vigencia");
-            $table->date("fin_vigencia");
+            $table->id('id_condonacion');
+            $table->boolean('descuento');
+            $table->float('porcentaje');
+            $table->date('inicio_vigencia');
+            $table->date('fin_vigencia');
             $table->timestamps();
         });
     }
