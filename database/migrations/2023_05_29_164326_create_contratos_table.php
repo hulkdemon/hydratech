@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("domicilio");
             $table->string("corrreo_electronico");
             $table->date("fecha_vigencia");
-            $table->foreign("id_tipo_contrato")->references("id_tipo_contrato")->on("tipos_contratos")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("id_tipo_contrato")->references("id_tipo_contrato")->on("tipos_contratos")->onDelete("cascade");
             $table->timestamps();
         });
     }

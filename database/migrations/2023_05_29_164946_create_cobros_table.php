@@ -23,10 +23,10 @@ return new class extends Migration
             $table->float("total");
             $table->string("recibo_formato");
             $table->string("estado");
-            $table->foreign("id_contrato")->references("id_contrato")->on("contratos")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreign("id_user")->references("id_user")->on("users")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreign("id_autorizador")->references("id_user")->on("users")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreign("id_uma")->references("id_uma")->on("uma")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("id_contrato")->references("id_contrato")->on("contratos")->onDelete("cascade");
+            $table->foreign("id_user")->references("id_user")->on("users")->onDelete("cascade");
+            $table->foreign("id_autorizador")->references("id_user")->on("users")->onDelete("cascade");
+            $table->foreign("id_uma")->references("id_uma")->on("uma")->onDelete("cascade");
             $table->timestamps();
         });
     }

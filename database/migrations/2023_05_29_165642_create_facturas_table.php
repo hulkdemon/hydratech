@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedInteger("ic_cobro");
             $table->string("xml");
             $table->string("ruta");
-            $table->foreign("id_contrato")->references("id_Contrato")->on("contratos")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreign("id_cobro")->references("id_cobro")->on("cobros")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("id_contrato")->references("id_Contrato")->on("contratos")->onDelete("cascade");
+            $table->foreign("id_cobro")->references("id_cobro")->on("cobros")->onDelete("cascade");
             $table->timestamps();
         });
     }

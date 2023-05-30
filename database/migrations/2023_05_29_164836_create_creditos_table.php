@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger("id_contrato");
             $table->float("monto");
             $table->integer("activo");
-            $table->foreign("id_contrato")->references("id_contrato")->on("contratos")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("id_contrato")->references("id_contrato")->on("contratos")->onDelete("cascade");
             $table->timestamps();
         });
     }
