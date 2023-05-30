@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('datos_fiscales', function (Blueprint $table) {
             $table->id('id_datos_fiscales');
-            $table->unsignedInteger('id_contrato');
+            $table->unsignedBigInteger('id_contrato');
             $table->string('rfc');
             $table->string('razon_social');
-            $table->foreign('id_contrato')->references('id_contrato')->on('contratos')->onDelete('cascade');
+            $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
             $table->timestamps();
         });
     }

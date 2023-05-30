@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->id('id_factura');
-            $table->unsignedInteger('id_contrato');
+            $table->unsignedBigInteger('id_contrato');
             $table->unsignedInteger('ic_cobro');
             $table->string('xml');
             $table->string('ruta');
-            $table->foreign('id_contrato')->references('id_Contrato')->on('contratos')->onDelete('cascade');
+            $table->foreign('id_contrato')->references('id_Contrato')->on('contratos');
             $table->foreign('id_cobro')->references('id_cobro')->on('cobros')->onDelete('cascade');
             $table->timestamps();
         });
