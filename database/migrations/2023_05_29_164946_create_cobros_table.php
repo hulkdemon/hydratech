@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('cobros', function (Blueprint $table) {
             $table->id("id_cobro");
-            $table->unsignedBigInteger("id_contrato");
-            $table->unsignedBigInteger("id_user");
-            $table->unsignedBigInteger("id_autorizador");
-            $table->unsignedBigInteger("id_uma");
+            $table->unsignedInteger("id_contrato");
+            $table->unsignedInteger("id_user");
+            $table->unsignedInteger("id_autorizador");
+            $table->unsignedInteger("id_uma");
             $table->date("fecha_cobro");
             $table->float("monto");
             $table->float("iva");

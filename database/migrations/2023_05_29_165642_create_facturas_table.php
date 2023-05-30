@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->id("id_factura");
-            $table->unsignedBigInteger("id_contrato");
-            $table->unsignedBigInteger("ic_cobro");
+            $table->unsignedInteger("id_contrato");
+            $table->unsignedInteger("ic_cobro");
             $table->string("xml");
             $table->string("ruta");
             $table->foreign("id_contrato")->references("id_Contrato")->on("contratos")->onDelete("cascade")->onUpdate("cascade");
