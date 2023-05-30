@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('condonaciones', function (Blueprint $table) {
             $table->id('id_condonacion');
+            $table->unsignedBigInteger('id_cobro');
             $table->boolean('descuento');
             $table->float('porcentaje');
             $table->date('inicio_vigencia');
             $table->date('fin_vigencia');
+            $table->foreign('id_cobro')->references('id_cobro')->on('cobros');
             $table->timestamps();
         });
     }
