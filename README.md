@@ -4,8 +4,6 @@ La aplicación web de cobro de agua potable ha sido diseñada para facilitar y a
 ## Introducción
 Para clonar o instalar un proyecto desde un repositorio de GitHub en el entorno local, se deben seguir unos pasos de instalación. A continuación, se mostrarán los pasos, desde cómo clonar el repositorio hasta el proceso de instalación en nuestra máquina, los comandos que se utilizarán, así como otros puntos que se deben realizar dentro de la carpeta y algunos archivos hasta realizar las migraciones de las bases de datos. Todos son importantes y no se debe saltar ninguno.
 
-[TOCM]
-
 ## Requerimientos
 Para instalar y correr la aplicación web en tu entorno local se debe tener instalados o instalar lo siguientes servicios.
 
