@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('recibo_formato');
             $table->string('estado');
             $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
-            $table->foreign('id_user')->references('id_user')->on('users');
-            $table->foreign('id_autorizador')->references('id_user')->on('users');
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_autorizador')->references('id')->on('users');
             $table->foreign('id_uma')->references('id_uma')->on('uma');
             $table->timestamps();
         });
