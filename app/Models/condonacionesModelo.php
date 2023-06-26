@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class condonacionesModelo extends Model
+class CondonacionesModelo extends Model
 {
     use HasFactory;
 
@@ -23,7 +23,7 @@ class condonacionesModelo extends Model
 
     public function cobro()
     {
-        return $this->belongsTo(cobrosModelo::class, 'id_cobro');
+        return $this->belongsTo(CobrosModelo::class, 'id_cobro');
     }
 
 }

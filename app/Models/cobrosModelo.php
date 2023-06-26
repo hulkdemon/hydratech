@@ -33,11 +33,11 @@ class CobrosModelo extends Model
 
     public function autorizador()
     {
-        return $this->belongsTo(rolModelo::class, 'id_autorizador');
+        return $this->belongsTo(RolModelo::class, 'id_autorizador');
     }
 
     public function uma()
     {
-        return $this->belongsTo(umaModelo::class, 'id_uma');
+        return $this->belongsTo(UmaModelo::class, 'id_uma');
     }
 }

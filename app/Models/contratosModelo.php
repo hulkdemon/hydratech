@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class contratosModelo extends Model
+class ContratosModelo extends Model
 {
     use HasFactory;
 
@@ -25,6 +25,6 @@ class contratosModelo extends Model
 
     public function tipoContrato()
     {
-        return $this->belongsTo(tipoContratoModelo::class, 'id_tipo_contrato');
+        return $this->belongsTo(TipoContratoModelo::class, 'id_tipo_contrato');
     }
 }

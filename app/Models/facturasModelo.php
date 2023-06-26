@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class facturasModelo extends Model
+class FacturasModelo extends Model
 {
     use HasFactory;
 
@@ -22,11 +22,11 @@ class facturasModelo extends Model
 
     public function contrato()
     {
-        return $this->belongsTo(contratosModelo::class, 'id_contrato');
+        return $this->belongsTo(ContratosModelo::class, 'id_contrato');
     }
 
     public function cobro()
     {
-        return $this->belongsTo(cobrosModelo::class, 'id_cobro');
+        return $this->belongsTo(CobrosModelo::class, 'id_cobro');
     }
 }
