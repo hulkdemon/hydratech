@@ -13,19 +13,6 @@ class CobrosModelo extends Model
     protected $primaryKey = 'id_cobro';
     public $timestamps = true;
 
-    protected $fillable = [
-        'id_contrato',
-        'id_user',
-        'id_autorizador',
-        'id_uma',
-        'fecha_cobro',
-        'monto',
-        'iva',
-        'total',
-        'recibo_formato',
-        'estado'
-    ];
-
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');

@@ -13,12 +13,6 @@ class CreditosModelo extends Model
     protected $primaryKey = 'id_credito';
     public $timestamps = true;
 
-    protected $fillable = [
-        'id_contrato',
-        'monto',
-        'activo'
-    ];
-
     public function contrato()
     {
         return $this->belongsTo(ContratosModelo::class, 'id_contrato');

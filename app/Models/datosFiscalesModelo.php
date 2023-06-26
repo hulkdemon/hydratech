@@ -13,12 +13,6 @@ class DatosFiscalesModelo extends Model
     protected $primaryKey = 'id_datos_fiscales';
     public $timestamps = true;
 
-    protected $fillable = [
-        'id_contrato',
-        'rfc',
-        'razon_social'
-    ];
-
     public function contrato()
     {
         return $this->belongsTo(ContratosModelo::class, 'id_contrato');

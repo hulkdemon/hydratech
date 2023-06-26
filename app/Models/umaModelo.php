@@ -13,9 +13,4 @@ class UmaModelo extends Model
     protected $primaryKey = 'id_uma';
     public $timestamps = true;
 
-    protected $fillable = [
-        'valor',
-        'fecha_aplicacion',
-        'fecha_vigencia'
-    ];
 }

@@ -13,11 +13,6 @@ class CobrosConceptoModelo extends Model
     protected $primaryKey = 'id_cobro_concepto';
     public $timestamps = true;
 
-    protected $fillable = [
-        'id_cobro',
-        'id_concepto'
-    ];
-
     public function cobro()
     {
         return $this->belongsTo(CobrosModelo::class, 'id_cobro');

@@ -13,14 +13,6 @@ class CondonacionesModelo extends Model
     protected $primaryKey = 'id_condonacion';
     public $timestamps = true;
 
-    protected $fillable = [
-        'id_cobro',
-        'descuento',
-        'porcentaje',
-        'inicio_vigencia',
-        'fin_vigencia'
-    ];
-
     public function cobro()
     {
         return $this->belongsTo(CobrosModelo::class, 'id_cobro');

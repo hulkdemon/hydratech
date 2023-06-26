@@ -13,7 +13,4 @@ class TiposContratoModelo extends Model
     protected $primaryKey = 'id_tipo_contrato';
     public $timestamps = true;
 
-    protected $fillable = [
-        'nombre'
-    ];
 }

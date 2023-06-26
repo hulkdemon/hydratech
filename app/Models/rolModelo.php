@@ -13,7 +13,4 @@ class RolModelo extends Model
     protected $primaryKey = 'id_rol';
     public $timestamps = true;
 
-    protected $fillable = [
-        'tipo'
-    ];
 }

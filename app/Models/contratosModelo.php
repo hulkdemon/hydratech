@@ -13,16 +13,6 @@ class ContratosModelo extends Model
     protected $primaryKey = 'id_contrato';
     public $timestamps = true;
 
-    protected $fillable = [
-        'id_tipo_contrato',
-        'numero_contrato',
-        'nombre',
-        'apellido',
-        'domicilio',
-        'correo_electronico',
-        'fecha_vigencia'
-    ];
-
     public function tipoContrato()
     {
         return $this->belongsTo(TipoContratoModelo::class, 'id_tipo_contrato');
