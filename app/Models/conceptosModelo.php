@@ -13,9 +13,4 @@ class ConceptosModelo extends Model
     protected $primaryKey = 'id_concepto';
     public $timestamps = true;
 
-    protected $fillable = [
-        'descripcion',
-        'precio',
-        'activo'
-    ];
 }
