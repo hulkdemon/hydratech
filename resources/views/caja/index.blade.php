@@ -3,11 +3,11 @@
 @section('title', 'Hydratech')
 
 @section('content_header')
-    <h1>Hydratech admin</h1>
+    <h1>Hydratech caja</h1>
 @stop
 
 @section('content')
-    <p>Pagina Principal HydraTech.</p>
+    <p>Pagina caja Hydratech.</p>
 @stop
 
 @section('css')
