@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Hydratech')
+@section('title', 'HydraTech')
 
 @section('content_header')
-    <h1>Hydratech admin</h1>
+    <h1>HydraTech</h1>
 @stop
 
 @section('content')
