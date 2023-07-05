@@ -3,7 +3,7 @@
 @section('title', 'Hydratech')
 
 @section('content_header')
-    <h1>Hydratech caja</h1>
+    <h1>Hydratech</h1>
 @stop
 
 @section('content')
