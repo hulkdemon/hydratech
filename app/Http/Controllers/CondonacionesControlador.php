@@ -21,6 +21,8 @@ class CondonacionesControlador extends Controller
     public function create()
     {
         //
+        return view('admin.gestion_condonaciones');
+
     }
 
     /**

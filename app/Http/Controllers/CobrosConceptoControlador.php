@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CobrosConceptoModelo;
 use Illuminate\Http\Request;
 
-class CobrosConceptoController extends Controller
+class CobrosConceptoControlador extends Controller
 {
     /**
      * Display a listing of the resource.

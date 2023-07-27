@@ -23,6 +23,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
+
     protected $fillable = [
         'name',
         'username',
@@ -50,6 +52,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function rol()
+    {
+        return $this->belongsTo(RolModelo::class, 'id_rol');
+    }
+
 
     /**
      * The accessors to append to the model's array form.

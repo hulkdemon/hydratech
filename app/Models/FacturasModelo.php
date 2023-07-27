@@ -13,10 +13,10 @@ class FacturasModelo extends Model
     protected $primaryKey = 'id_factura';
     public $timestamps = true;
 
-    public function contrato()
-    {
-        return $this->belongsTo(ContratosModelo::class, 'id_contrato');
-    }
+        public function contrato()
+        {
+            return $this->belongsTo(ContratosModelo::class, 'id_contrato');
+        }
 
     public function cobro()
     {

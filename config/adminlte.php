@@ -317,21 +317,40 @@ return [
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
-        [
-            'text' => 'Crear usuario',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-plus',
+        ['header' => 'Opciones de Administrador',
+        'icon'    => 'fas fa-fw fa-share'
         ],
 
-        ['header' => 'Opciones de Administrador'],
         [
-            'text' => 'Ver usuarios',
-            'url'  => 'admin/settings',
+            'text'    => 'Opciones de usuarios',
+            'icon'    => 'fas fa-fw fa-toolbox',
+            'submenu' => [
+        [
+            'text' => 'Registrar usuario',
+            'url'  => 'admin/usuarios/registrar_usuario',
+            'icon' => 'fas fa-fw fa-plus',
+        ],
+        [
+            'text' => 'Registrar nuevo rol',
+            'url'  => 'admin/roles/registrar_rol',
+            'icon' => 'fas fa-fw fa-suitcase',
+        ],
+        [
+            'text' => 'Ver usuarios registrados',
+            'url'  => 'admin/usuarios/ver_usuarios',
             'icon' => 'fas fa-fw fa-users',
         ],
         [
+            'text' => 'Ver roles registrados',
+            'url'  => 'admin/roles/ver_roles',
+            'icon' => 'fas fa-fw fa-suitcase',
+        ],
+        ],  
+        ],
+        
+        [
             'text' => 'Gestión de condonaciones',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/gestion_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
         ],
         /*
