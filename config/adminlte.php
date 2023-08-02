@@ -350,7 +350,7 @@ return [
         
         [
             'text' => 'Gestión de condonaciones',
-            'url'  => 'admin/gestion_condonaciones',
+            'url'  => 'admin/condonaciones/gestion_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
         ],
         /*
@@ -397,19 +397,35 @@ return [
         'icon'    => 'fas fa-fw fa-share'
         ],
         [
-            'text'    => 'Menú de gestión',
-            'icon'    => 'fas fa-fw fa-toolbox',
+            'text'    => 'Gestión de Contratos',
+            'icon'    => 'fas fa-fw fa-file-signature',
             'submenu' => [
                 [
                     'text' => 'Registrar contrato',
                     'icon'    => 'fas fa-fw fa-file-signature',
-                    'url'  => '#',
+                    'url'  => 'caja/contratos/registrar_contrato',
                 ],
                 [
-                    'text' => 'Gestión de contratos',
+                    'text' => 'Registrar tipo de contrato',
                     'icon'    => 'fas fa-fw fa-folder-open',
-                    'url'  => '#',
+                    'url'  => 'caja/tipos_contrato/registrar_tipo_contrato',
                 ], 
+                [
+                    'text' => 'Ver contratos registrados',
+                    'icon'    => 'fas fa-fw fa-file-contract',
+                    'url'  => 'caja/contratos/ver_contratos',
+                ],
+                [
+                    'text' => 'Ver tipos de contrato registrados',
+                    'icon'    => 'fas fa-fw fa-file-contract',
+                    'url'  => 'caja/tipos_contrato/ver_tipos_contrato',
+                ],
+            ],
+        ], 
+        [
+            'text'    => 'Menú de gestión',
+            'icon'    => 'fas fa-fw fa-toolbox',
+            'submenu' => [
                 [
                     'text' => 'Realizar pago',
                     'icon'    => 'fas fa-fw fa-money-bill',
@@ -434,7 +450,7 @@ return [
         ], 
         [
             'text' => 'Solicitar condonaciones',
-            'url'  => 'admin/settings',
+            'url'  => 'caja/condonaciones/solicitar_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
         ],
         [
