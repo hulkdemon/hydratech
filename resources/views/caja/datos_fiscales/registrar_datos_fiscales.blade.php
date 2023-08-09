@@ -4,8 +4,8 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Registro de datos fiscales</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h4 class="modal-title">Registro de datos fiscales al contrato registrado a nombre de: {{$contrato->nombre}} {{$contrato->apellido}}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -30,12 +30,12 @@
                         <!-- /.input group -->
                     </div>
                     <!-- /.form group -->
-                <label>Ingrese la razón social</label>
+                <label>Razón social</label>
                 <!-- Date mm/dd/yyyy -->
                 <div class="form-group">
                     <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                        <span class="input-group-text"><i class="fa-solid fa-circle-info"></i></span>
                     </div>
                     <input type="text" name="razon_social" class="form-control" id="razon_social" value="{{old('razon_social')}}" placeholder="Ingrese la razón social">
                     </div>
