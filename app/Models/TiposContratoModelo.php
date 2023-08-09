@@ -13,4 +13,8 @@ class TiposContratoModelo extends Model
     protected $primaryKey = 'id_tipo_contrato';
     public $timestamps = true;
 
+    public function tipos_contratos()
+    {
+        return $this->hasMany(TiposContratoModelo::class, 'id_tipo_contrato');
+    }
 }

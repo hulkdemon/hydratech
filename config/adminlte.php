@@ -311,86 +311,88 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
+        //Opciones de administrador para el rol de admin
         ['header' => 'Configuraciones de usuario'],
         [
             'text' => 'Mi perfil',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
-        [
-            'text' => 'Crear usuario',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-plus',
+        ['header' => 'Opciones de Administrador',
+        'icon'    => 'fas fa-fw fa-share'
         ],
 
-        ['header' => 'Opciones de Administrador'],
         [
-            'text' => 'Ver usuarios',
-            'url'  => 'admin/settings',
+            'text'    => 'Opciones de usuarios',
+            'icon'    => 'fas fa-fw fa-toolbox',
+            'submenu' => [
+        [
+            'text' => 'Registrar usuario',
+            'url'  => 'admin/usuarios/registrar_usuario',
+            'icon' => 'fas fa-fw fa-user-plus',
+        ],
+        [
+            'text' => 'Registrar nuevo rol',
+            'url'  => 'admin/roles/registrar_rol',
+            'icon' => 'fas fa-fw fa-suitcase',
+        ],
+        [
+            'text' => 'Ver usuarios registrados',
+            'url'  => 'admin/usuarios/ver_usuarios',
             'icon' => 'fas fa-fw fa-users',
         ],
         [
+            'text' => 'Ver roles registrados',
+            'url'  => 'admin/roles/ver_roles',
+            'icon' => 'fas fa-fw fa-suitcase',
+        ],
+        ],  
+        ],
+        [
             'text' => 'Gestión de condonaciones',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/condonaciones/gestion_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
         ],
-        /*
         [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ], */
+            'text' => 'Capturar Valor de UMA',
+            'url'  => 'admin/uma/registrar_uma',
+            'icon' => 'fas fa-fw fa-coins',
+        ],
 
+        //Opciones de caja para el rol de caja
         ['header' => 'Opciones de Caja',
         'icon'    => 'fas fa-fw fa-share'
         ],
         [
-            'text'    => 'Menú de gestión',
-            'icon'    => 'fas fa-fw fa-toolbox',
+            'text'    => 'Gestión de Contratos',
+            'icon'    => 'fas fa-fw fa-file-signature',
             'submenu' => [
                 [
                     'text' => 'Registrar contrato',
                     'icon'    => 'fas fa-fw fa-file-signature',
-                    'url'  => '#',
+                    'url'  => 'caja/contratos/registrar_contrato',
                 ],
                 [
-                    'text' => 'Gestión de contratos',
+                    'text' => 'Registrar tipo de contrato',
                     'icon'    => 'fas fa-fw fa-folder-open',
-                    'url'  => '#',
+                    'url'  => 'caja/tipos_contrato/registrar_tipo_contrato',
                 ], 
+                [
+                    'text' => 'Ver contratos registrados',
+                    'icon'    => 'fas fa-fw fa-file-contract',
+                    'url'  => 'caja/contratos/ver_contratos',
+                ],
+                [
+                    'text' => 'Ver tipos de contrato registrados',
+                    'icon'    => 'fas fa-fw fa-file-contract',
+                    'url'  => 'caja/tipos_contrato/ver_tipos_contrato',
+                ],
+            ],
+        ], 
+        [
+            'text'    => 'Menú de gestión',
+            'icon'    => 'fas fa-fw fa-toolbox',
+            'submenu' => [
                 [
                     'text' => 'Realizar pago',
                     'icon'    => 'fas fa-fw fa-money-bill',
@@ -415,13 +417,8 @@ return [
         ], 
         [
             'text' => 'Solicitar condonaciones',
-            'url'  => 'admin/settings',
+            'url'  => 'caja/condonaciones/solicitar_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
-        ],
-        [
-            'text' => 'Capturar Valor de UMA',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-coins',
         ],
     ],
 

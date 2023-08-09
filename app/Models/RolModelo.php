@@ -13,4 +13,8 @@ class RolModelo extends Model
     protected $primaryKey = 'id_rol';
     public $timestamps = true;
 
+    public function usuarios()
+    {
+        return $this->hasMany(User::class, 'id_rol');
+    }
 }

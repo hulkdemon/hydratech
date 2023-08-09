@@ -18,8 +18,4 @@ class FacturasModelo extends Model
         return $this->belongsTo(ContratosModelo::class, 'id_contrato');
     }
 
-    public function cobro()
-    {
-        return $this->belongsTo(CobrosModelo::class, 'id_cobro');
-    }
 }

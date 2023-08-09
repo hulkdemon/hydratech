@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->string('domicilio');
-            $table->string('corrreo_electronico');
+            $table->string('correo_electronico')->nullable();
             $table->date('fecha_vigencia');
             $table->foreign('id_tipo_contrato')->references('id_tipo_contrato')->on('tipos_contratos');
             $table->timestamps();
