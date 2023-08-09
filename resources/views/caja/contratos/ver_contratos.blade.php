@@ -67,9 +67,11 @@
                         <td>{{ $contrato->tipos_contratos->nombre}}</td>
                         <td><a href="{{ url('caja/contratos/'.$contrato->id_contrato.'/editar_contrato')}}" class="btn btn-warning ">Editar</a></td>                     
                           <td>  
+                            @if(isset($contrato))
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrar_datos_fiscales{{ $contrato->id_contrato }}">
-                              Registrar
-                          </button>
+                                Registrar
+                            </button>
+                          @endif
                           </td>
                       </tr>
                     @endforeach
