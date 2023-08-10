@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_cobro');
             $table->string('xml');
             $table->string('ruta');
-            $table->foreign('id_contrato')->references('id_Contrato')->on('contratos');
+            $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
             $table->foreign('id_cobro')->references('id_cobro')->on('cobros');
             $table->timestamps();
         });
