@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('cobros', function (Blueprint $table) {
             $table->id('id_cobro');
             $table->unsignedBigInteger('id_contrato');
-            $table->unsignedBigInteger('id_user');
-            $table->unsignedBigInteger('id_autorizador');
+            $table->unsignedBigInteger('id_usuario');
             $table->unsignedBigInteger('id_uma');
             $table->date('fecha_cobro');
             $table->float('monto');
@@ -24,8 +23,7 @@ return new class extends Migration
             $table->string('recibo_formato');
             $table->string('estado');
             $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_autorizador')->references('id')->on('users');
+            $table->foreign('id_usuario')->references('id')->on('users');
             $table->foreign('id_uma')->references('id_uma')->on('uma');
             $table->timestamps();
         });
