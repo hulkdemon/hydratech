@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_usuario');
             $table->boolean('descuento');
             $table->float('porcentaje');
-            $table->string('estdo')->default('pendiente');
+            $table->string('estado')->default('pendiente');
             $table->date('inicio_vigencia');
             $table->date('fin_vigencia');
-            $table->foreign('id_usuario')->references('id')->on('user');
+            $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();
         });
     }
