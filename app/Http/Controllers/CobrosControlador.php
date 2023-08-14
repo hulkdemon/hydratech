@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CobrosModelo;
+use App\Models\ContratosModelo;
 use Illuminate\Http\Request;
 
 class CobrosControlador extends Controller
@@ -12,7 +13,8 @@ class CobrosControlador extends Controller
      */
     public function index()
     {
-        //
+        $contratos = ContratosModelo::all();
+        return view ("caja.cobros.busqueda_cobros", ["contratos" => $contratos]);
     }
 
     /**

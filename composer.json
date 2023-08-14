@@ -1,4 +1,5 @@
 {
+    
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
@@ -12,7 +13,9 @@
         "laravel/jetstream": "^3.2",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "livewire/livewire": "^2.11"
+        "livewire/livewire": "^2.11",
+        "realrashid/sweet-alert": "^7.1",
+        "yajra/laravel-datatables-buttons": "^10.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 
 class CondonacionesModelo extends Model
 {
@@ -13,9 +14,9 @@ class CondonacionesModelo extends Model
     protected $primaryKey = 'id_condonacion';
     public $timestamps = true;
 
-    public function cobro()
+    public function usuario()
     {
-        return $this->belongsTo(CobrosModelo::class, 'id_cobro');
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 
 }

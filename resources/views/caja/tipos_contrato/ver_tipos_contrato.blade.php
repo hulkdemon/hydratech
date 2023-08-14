@@ -3,9 +3,8 @@
 
 @section('title', 'Mostrar tipos de contrato')
 
-@section('content')
+@section('content') 
     <body> 
-        
         <section class="content-header">
             <div class="container-fluid">
             <div class="row mb-2">
@@ -30,12 +29,12 @@
                 <h3 class="card-title">Tabla con los tipos de contrato registrados</h3>
               </div>
               <div class="card-header">
-                <a href="{{url('caja/tipos_contrato/registrar_tipo_contrato')}}" class="btn btn-primary ">Registrar nuevo tipo de contrato</a><br><br>
+                <a href="{{url('caja/tipos_contrato/registrar_tipo_contrato')}}" class="btn btn-primary ">Registrar nuevo tipo de contrato</a>
 
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="datos" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>#</th>
@@ -57,10 +56,8 @@
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
                       </td>
-    
                     </tr>
                     @endforeach
-                    
                 </tbody>
                 </table>
               </div>
@@ -75,5 +72,43 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    
+<script>
+$(function () {
+    $("#datos").DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        }
+    });
+});
+</script>
 @stop

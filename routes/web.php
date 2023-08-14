@@ -150,6 +150,26 @@ Route::prefix('caja/contratos')->group(function () {
 
 });
 
+//Grupo de rutas prefijas con caja para el controlador de cobros
+Route::prefix('caja/cobros')->group(function () {
+
+    // Ruta para mostrar el formulario de búsqueda para asignar cobros
+    Route::get('busqueda_cobros', [CobrosControlador::class, 'index'])->name('caja.cobros.busqueda_cobros');
+
+    // Ruta para mostrar el formulario de creación de cobros
+    Route::get('registrar_cobro', [CobrosControlador::class, 'create'])->name('caja.cobros.registrar_cobro');
+    
+    // Ruta para mostrar los detalles de un cobro específico
+    Route::get('{id_cobro}', [CobrosControlador::class, 'show'])->name('caja.cobros.show');
+
+    // Ruta para mostrar todos los cobros
+    Route::get('ver_cobros', [CobrosControlador::class, 'show'])->name('caja.cobros.ver_cobros');
+
+    // Ruta para almacenar los datos del formulario de creación de cobros
+    Route::post('', [CobrosControlador::class, 'store'])->name('caja.cobros.store');
+    
+});
+
 
 //Grupo de rutas prefijas con caja para el controladro de condonaciones en caja
 Route::prefix('caja/condonaciones')->group(function () {

@@ -13,14 +13,14 @@ class CobrosModelo extends Model
     protected $primaryKey = 'id_cobro';
     public $timestamps = true;
 
-    public function user()
+    public function contratos()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(ContratosModelo::class, 'id_contrato');
     }
 
-    public function autorizador()
+    public function usuarios()
     {
-        return $this->belongsTo(RolModelo::class, 'id_autorizador');
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 
     public function uma()

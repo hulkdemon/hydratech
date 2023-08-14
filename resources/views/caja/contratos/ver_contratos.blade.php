@@ -30,8 +30,7 @@
                 <h3 class="card-title">Tabla con los contratos registrados</h3>
               </div>
               <div class="card-header">
-                <a href="{{url('caja/contratos/registrar_contrato')}}" class="btn btn-primary ">Registrar nuevo contrato</a><br><br>
-
+                <a href="{{url('caja/contratos/registrar_contrato')}}" class="btn btn-primary ">Registrar nuevo contrato</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
