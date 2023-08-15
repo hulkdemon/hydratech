@@ -30,7 +30,8 @@
                 <h3 class="card-title">Tabla con los contratos registrados</h3>
               </div>
               <div class="card-header">
-                <a href="{{url('caja/contratos/registrar_contrato')}}" class="btn btn-primary ">Registrar nuevo contrato</a>
+                <a href="{{url('caja/contratos/registrar_contrato')}}" class="btn btn-primary ">Registrar nuevo contrato</a><br><br>
+
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -39,12 +40,14 @@
                   <tr>
                     <th>#</th>
                     <th>Número del contrato</th>
-                    <th>Nombre de la persona</th>
+                    <th>Nombres de la persona</th>
                     <th>Apellidos de la persona</th>
                     <th>Domicilio</th>
                     <th>Correo electrónico</th>
                     <th>Fecha vigencia</th>
-                    <th>Tipo contrato registrado</th>
+                    <th>Tipo de contrato registrado</th>
+                    <th>Editar Contrato</th>
+                    <th>Registrar datos fiscales</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -55,10 +58,22 @@
                         <td>{{ $contrato->nombre }}</td>
                         <td>{{ $contrato->apellido }}</td>
                         <td>{{ $contrato->domicilio }}</td>
-                        <td>{{ $contrato->correo_electronico }}</td>
+                        @if ($contrato->correo_electronico)
+                        <td>{{ $contrato->correo_electronico}}</td>
+                        @else
+                            <td>No hay correo registrado</td>
+                        @endif
                         <td>{{ $contrato->fecha_vigencia }}</td>
                         <td>{{ $contrato->tipos_contratos->nombre}}</td>
-                    </tr>
+                        <td><a href="{{ url('caja/contratos/'.$contrato->id_contrato.'/editar_contrato')}}" class="btn btn-warning ">Editar</a></td>                     
+                          <td>  
+                            @if(isset($contrato))
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrar_datos_fiscales{{ $contrato->id_contrato }}">
+                                Registrar
+                            </button>
+                          @endif
+                          </td>
+                      </tr>
                     @endforeach
                 </tbody>
                 </table>
@@ -67,6 +82,8 @@
             </div>
     </body>
     </html>
+    @include('caja.datos_fiscales.registrar_datos_fiscales')
+
 @stop
 
 @section('css')

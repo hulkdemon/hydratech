@@ -69,6 +69,33 @@ Route::prefix('admin/roles')->group(function () {
 });
 
 
+//Grupo de rutas prefijas con admin para el controlador de UMA
+
+Route::prefix('admin/uma')->group(function () {
+    // Ruta para mostrar el formulario de registro de UMA
+    Route::get('registrar_uma', [UmaControlador::class, 'create'])->name('admin.uma.registrar_uma');
+    
+    // Ruta para mostrar los detalles de un rol específico
+    Route::get('{id_uma}', [UmaControlador::class, 'show'])->name('admin.uma.show');
+
+    // Ruta para mostrar todos los registros de UMA
+    Route::get('ver_uma', [UmaControlador::class, 'show'])->name('admin.uma.ver_uma');
+
+    // Ruta para almacenar los datos del formulario de creación de roles
+    Route::post('', [UmaControlador::class, 'store'])->name('admin.uma.store');
+
+    /* Ruta para mostrar el formulario de edición de un rol
+    Route::get('{id_uma}/editar_roles', [UmaControlador::class, 'edit'])->name('admin.uma.edit');
+
+    // Ruta para actualizar los datos de UMA
+    Route::put('{id_uma}', [UmaControlador::class, 'update'])->name('admin.uma.update');
+
+    // Ruta para eliminar un UMA
+    Route::delete('{id_uma}', [UmaControlador::class, 'destroy'])->name('admin.uma.destroy');
+    **/
+});
+
+
 //Grupo de rutas prefijas con admin para el controlador de Usuario
 Route::prefix('admin/usuarios')->group(function () {
     // Ruta para mostrar el formulario de creación de usuarios
@@ -170,6 +197,29 @@ Route::prefix('caja/cobros')->group(function () {
     
 });
 
+
+//Grupo de rutas prefijas con caja para el controlador de Datos Fiscales
+
+Route::prefix('caja/datos_fiscales')->group(function () {
+    // Ruta para mostrar el formulario de creación de datos fiscales
+    Route::get('registrar_datos_fiscales', [DatosFiscalesControlador::class, 'create'])->name('caja.datos_fiscales.registrar_datos_fiscales');
+    
+    // Ruta para mostrar los detalles de datos fiscales específicos
+    Route::get('{id_datos_fiscales}', [DatosFiscalesControlador::class, 'show'])->name('caja.datos_fiscales.show');
+
+    // Ruta para mostrar todos los datos fiscales
+    Route::get('ver_datos_fiscales', [DatosFiscalesControlador::class, 'show'])->name('caja.datos_fiscales.ver_datos_fiscales');
+
+    // Ruta para almacenar los datos del formulario de creación de datos fiscales
+    Route::post('', [DatosFiscalesControlador::class, 'store'])->name('caja.datos_fiscales.store');
+
+    // Ruta para mostrar el formulario de edición de datos fiscales
+    Route::get('{id_datos_fiscales}/editar_datos_fiscales', [DatosFiscalesControlador::class, 'edit'])->name('caja.datos_fiscales.edit');
+
+    // Ruta para actualizar los datos fiscales
+    Route::put('{id_datos_fiscales}', [DatosFiscalesControlador::class, 'update'])->name('caja.datos_fiscales.update');
+
+});
 
 //Grupo de rutas prefijas con caja para el controladro de condonaciones en caja
 Route::prefix('caja/condonaciones')->group(function () {

@@ -13,8 +13,8 @@ class ContratosModelo extends Model
     protected $primaryKey = 'id_contrato';
     public $timestamps = true;
 
-    public function tipoContrato()
+    public function tipos_contratos()
     {
-        return $this->belongsTo(TipoContratoModelo::class, 'id_tipo_contrato');
+        return $this->belongsTo(TiposContratoModelo::class, 'id_tipo_contrato');
     }
 }

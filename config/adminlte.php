@@ -311,6 +311,7 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
+        //Opciones de administrador para el rol de admin
         ['header' => 'Configuraciones de usuario'],
         [
             'text' => 'Mi perfil',
@@ -328,7 +329,7 @@ return [
         [
             'text' => 'Registrar usuario',
             'url'  => 'admin/usuarios/registrar_usuario',
-            'icon' => 'fas fa-fw fa-plus',
+            'icon' => 'fas fa-fw fa-user-plus',
         ],
         [
             'text' => 'Registrar nuevo rol',
@@ -347,52 +348,18 @@ return [
         ],
         ],  
         ],
-        
         [
             'text' => 'Gestión de condonaciones',
             'url'  => 'admin/condonaciones/gestion_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
         ],
-        /*
         [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ], */
+            'text' => 'Capturar Valor de UMA',
+            'url'  => 'admin/uma/registrar_uma',
+            'icon' => 'fas fa-fw fa-coins',
+        ],
 
+        //Opciones de caja para el rol de caja
         ['header' => 'Opciones de Caja',
         'icon'    => 'fas fa-fw fa-share'
         ],
@@ -427,19 +394,9 @@ return [
             'icon'    => 'fas fa-fw fa-toolbox',
             'submenu' => [
                 [
-                    'text' => 'Realizar pago',
+                    'text' => 'Realizar cobros',
                     'icon'    => 'fas fa-fw fa-money-bill',
-                    'url'  => 'caja/cobros/busqueda_cobros',
-                ],
-                [
-                    'text' => 'Registrar multa',
-                    'icon'    => 'fas fa-fw fa-pen',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Registrar anticipo',
-                    'icon'    => 'fas fa-fw fa-comments-dollar',
-                    'url'  => '#',
+                    'url'  => 'caja/cobros/busqueda_contratos',
                 ],
                 [
                     'text' => 'Gestión de recibos',
@@ -452,11 +409,6 @@ return [
             'text' => 'Solicitar condonaciones',
             'url'  => 'caja/condonaciones/solicitar_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
-        ],
-        [
-            'text' => 'Capturar Valor de UMA',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-coins',
         ],
     ],
 
@@ -541,7 +493,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',

@@ -42,7 +42,6 @@
                     <th>Nombres del usuario</th>
                     <th>Nombre de usuario (username)</th>
                     <th>Correo</th>
-                    <th>Clave</th>
                     <th>Rol del usuario</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
@@ -55,7 +54,6 @@
                         <td>{{ $usuario->name }}</td>
                         <td>{{ $usuario->username }}</td>
                         <td>{{ $usuario->email }}</td>
-                        <td>{{ Str::limit(bcrypt($usuario->password), 10) }}</td>
                         @if ($usuario->id_rol)
                         <td>{{ $usuario->rol->tipo }}</td>
                     @else
