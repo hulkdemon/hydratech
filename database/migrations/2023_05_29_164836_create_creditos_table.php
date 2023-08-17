@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_credito');
             $table->unsignedBigInteger('id_contrato');
             $table->float('monto');
-            $table->integer('activo');
+            $table->integer('activo')->default('1');
             $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
             $table->timestamps();
         });
