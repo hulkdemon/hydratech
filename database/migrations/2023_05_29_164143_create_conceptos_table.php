@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_concepto');
             $table->string('descripcion');
             $table->float('precio');
-            $table->integer('activo');
+            $table->integer('activo')->default('1');
             $table->timestamps();
         });
     }
