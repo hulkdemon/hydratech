@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Hydratech',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Hydra</b>Tech',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -192,7 +192,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light-primary elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -304,31 +304,37 @@ return [
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Buscar',
         ],
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
+        ['header' => 'Configuraciones de usuario'],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
+            'text' => 'Mi perfil',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
+            'text' => 'Crear usuario',
             'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'fas fa-fw fa-plus',
         ],
+
+        ['header' => 'Opciones de Administrador'],
+        [
+            'text' => 'Ver usuarios',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-users',
+        ],
+        [
+            'text' => 'Gestión de condonaciones',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-clipboard-check',
+        ],
+        /*
         [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
@@ -366,22 +372,56 @@ return [
                     'url'  => '#',
                 ],
             ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
+        ], */
+
+        ['header' => 'Opciones de Caja',
+        'icon'    => 'fas fa-fw fa-share'
         ],
         [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
+            'text'    => 'Menú de gestión',
+            'icon'    => 'fas fa-fw fa-toolbox',
+            'submenu' => [
+                [
+                    'text' => 'Registrar contrato',
+                    'icon'    => 'fas fa-fw fa-file-signature',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Gestión de contratos',
+                    'icon'    => 'fas fa-fw fa-folder-open',
+                    'url'  => '#',
+                ], 
+                [
+                    'text' => 'Realizar pago',
+                    'icon'    => 'fas fa-fw fa-money-bill',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Registrar multa',
+                    'icon'    => 'fas fa-fw fa-pen',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Registrar anticipo',
+                    'icon'    => 'fas fa-fw fa-comments-dollar',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Gestión de recibos',
+                    'icon'    => 'fas fa-fw fa-eye',
+                    'url'  => '#',
+                ],
+            ],
+        ], 
+        [
+            'text' => 'Solicitar condonaciones',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-clipboard-check',
         ],
         [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
+            'text' => 'Capturar Valor de UMA',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-coins',
         ],
     ],
 
