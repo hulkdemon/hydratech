@@ -45,6 +45,11 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @if ($roles->isEmpty())
+                    <tr>
+                        <td colspan="10">No hay roles registrados</td>
+                    </tr>
+                    @else
                     @foreach ($roles as $rol)
                     <tr>
                         <td>{{ $rol->id_rol }}</td>
@@ -57,10 +62,9 @@
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
                       </td>
-    
                     </tr>
                     @endforeach
-                    
+                    @endif
                 </tbody>
                 </table>
               </div>

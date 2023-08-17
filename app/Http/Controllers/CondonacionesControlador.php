@@ -20,9 +20,7 @@ class CondonacionesControlador extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.gestion_condonaciones');
-
+        return view('caja.condonaciones.solicitar_condonaciones');
     }
 
     /**
@@ -38,7 +36,8 @@ class CondonacionesControlador extends Controller
      */
     public function show(CondonacionesModelo $condonacionesModelo)
     {
-        //
+        $condonaciones = CondonacionesModelo::all();
+        return view('admin.condonaciones.gestion_condonaciones', ['condonaciones' => $condonaciones]); 
     }
 
     /**

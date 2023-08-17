@@ -91,7 +91,7 @@ class UsuarioControlador extends Controller
         $usuario ->name = $request->input('name');
         $usuario ->username = $request->input('username');
         $usuario ->email = $request->input('email');
-        $usuario ->password = $request->input('password');
+        $usuario->password = Hash::make($request->input('password'));
         $usuario ->id_rol = $request->input('id_rol');        
         $usuario->save();
 

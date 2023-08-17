@@ -48,6 +48,11 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @if ($usuarios->isEmpty())
+                    <tr>
+                        <td colspan="10">No hay usuarios registrados</td>
+                    </tr>
+                    @else
                     @foreach ($usuarios as $usuario)
                     <tr>
                         <td>{{ $usuario->id}}</td>
@@ -67,10 +72,9 @@
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
                       </td>
-    
                     </tr>
                     @endforeach
-                    
+                    @endif
                 </tbody>
                 </table>
               </div>

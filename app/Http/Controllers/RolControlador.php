@@ -29,7 +29,7 @@ class RolControlador extends Controller
     public function store(Request $request)
     {
         $request -> validate([
-            'tipo' => 'required|unique:rol|max:20|alpha'
+            'tipo' => 'required|unique:rol|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/'
         ]);
 
         $rol = new RolModelo();

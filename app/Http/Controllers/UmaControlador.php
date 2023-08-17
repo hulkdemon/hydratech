@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UmaModelo;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class UmaControlador extends Controller
 {
@@ -20,7 +21,8 @@ class UmaControlador extends Controller
      */
     public function create()
     {
-        //
+        $umas = UmaModelo::all();
+        return view('admin.uma.registrar_uma', ['umas' => $umas]); 
     }
 
     /**
@@ -28,7 +30,46 @@ class UmaControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'valor' => 'required|regex:/^\d{1,8}(\.\d{1,2})?$/',
+            'fecha_aplicacion' => [
+                'required',
+                'date',
+                // Función para obtener el año y validar
+                function ($attribute, $valorAnio, $error) {
+                    // Obtener el año actual
+                    $añoActual = date('Y');
+                    
+                    // Verificar si ya existe un UMA para el año actual
+                    $contarUma = UmaModelo::whereYear('fecha_aplicacion', $añoActual)->count();
+                    
+                    // Si ya existe un UMA para el año actual, mostrar mensaje de error
+                    if ($contarUma > 0) {
+                        $error('Ya se ha registrado un UMA para el año actual.');
+                    }
+            
+                    // Obtener el año de la fecha de aplicación
+                    $fechaAplicacion = Carbon::parse($valorAnio)->format('Y');
+                    
+                    // Verificar si la fecha de aplicación no es del año actual
+                    if ($fechaAplicacion != $añoActual) {
+                        $error('La fecha de aplicación debe ser del año actual ' . $añoActual);
+                    }
+                },
+            ],
+            
+        ]);
+        $uma = new UmaModelo();
+        $uma ->valor = $request->input('valor');
+        $uma ->fecha_aplicacion = $request->input('fecha_aplicacion');
+
+        // Calcular fecha de vigencia sumando 1 año a la fecha de aplicación
+        $fechaAplicacion = Carbon::parse($request->input('fecha_aplicacion'));
+        $uma->fecha_vigencia = $fechaAplicacion->addYear();
+
+        $uma->save();
+
+        return redirect()->route('admin.uma.registrar_uma');
     }
 
     /**

@@ -181,7 +181,7 @@ Route::prefix('caja/contratos')->group(function () {
 Route::prefix('caja/cobros')->group(function () {
 
     // Ruta para mostrar el formulario de búsqueda para asignar cobros
-    Route::get('busqueda_cobros', [CobrosControlador::class, 'index'])->name('caja.cobros.busqueda_cobros');
+    Route::get('gestion_contratos', [CobrosControlador::class, 'index'])->name('caja.cobros.gestion_contratos');
 
     // Ruta para mostrar el formulario de creación de cobros
     Route::get('registrar_cobro', [CobrosControlador::class, 'create'])->name('caja.cobros.registrar_cobro');
@@ -218,6 +218,29 @@ Route::prefix('caja/datos_fiscales')->group(function () {
 
     // Ruta para actualizar los datos fiscales
     Route::put('{id_datos_fiscales}', [DatosFiscalesControlador::class, 'update'])->name('caja.datos_fiscales.update');
+
+});
+
+//Grupo de rutas prefijas con caja para el controlador de Conceptos
+
+Route::prefix('caja/conceptos')->group(function () {
+    // Ruta para mostrar el formulario de creación de datos fiscales
+    Route::get('registrar_concepto', [ConceptosControlador::class, 'create'])->name('caja.conceptos.registrar_concepto');
+    
+    // Ruta para mostrar los detalles de datos fiscales específicos
+    Route::get('{id_concepto}', [ConceptosControlador::class, 'show'])->name('caja.conceptos.show');
+
+    // Ruta para mostrar todos los datos fiscales
+    Route::get('ver_conceptos', [ConceptosControlador::class, 'show'])->name('caja.conceptos.ver_conceptos');
+
+    // Ruta para almacenar los datos del formulario de creación de datos fiscales
+    Route::post('', [ConceptosControlador::class, 'store'])->name('caja.conceptos.store');
+
+    // Ruta para mostrar el formulario de edición de datos fiscales
+    Route::get('{id_concepto}/editar_concepto', [ConceptosControlador::class, 'edit'])->name('caja.conceptos.edit');
+
+    // Ruta para actualizar los datos fiscales
+    Route::put('{id_concepto}', [ConceptosControlador::class, 'update'])->name('caja.conceptos.update');
 
 });
 

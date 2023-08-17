@@ -20,7 +20,7 @@ class DatosFiscalesControlador extends Controller
      */
     public function create()
     {
-        //
+        return view('caja.datos_fiscales.registrar_datos_fiscales');
     }
 
     /**
@@ -28,7 +28,16 @@ class DatosFiscalesControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        //Función que realiza todo de crear, obtener y guardar
+        $datos_fiscales = new DatosFiscalesModelo();
+        $datos_fiscales->id_contrato = $request->input('id_contrato');
+        $datos_fiscales ->rfc = $request->input('rfc');
+        $datos_fiscales ->razon_social = $request->input('razon_social');
+        $datos_fiscales ->save();
+    
+        //Método que nos direcciona a cursos.show una vez guardado
+        return redirect()->route('caja.datos_fiscales.ver_datos_fiscales');
     }
 
     /**

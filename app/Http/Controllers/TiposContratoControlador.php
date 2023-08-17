@@ -29,7 +29,7 @@ class TiposContratoControlador extends Controller
     public function store(Request $request)
     {
         $request -> validate([
-            'nombre' => 'required|unique:tipos_contratos|max:20|alpha'
+            'nombre' => 'required|unique:tipos_contratos|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/'
         ]);
 
         $TipoContrato = new TiposContratoModelo();

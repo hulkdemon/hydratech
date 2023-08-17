@@ -44,6 +44,11 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @if ($tipos_contrato->isEmpty())
+                        <tr>
+                            <td colspan="10">No hay tipos de contratos registrados</td>
+                        </tr>
+                    @else
                     @foreach ($tipos_contrato as $tipo_contrato)
                     <tr>
                         <td>{{ $tipo_contrato->id_tipo_contrato }}</td>
@@ -58,6 +63,7 @@
                       </td>
                     </tr>
                     @endforeach
+                    @endif
                 </tbody>
                 </table>
               </div>

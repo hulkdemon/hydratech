@@ -349,7 +349,7 @@ return [
         ],  
         ],
         [
-            'text' => 'Gestión de condonaciones',
+            'text' => 'Administración de condonaciones',
             'url'  => 'admin/condonaciones/gestion_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
         ],
@@ -364,7 +364,7 @@ return [
         'icon'    => 'fas fa-fw fa-share'
         ],
         [
-            'text'    => 'Gestión de Contratos',
+            'text'    => 'Manejo de Contratos',
             'icon'    => 'fas fa-fw fa-file-signature',
             'submenu' => [
                 [
@@ -390,13 +390,13 @@ return [
             ],
         ], 
         [
-            'text'    => 'Menú de gestión',
+            'text'    => 'Gestión de cobros',
             'icon'    => 'fas fa-fw fa-toolbox',
             'submenu' => [
                 [
                     'text' => 'Realizar cobros',
                     'icon'    => 'fas fa-fw fa-money-bill',
-                    'url'  => 'caja/cobros/busqueda_contratos',
+                    'url'  => 'caja/cobros/gestion_contratos',
                 ],
                 [
                     'text' => 'Gestión de recibos',

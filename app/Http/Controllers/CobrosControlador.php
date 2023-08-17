@@ -14,7 +14,7 @@ class CobrosControlador extends Controller
     public function index()
     {
         $contratos = ContratosModelo::all();
-        return view ("caja.cobros.busqueda_cobros", ["contratos" => $contratos]);
+        return view ("caja.cobros.gestion_contratos", ["contratos" => $contratos]);
     }
 
     /**

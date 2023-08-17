@@ -20,7 +20,7 @@ class ConceptosControlador extends Controller
      */
     public function create()
     {
-        //
+        return view('caja.conceptos.registrar_conceptos');
     }
 
     /**
@@ -28,7 +28,19 @@ class ConceptosControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request -> validate([
+            'descripcion' => 'required|string|regex:/^[a-zA-Z\sáéíóúÁÉÍÓÚ]+$/u',
+            'precio' => 'required|regex:/^\d{1,8}(\.\d{1,2})?$/'
+        ]);
+
+        //Función que realiza todo de crear, obtener y guardar
+        $concepto = new ConceptosModelo();
+        $concepto->descripcion = $request->input('descripcion');
+        $concepto ->precio = $request->input('precio');
+        $concepto ->save();
+    
+        //Método que nos direcciona a cursos.show una vez guardado
+        return redirect()->route('caja.cobros.gestion_contratos');
     }
 
     /**

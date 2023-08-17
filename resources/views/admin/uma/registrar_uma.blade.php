@@ -93,6 +93,7 @@ use Carbon\Carbon;
             <h3 class="card-title">Registros de datos del UMA</h3>
             </div>
             <div class="card-body p-0">
+                
             <table class="table">
                 <thead>
                 <tr>
@@ -104,8 +105,13 @@ use Carbon\Carbon;
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach ($umas as $uma)
+                    @if ($umas->isEmpty())
                     <tr>
+                        <td colspan="10">No hay registros de UMA</td>
+                    </tr>
+                    @else
+                    @foreach ($umas as $uma)
+                    <tr class="uma-row" data-fecha-vigencia="{{ $uma->fecha_vigencia }}">
                         <td>{{ $uma->id_uma }}</td>
                         <td>{{ $uma->valor }}</td>                    
                         <td>{{ $uma->fecha_aplicacion }}</td>                    
@@ -127,7 +133,7 @@ use Carbon\Carbon;
                         </td>
                     </tr>
                     @endforeach
-                
+                @endif
                 </tbody>
             </table>
             </div>
@@ -144,5 +150,38 @@ use Carbon\Carbon;
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+<script>
+    //coders free
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll(".uma-row");
+        const currentYear = new Date().getFullYear();
+
+        rows.forEach(row => {
+            const fechaVigencia = new Date(row.dataset.fechaVigencia);
+            const fechaActual = new Date();
+
+            // Redondear las fechas al principio del día
+            fechaVigencia.setHours(0, 0, 0, 0);
+            fechaActual.setHours(0, 0, 0, 0);
+
+            const oneDay = 24 * 60 * 60 * 1000; // Milisegundos en un día
+            const oneWeek = 7 * oneDay; // Milisegundos en una semana
+
+            // Calcula la diferencia en días entre la fecha de vigencia y la fecha actual
+            const daysRemaining = Math.floor((fechaVigencia - fechaActual) / oneDay);
+
+            if (daysRemaining > 0 && daysRemaining <= 7) {
+                const alertMessage = `¡Atención! El UMA del año ${currentYear} está a punto de caducar en ${daysRemaining} día(s). Recuerda actualizarla a tiempo.`;
+
+                // Muestra el mensaje de advertencia en una alerta emergente
+                alert(alertMessage);
+            } else if (daysRemaining < 0) {
+                const alertMessage = `¡Alerta! El UMA del año ${currentYear} ha caducado. Es necesario ingresarlo nuevamente.`;
+
+                // Muestra el mensaje de alerta en una alerta emergente
+                alert(alertMessage);
+            }
+        });
+    });
+</script>
 @stop

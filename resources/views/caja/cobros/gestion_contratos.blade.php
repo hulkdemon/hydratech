@@ -36,8 +36,7 @@
                       <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="{{url ("caja/contratos/registrar_contrato")}}"><i class="fa-solid fa-file-signature"></i> Registrar contrato</a></li>
                         <li class="dropdown-item"><a href="{{url ("caja/tipos_contrato/registrar_tipo_contrato")}}"><i class="fa-solid fa-folder-open"></i> Registrar tipo de contrato</a></li>
-                        <li class="dropdown-item"><a href="{{url ("caja/tipos_contrato/registrar_tipo_contrato")}}"><i class="fa-solid fa-comments-dollar"></i> Registrar concepto</a></li>
-  
+                        <li class="dropdown-item"><a class="primary button cursor-pointer" style="cursor: pointer;" data-toggle="modal" data-target="#registrar_concepto"><i class="fa-regular fa-circle-xmark" ></i> Registrar concepto </a></li>
                     </ul>                
                 </div>
             </div>
@@ -78,6 +77,7 @@
         
     </body>
     </html>
+    @include('caja.conceptos.registrar_concepto')
 @stop
 
 @section('css')

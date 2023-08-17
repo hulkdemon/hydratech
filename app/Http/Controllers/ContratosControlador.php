@@ -33,11 +33,11 @@ class ContratosControlador extends Controller
     
         //Validaciones del formulario
         $request->validate([
-            'numero_contrato' => 'required|numeric|unique:contratos|digits:10',
-            'nombre' => 'required|string|regex:/^[a-zA-Z]+\s[a-zA-Z]+$/',
-            'apellido' => 'required|string|regex:/^[a-zA-Z]+\s[a-zA-Z]+$/',
+            'numero_contrato' => 'required|numeric|unique:contratos|digits:12',
+            'nombre' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/',
+            'apellido' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/',            
             'domicilio' => 'required|string|regex:/^[a-zA-Z0-9\s]+$/',         
-            'correo_electronico' => 'required|unique:contratos|email',
+            'correo_electronico' => 'nullable|unique:contratos|email',
             'tipo_contrato' => 'required',
             'fecha_vigencia' => 'required|date',
         ]);
@@ -65,23 +65,48 @@ class ContratosControlador extends Controller
     public function show()
     {
         $contratos = ContratosModelo::all();
-        return view('caja.contratos.ver_contratos', ['contratos' => $contratos]);  
+        $tipos_contratos = TiposContratoModelo::all(); 
+        return view('caja.contratos.ver_contratos', ['contratos' => $contratos], ['tipos_contratos' => $tipos_contratos]);  
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ContratosModelo $contratosModelo)
+    public function edit($id_contrato)
     {
-        //
+        $contrato = ContratosModelo::find($id_contrato);
+        return view('caja.contratos.editar_contrato',['contrato' => $contrato, 'tipos_contratos' => TiposContratoModelo::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ContratosModelo $contratosModelo)
+    public function update(Request $request, $id_contrato)
     {
-        //
+        //Validaciones del formulario
+        $request->validate([
+            'numero_contrato' => 'required|numeric|unique:contratos|digits:11',
+            'nombre' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/',
+            'apellido' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/',            
+            'domicilio' => 'required|string|regex:/^[a-zA-Z0-9\s]+$/',         
+            'correo_electronico' => 'nullable|unique:contratos|email',
+            'tipo_contrato' => 'required',
+            'fecha_vigencia' => 'required|date',
+        ]);
+
+        //Método para encontrar el id y poder actualizar sus datos
+        $contrato = ContratosModelo::find($id_contrato);
+        $contrato ->numero_contrato = $request->input('numero_contrato');
+        $contrato ->nombre = $request->input('nombre');
+        $contrato ->apellido = $request->input('apellido');
+        $contrato ->domicilio = $request->input('domicilio');
+        $contrato ->correo_electronico = $request->input('correo_electronico');
+        $contrato ->id_tipo_contrato = $request->input('tipo_contrato');
+        $contrato ->fecha_vigencia = $request->input('fecha_vigencia');
+        $contrato ->save();
+
+        //Método que nos direcciona a la ruta para ver los contratos
+        return redirect()->route('caja.contratos.ver_contratos');
     }
 
     /**
