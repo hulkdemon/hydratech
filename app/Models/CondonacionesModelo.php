@@ -19,4 +19,8 @@ class CondonacionesModelo extends Model
         return $this->belongsTo(User::class, 'id_usuario');
     }
 
+    public function contrato()
+    {
+        return $this->belongsTo(ContratosModelo::class, 'id_contrato');
+    }
 }

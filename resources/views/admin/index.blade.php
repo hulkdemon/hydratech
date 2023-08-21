@@ -3,11 +3,18 @@
 @section('title', 'HydraTech')
 
 @section('content_header')
-    <h1>Hydratech</h1>
+{{-- Vista --}}
+@auth
+    @if(auth()->user()->rol)
+    <h1>Bienvenido, usuario: {{ auth()->user()->name }} con rol de:  {{ auth()->user()->rol->tipo }}</h1>
+    @else
+    <h1>Bienvenido, usuario: {{ auth()->user()->name }} </h1>
+    @endif
+@endauth
 @stop
 
 @section('content')
-    <p>Pagina Principal HydraTech.</p>
+    <p>Pagina de administrador Hydratech</p>
 @stop
 
 @section('css')

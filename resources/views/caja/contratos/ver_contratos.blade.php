@@ -5,7 +5,6 @@
 
 @section('content')
     <body> 
-        
         <section class="content-header">
             <div class="container-fluid">
             <div class="row mb-2">
@@ -99,6 +98,8 @@
 @stop
 
 @section('js')
+<script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <!-- DataTables -->

@@ -1,4 +1,3 @@
-<script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
 @if(isset($contrato))
 <div class="modal fade" id="registrar_datos_fiscales{{ $contrato->id_contrato }}">
     <div class="modal-dialog modal-xl">

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\CondonacionesModelo;
+use App\Models\ContratosModelo;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CondonacionesControlador extends Controller
@@ -20,7 +23,9 @@ class CondonacionesControlador extends Controller
      */
     public function create()
     {
-        return view('caja.condonaciones.solicitar_condonaciones');
+        $users = User::all();
+        $contratos = ContratosModelo::all();
+        return view('caja.conceptos.asignar_condonaciones', ["users"=>$users, "contratos"=>$contratos ]);       
     }
 
     /**
@@ -28,7 +33,25 @@ class CondonacionesControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            
+            
+        ]);
+        $condonacion = new CondonacionesModelo();
+        $condonacion ->id_usuario  = $request->input('id_usuario');
+        $condonacion ->id_contrato  = $request->input('id_contrato');
+        $condonacion ->descuento = $request->input('descuento');
+        $condonacion ->porcentaje = $request->input('porcentaje');
+        $condonacion->estado = 'aprobada';
+        $condonacion ->inicio_vigencia = $request->input('inicio_vigencia');
+
+        // Calcular fecha de vigencia sumando 1 año a la fecha de aplicación
+        $fechaAplicacion = Carbon::parse($request->input('inicio_vigencia'));
+        $condonacion->fin_vigencia = $fechaAplicacion->addYear();
+
+        $condonacion->save();
+
+        return redirect()->route('caja.cobros.gestion_contratos');
     }
 
     /**

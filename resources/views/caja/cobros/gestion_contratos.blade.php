@@ -4,10 +4,7 @@
 @section('title', 'Gestión de transacciones')
 
 @section('content')
-
     <body> 
-       
-        <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
         <section class="content-header">
             <div class="container-fluid">
             <div class="row mb-2">
@@ -40,13 +37,14 @@
                     </ul>                
                 </div>
             </div>
+           
             <div class="card-body">
                 <h5 class="mb-2">Realizar búsqueda por nombre, apellido, domicilio o número de contrato</h5>
                 <table id="datos" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Número del contrato</th>
+                            <th >Num. contrato</th>
                             <th>Nombre de la persona</th>
                             <th>Domicilio</th>
                             <th class="text-center">Acciones para el contrato</th>
@@ -56,18 +54,31 @@
                     <tbody>
                         @foreach ($contratos as $contrato)
                         <tr>
-                            <td>{{ $contrato->id_contrato }}</td>
-                            <td>{{ $contrato->numero_contrato }}</td>
+                            <td style="width: 10;">{{ $contrato->id_contrato }}</td>
+                            <td style="width: 80px;">{{ $contrato->numero_contrato }}</td>
                             <td>{{ $contrato->nombre }} {{ $contrato->apellido }}</td>
                             <td>{{ $contrato->domicilio }}</td>
                             <td>
                                 <div class="d-flex justify-content-between">
                                     <button class="btn btn-primary btn-sm"><i class="fa-solid fa-credit-card"></i>  Realizar cobro</button>
-                                    <button class="btn btn-success btn-sm"><i class="fa-solid fa-wallet"></i> Registrar abono</button>
-                                    <button class="btn btn-info btn-sm"><i class="fa-solid fa-hand-holding-dollar"></i> Asignar condonación</button>
+                                    @if(isset($contrato))
+                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#registrar_creditos{{ $contrato->id_contrato }}">
+                                            <i class="fa-solid fa-wallet"></i> Registrar crédito
+                                        </button>
+                                    @endif
+                                    @if(isset($contrato))
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#asignar_condonaciones{{ $contrato->id_contrato }}">
+                                            <i class="fa-solid fa-hand-holding-dollar"></i> Asignar condonación
+                                        </button>
+                                        @endif
                                 </div>
                             </td>
-                            <td><button class="btn btn-danger btn-sm"><i class="fa-solid fa-gavel"></i> Aplicar multa</button></td>
+                            <td>
+                                @if(isset($contrato))
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#asignar_conceptos{{ $contrato->id_contrato }}">
+                                    <i class="fa-solid fa-gavel"></i> Aplicar multa
+                                </button>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
@@ -78,6 +89,10 @@
     </body>
     </html>
     @include('caja.conceptos.registrar_concepto')
+    @include('caja.creditos.registrar_creditos')
+    @include('caja.cobros_conceptos.asignar_conceptos')
+    @include('caja.condonaciones.asignar_condonaciones')
+
 @stop
 
 @section('css')
@@ -85,7 +100,8 @@
 @stop
 
 @section('js')
-
+    <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     
     $(function () {

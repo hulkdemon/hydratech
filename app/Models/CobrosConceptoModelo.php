@@ -13,9 +13,9 @@ class CobrosConceptoModelo extends Model
     protected $primaryKey = 'id_cobro_concepto';
     public $timestamps = true;
 
-    public function cobro()
+    public function contratos()
     {
-        return $this->belongsTo(CobrosModelo::class, 'id_cobro');
+        return $this->belongsTo(ContratosModelo::class, 'id_contrato');
     }
 
     public function concepto()

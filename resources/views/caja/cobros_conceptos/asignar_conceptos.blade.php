@@ -1,9 +1,9 @@
 @if(isset($contrato))
-<div class="modal fade" id="registrar_creditos{{ $contrato->id_contrato }}">
+<div class="modal fade" id="asignar_conceptos{{ $contrato->id_contrato }}">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Registro de créditos (abonos) al contrato registrado a nombre de: {{$contrato->nombre}} {{$contrato->apellido}}</h4>
+            <h4 class="modal-title">Registro de conceptos (multas) al contrato registrado a nombre de: {{$contrato->nombre}} {{$contrato->apellido}}</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -21,25 +21,30 @@
                 </button>
             </div>
             @endif
-            <form action="{{url('caja/creditos')}}" method="post">
+            <form action="{{url('caja/cobros_conceptos')}}" method="post">
                 @csrf
                 <!-- Input addon -->
-                <div class="card card-success">
+                <div class="card card-danger">
                     <div class="card-header">
-                      <h3 class="card-title">Registro de créditos al contrato</h3>
+                      <h3 class="card-title">Asignación de multas al contrato</h3>
                     </div>
         <div class="card-body">
-                <label>Ingrese la cantidad a abonar:</label>
+                    <label>Multa a asignar:</label>
                     <!-- Date mm/dd/yyyy -->
                     <div class="form-group">
                         <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                            <span class="input-group-text"><i class="fa-solid fa-gavel"></i></span>
                         </div>
-                        <input type="text" name="monto" class="form-control" id="monto" value="{{old('monto')}}" placeholder="Ingrese el monto a registrar para poder dar abono automático al siguiente cobro">
+                        <select name="id_concepto" id="id_concepto" class="form-control">
+                            <option value="">Seleccione la multa a registrar al contrato</option>
+                            @foreach ($conceptos as $conceptos)
+                                <option value="{{ $conceptos->id_concepto}}">{{ $conceptos -> descripcion}}</option>
+                            @endforeach
+                        </select>
                         </div>
                         <!-- /.input group -->
-                    </div>
+                        </div>
                     <!-- /.form group -->
                         <input type="hidden" name="id_contrato" value="{{ $contrato->id_contrato }}">
                         </div>

@@ -394,7 +394,7 @@ return [
             'icon'    => 'fas fa-fw fa-toolbox',
             'submenu' => [
                 [
-                    'text' => 'Realizar cobros',
+                    'text' => 'Realizar cobros y administración',
                     'icon'    => 'fas fa-fw fa-money-bill',
                     'url'  => 'caja/cobros/gestion_contratos',
                 ],

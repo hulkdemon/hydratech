@@ -20,7 +20,7 @@ class CreditosControlador extends Controller
      */
     public function create()
     {
-        //
+        return view('caja.creditos.registrar_creditos');
     }
 
     /**
@@ -28,7 +28,19 @@ class CreditosControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request -> validate([
+            'id_contrato' => 'required',
+            'monto' => 'required|regex:/^\d{1,8}(\.\d{1,2})?$/'
+        ]);
+
+          //Función que realiza todo de crear, obtener y guardar
+        $creditos = new CreditosModelo();
+        $creditos->id_contrato = $request->input('id_contrato');
+        $creditos ->monto = $request->input('monto');
+        $creditos ->save();
+
+        //Método que nos direcciona a Gestion_contratos una vez guardado
+        return redirect()->route('caja.cobros.gestion_contratos');  
     }
 
     /**
@@ -50,9 +62,9 @@ class CreditosControlador extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CreditosModelo $creditosModelo)
+    public function update(Request $request)
     {
-        //
+        
     }
 
     /**

@@ -236,18 +236,73 @@ Route::prefix('caja/conceptos')->group(function () {
     // Ruta para almacenar los datos del formulario de creación de datos fiscales
     Route::post('', [ConceptosControlador::class, 'store'])->name('caja.conceptos.store');
 
-    // Ruta para mostrar el formulario de edición de datos fiscales
-    Route::get('{id_concepto}/editar_concepto', [ConceptosControlador::class, 'edit'])->name('caja.conceptos.edit');
+});
 
-    // Ruta para actualizar los datos fiscales
-    Route::put('{id_concepto}', [ConceptosControlador::class, 'update'])->name('caja.conceptos.update');
+//Grupo de rutas prefijas de caja para el controlador de Asignar Conceptos
+Route::prefix('caja/cobros_conceptos')->group(function () {
+    // Ruta para mostrar el formulario de creación de datos fiscales
+    Route::get('asignar_conceptos', [CobrosConceptoControlador::class, 'create'])->name('caja.cobros_conceptos.asignar_conceptos');
+    
+    // Ruta para mostrar los detalles de datos fiscales específicos
+    Route::get('{id_cobro_concepto}', [CobrosConceptoControlador::class, 'show'])->name('caja.cobros_conceptos.show');
+
+    // Ruta para mostrar todos los datos fiscales
+    Route::get('ver_cobros_concepto', [CobrosConceptoControlador::class, 'show'])->name('caja.cobros_conceptos.ver_cobros_concepto');
+
+    // Ruta para almacenar los datos del formulario de creación de datos fiscales
+    Route::post('', [CobrosConceptoControlador::class, 'store'])->name('caja.cobros_conceptos.store');
 
 });
 
-//Grupo de rutas prefijas con caja para el controladro de condonaciones en caja
+//Grupo de rutas prefijas con caja para el controlador de Creditos
+
+Route::prefix('caja/creditos')->group(function () {
+    // Ruta para mostrar el formulario de creación de datos fiscales
+    Route::get('registrar_creditos', [CreditosControlador::class, 'create'])->name('caja.creditos.registrar_creditos');
+    
+    // Ruta para mostrar los detalles de datos fiscales específicos
+    Route::get('{id_credito}', [CreditosControlador::class, 'show'])->name('caja.creditos.show');
+
+    // Ruta para mostrar todos los datos fiscales
+    Route::get('ver_creditos', [CreditosControlador::class, 'show'])->name('caja.creditos.ver_creditos');
+
+    // Ruta para almacenar los datos del formulario de creación de datos fiscales
+    Route::post('', [CreditosControlador::class, 'store'])->name('caja.creditos.store');
+
+});
+    
+
+//Grupo de rutas prefijas con caja para el controlador de Cobros Concepto
+
+Route::prefix('caja/creditos')->group(function () {
+    // Ruta para mostrar el formulario de registro de créditos
+    Route::get('registrar_creditos', [CreditosControlador::class, 'create'])->name('caja.creditos.registrar_creditos');
+    
+    // Ruta para mostrar los detalles de créditos específicos
+    Route::get('{id_credito}', [CreditosControlador::class, 'show'])->name('caja.creditos.show');
+
+    // Ruta para mostrar todos los créditos
+    Route::get('ver_creditos', [CreditosControlador::class, 'show'])->name('caja.creditos.ver_creditos');
+
+    // Ruta para almacenar los datos del formulario de creación de créditos
+    Route::post('', [CreditosControlador::class, 'store'])->name('caja.creditos.store');
+
+});
+    
+//Grupo de rutas prefijas con caja para el controlador de condonaciones en caja
 Route::prefix('caja/condonaciones')->group(function () {
+
     // Ruta para mostrar el formulario de creación de usuarios
-    Route::get('solicitar_condonaciones', [CondonacionesControlador::class, 'create'])->name('caja.condonaciones.solicitar_condonaciones');
+    Route::get('asignar_condonaciones', [CondonacionesControlador::class, 'create'])->name('caja.condonaciones.asignar_condonaciones');
+    
+    // Ruta para mostrar los detalles de datos fiscales específicos
+    Route::get('{id_condonacion}', [CondonacionesControlador::class, 'show'])->name('caja.condonaciones.show');
+
+    // Ruta para mostrar todos los datos fiscales
+    Route::get('ver_condonaciones', [CondonacionesControlador::class, 'show'])->name('caja.condonaciones.ver_condonaciones');
+
+    // Ruta para almacenar los datos del formulario de creación de datos fiscales
+    Route::post('', [CondonacionesControlador::class, 'store'])->name('caja.condonaciones.store');
     
 });
 

@@ -6,10 +6,6 @@
 @php
 use Carbon\Carbon;
 @endphp
-<head>
-    <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
-
-</head>
     <body>
         <br>
         @if ($errors->any())
@@ -150,6 +146,8 @@ use Carbon\Carbon;
 @stop
 
 @section('js')
+<script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     //coders free
     document.addEventListener("DOMContentLoaded", function () {

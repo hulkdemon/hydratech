@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CobrosConceptoModelo;
+use App\Models\ConceptosModelo;
+use App\Models\ContratosModelo;
 use Illuminate\Http\Request;
 
 class CobrosConceptoControlador extends Controller
@@ -20,7 +22,9 @@ class CobrosConceptoControlador extends Controller
      */
     public function create()
     {
-        //
+        $contratos = ContratosModelo::all();
+        $conceptos = ConceptosModelo::all();
+        return view('caja.conceptos.asignar_concepto', ["contratos"=>$contratos, "conceptos"=>$conceptos ]);   
     }
 
     /**
@@ -28,7 +32,19 @@ class CobrosConceptoControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request -> validate([
+            'id_contrato' => 'required',
+            'id_concepto' => 'required',
+        ]);
+
+        //Función que realiza todo de crear, obtener y guardar
+        $CobroConcepto = new CobrosConceptoModelo();
+        $CobroConcepto->id_contrato = $request->input('id_contrato');
+        $CobroConcepto ->id_concepto = $request->input('id_concepto');
+        $CobroConcepto ->save();
+    
+        //Método que nos direcciona a Gestion_contratos una vez guardado
+        return redirect()->route('caja.cobros.gestion_contratos');
     }
 
     /**

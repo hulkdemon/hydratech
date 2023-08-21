@@ -79,5 +79,6 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+  <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @stop

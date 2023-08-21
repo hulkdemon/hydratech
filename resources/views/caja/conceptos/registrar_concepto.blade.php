@@ -1,4 +1,3 @@
-<script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
 <div class="modal fade" id="registrar_concepto" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

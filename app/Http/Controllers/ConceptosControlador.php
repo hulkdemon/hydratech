@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConceptosModelo;
+use App\Models\ContratosModelo;
 use Illuminate\Http\Request;
 
 class ConceptosControlador extends Controller
@@ -39,7 +40,7 @@ class ConceptosControlador extends Controller
         $concepto ->precio = $request->input('precio');
         $concepto ->save();
     
-        //Método que nos direcciona a cursos.show una vez guardado
+        //Método que nos direcciona a Gestion_contratos una vez guardado
         return redirect()->route('caja.cobros.gestion_contratos');
     }
 

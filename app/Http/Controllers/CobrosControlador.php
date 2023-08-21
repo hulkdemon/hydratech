@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\CobrosModelo;
+use App\Models\ConceptosModelo;
+use App\Models\CondonacionesModelo;
 use App\Models\ContratosModelo;
+use App\Models\CreditosModelo;
 use Illuminate\Http\Request;
 
 class CobrosControlador extends Controller
@@ -14,8 +17,26 @@ class CobrosControlador extends Controller
     public function index()
     {
         $contratos = ContratosModelo::all();
-        return view ("caja.cobros.gestion_contratos", ["contratos" => $contratos]);
+        $conceptos = ConceptosModelo::all();
+        $creditos = CreditosModelo::all();
+    
+        // Agrega la lógica de validación aquí
+        $existeCondonacion = false; // Inicialmente asumimos que no hay condonación
+        foreach ($contratos as $contrato) {
+            if (CondonacionesModelo::where('id_contrato', $contrato->id_contrato)->exists()) {
+                $existeCondonacion = true; // Si existe condonación, actualizamos la variable
+                break; // Ya que encontramos una condonación, podemos detener el bucle
+            }
+        }
+    
+        return view ("caja.cobros.gestion_contratos", [
+            "contratos" => $contratos,
+            "conceptos" => $conceptos,
+            "creditos" => $creditos,
+            "existeCondonacion" => $existeCondonacion, // Pasamos la variable a la vista
+        ]);
     }
+    
 
     /**
      * Show the form for creating a new resource.

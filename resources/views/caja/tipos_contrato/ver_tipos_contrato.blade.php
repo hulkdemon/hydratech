@@ -78,7 +78,8 @@
 @stop
 
 @section('js')
-    
+    <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(function () {
     $("#datos").DataTable({
