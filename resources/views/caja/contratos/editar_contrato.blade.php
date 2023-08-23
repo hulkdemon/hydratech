@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Registrar contratos')
+@section('title', 'Editar contrato')
 
 @section('content')
     <body>
@@ -36,8 +36,9 @@
             </div>
             </div><!-- /.container-fluid -->
         </section>
-                <form id="formulario_contrato" action="{{url('caja/contratos')}}" method="post">
+                <form action="{{url('caja/contratos/' .$contrato->id_contrato)}}" method="post">
                     @csrf
+                    @method("PUT")
                     <!-- Input addon -->
                     <div class="card card-info">
                         <div class="card-header">
@@ -51,7 +52,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                             </div>
-                            <input type="text" name="numero_contrato" class="form-control" id="numero_contrato" value="{{old('numero_contrato')}}" placeholder="Ingrese el número del contrato">
+                            <input type="text" name="numero_contrato" class="form-control" id="numero_contrato" value="{{$contrato->numero_contrato}}" placeholder="Ingrese el número del contrato">
                             </div>
                             <!-- /.input group -->
                         </div>
@@ -63,7 +64,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
                         </div>
-                        <input type="text" name="nombre" class="form-control" id="nombre" value="{{old('nombre')}}" placeholder="Ingrese los nombres de la persona a registrar el contrato">
+                        <input type="text" name="nombre" class="form-control" id="nombre" value="{{$contrato->nombre}}" placeholder="Ingrese los nombres de la persona a registrar el contrato">
                         </div>
                         <!-- /.input group -->
                     </div>
@@ -74,7 +75,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa-solid fa-signature"></i></span>
                             </div>
-                            <input type="text" name="apellido" class="form-control" id="apellido" value="{{old('apellido')}}" placeholder="Ingrese los apellidos de la persona">
+                            <input type="text" name="apellido" class="form-control" id="apellido" value="{{$contrato->apellido}}" placeholder="Ingrese los apellidos de la persona">
                             </div>
                             <!-- /.input group -->
                     </div>
@@ -85,7 +86,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
                             </div>
-                            <input type="text" name="domicilio" class="form-control" id="domicilio" value="{{old('domicilio')}}" placeholder="Ingrese el domicilio de la persona">
+                            <input type="text" name="domicilio" class="form-control" id="domicilio" value="{{$contrato->domicilio}}" placeholder="Ingrese el domicilio de la persona">
                             </div>
                             <!-- /.input group -->
                     </div>
@@ -97,7 +98,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                             </div>
-                            <input type="email" name="correo_electronico" class="form-control" id="coreo_electronico" value="{{old('correo_electronico')}}" placeholder="Ingrese el correo electrónico de la persona">
+                            <input type="email" name="correo_electronico" class="form-control" id="correo_electronico" value="{{$contrato->correo_electronico}}" placeholder="Ingrese el correo electrónico de la persona">
                             </div>
                             <!-- /.input group -->
                         </div>
@@ -111,8 +112,8 @@
                             <select name="tipo_contrato" id="tipo_contrato" class="form-control">
                                 <option value="">Seleccione el tipo de contrato que se registrará al contrato</option>
                                 @foreach ($tipos_contratos as $tipo_contrato)
-                                    <option value="{{ $tipo_contrato->id_tipo_contrato}}">{{ $tipo_contrato -> nombre}}</option>
-                                @endforeach
+                                <option value="{{ $tipo_contrato->id_tipo_contrato}}" @if ($tipo_contrato->id_tipo_contrato == $contrato->id_tipo_contrato) {{'selected'}} @endif>{{ $tipo_contrato -> nombre}}</option>
+                            @endforeach
                             </select>                              
                             </div> 
                         </div>
@@ -124,7 +125,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                                 </div>
-                                <input type="date" name="fecha_vigencia" class="form-control" id="fecha_vigencia" value="{{old('fecha_vigencia')}}">
+                                <input type="date" name="fecha_vigencia" class="form-control" id="fecha_vigencia" value="{{$contrato->fecha_vigencia}}">
                                 </div>
                                 <!-- /.input group -->
                             </div>
@@ -155,45 +156,7 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
-
 @section('js')
     <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<script>
-   $(document).ready(function () {
-    $('#formulario_contrato').submit(function (e) {
-        e.preventDefault();
-
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: response.message,
-                    });
-                    $('#formulario_contrato')[0].reset();
-                } else {
-                    let errorHtml = '<ul>';
-                    $.each(response.errors, function (key, value) {
-                        errorHtml += '<li>' + value + '</li>';
-                    });
-                    errorHtml += '</ul>';
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error de validación',
-                        html: errorHtml,
-                    });
-                }
-            },
-            
-        });
-    });
-});
-</script>
+@stop

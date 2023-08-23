@@ -31,19 +31,26 @@
                     </li>
                     <li class="breadcrumb-item active">Creación de roles</li>
                 </ol>
-                </div>
             </div>
+            </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{{ route('admin.roles.ver_roles') }}" class="btn btn-primary">
+                            Ver roles registrados
+                        </a>
+                    </div>
+                </div>
             </div><!-- /.container-fluid -->
         </section>
-                <form action="{{url('admin/roles')}}" method="post">
+                <form id="formulario_roles" action="{{url('admin/roles')}}" method="post">
                     @csrf
                     <!-- Input addon -->
                     <div class="card card-info">
                         <div class="card-header">
                           <h3 class="card-title">Datos del rol a crear</h3>
                         </div>
-            <div class="card-body">
-<label>Nombre del rol a crear:</label>
+                        <div class="card-body">
+                        <label>Nombre del rol a crear:</label>
                         <!-- Date mm/dd/yyyy -->
                         <div class="form-group">
                             <div class="input-group">
@@ -84,4 +91,43 @@
 @section('js')
     <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+   $(document).ready(function () {
+    $('#formulario_roles').submit(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: response.message,
+                    });
+                    $('#formulario_roles')[0].reset();
+                } else {
+                    let errorHtml = '<ul>';
+                    $.each(response.errors, function (key, value) {
+                        errorHtml += '<li>' + value + '</li>';
+                    });
+                    errorHtml += '</ul>';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error de validación',
+                        html: errorHtml,
+                    });
+                }
+            },
+            
+        });
+    });
+});
+</script>
 @stop

@@ -11,7 +11,7 @@
                     <li>{{ $error}}</li>
                 @endforeach
             </ul>
-            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -84,5 +84,5 @@
 
 @section('js')
     <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 @stop

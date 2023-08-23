@@ -42,7 +42,8 @@ class CobrosConceptoControlador extends Controller
         $CobroConcepto->id_contrato = $request->input('id_contrato');
         $CobroConcepto ->id_concepto = $request->input('id_concepto');
         $CobroConcepto ->save();
-    
+        flash()->addPreset('multa');
+
         //Método que nos direcciona a Gestion_contratos una vez guardado
         return redirect()->route('caja.cobros.gestion_contratos');
     }

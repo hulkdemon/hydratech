@@ -39,7 +39,8 @@ class ConceptosControlador extends Controller
         $concepto->descripcion = $request->input('descripcion');
         $concepto ->precio = $request->input('precio');
         $concepto ->save();
-    
+        flash()->addPreset('concepto');
+
         //Método que nos direcciona a Gestion_contratos una vez guardado
         return redirect()->route('caja.cobros.gestion_contratos');
     }

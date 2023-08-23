@@ -17,4 +17,9 @@ class ContratosModelo extends Model
     {
         return $this->belongsTo(TiposContratoModelo::class, 'id_tipo_contrato');
     }
+
+    public function condonaciones()
+    {
+        return $this->hasMany(CondonacionesModelo::class, 'id_contrato');
+    }
 }

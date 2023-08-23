@@ -175,6 +175,12 @@ Route::prefix('caja/contratos')->group(function () {
     // Ruta para almacenar los datos del formulario de creación de contratos
     Route::post('', [ContratosControlador::class, 'store'])->name('caja.contratos.store');
 
+    // Ruta para mostrar el formulario de edición de un contrato
+    Route::get('{id_contrato}/editar_contrato', [ContratosControlador::class, 'edit'])->name('caja.contratos.edit');
+
+    // Ruta para actualizar los datos de un contrato
+    Route::put('{id_contrato}', [ContratosControlador::class, 'update'])->name('caja.contratos.update');
+
 });
 
 //Grupo de rutas prefijas con caja para el controlador de cobros

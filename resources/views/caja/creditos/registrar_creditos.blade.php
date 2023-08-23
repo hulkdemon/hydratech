@@ -9,18 +9,6 @@
           </button>
         </div>
         <div class="modal-body">
-            @if ($errors->any())
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error}}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @endif
             <form action="{{url('caja/creditos')}}" method="post">
                 @csrf
                 <!-- Input addon -->
@@ -34,7 +22,7 @@
                     <div class="form-group">
                         <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                            <span class="input-group-text"><i class="fa-solid fa-sack-dollar"></i></span>
                         </div>
                         <input type="text" name="monto" class="form-control" id="monto" value="{{old('monto')}}" placeholder="Ingrese el monto a registrar para poder dar abono automático al siguiente cobro">
                         </div>

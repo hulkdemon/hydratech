@@ -36,8 +36,11 @@ class DatosFiscalesControlador extends Controller
         $datos_fiscales ->razon_social = $request->input('razon_social');
         $datos_fiscales ->save();
     
-        //Método que nos direcciona a cursos.show una vez guardado
-        return redirect()->route('caja.datos_fiscales.ver_datos_fiscales');
+        //Mensaje de alerta
+        flash()->addPreset('registro_insertado');
+
+        //Método que nos direcciona a contratos.show una vez guardado
+        return redirect()->route('caja.contratos.ver_contratos');
     }
 
     /**

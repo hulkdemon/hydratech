@@ -9,18 +9,6 @@
           </button>
         </div>
         <div class="modal-body">
-            @if ($errors->any())
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error}}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @endif
             <form action="{{url('caja/condonaciones')}}" method="post">
                 @csrf
                 <!-- Input addon -->
@@ -34,7 +22,7 @@
                         <div class="form-group">
                             <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                                <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
                             </div>
                             <input type="text" name="descuento" class="form-control" id="descuento" value="{{old('descuento')}}" placeholder="Ingrese el descuento que se va registrar en la condonación">
                             </div>
@@ -45,7 +33,7 @@
                         <div class="form-group">
                             <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                                <span class="input-group-text"><i class="fa-solid fa-percent"></i></span>
                             </div>
                             <input type="text" name="porcentaje" class="form-control" id="porcentaje" value="{{old('porcentaje')}}" placeholder="Ingrese el porcentaje a registrar">
                             </div>
@@ -56,7 +44,7 @@
                         <div class="form-group">
                             <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                                <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
                             </div>
                             <input type="date" name="inicio_vigencia" class="form-control" id="inicio_vigencia" value="{{old('inicio_vigencia')}}" >
                             </div>

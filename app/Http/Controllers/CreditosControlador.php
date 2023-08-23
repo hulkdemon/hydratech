@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CreditosModelo;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class CreditosControlador extends Controller
 {
@@ -38,6 +39,7 @@ class CreditosControlador extends Controller
         $creditos->id_contrato = $request->input('id_contrato');
         $creditos ->monto = $request->input('monto');
         $creditos ->save();
+        flash()->addPreset('creditos');
 
         //Método que nos direcciona a Gestion_contratos una vez guardado
         return redirect()->route('caja.cobros.gestion_contratos');  

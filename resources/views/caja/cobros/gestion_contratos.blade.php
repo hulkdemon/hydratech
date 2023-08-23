@@ -5,6 +5,18 @@
 
 @section('content')
     <body> 
+        @if ($errors->any())
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error}}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif  
         <section class="content-header">
             <div class="container-fluid">
             <div class="row mb-2">
@@ -66,11 +78,15 @@
                                             <i class="fa-solid fa-wallet"></i> Registrar crédito
                                         </button>
                                     @endif
-                                    @if(isset($contrato))
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#asignar_condonaciones{{ $contrato->id_contrato }}">
-                                            <i class="fa-solid fa-hand-holding-dollar"></i> Asignar condonación
-                                        </button>
-                                        @endif
+                                    @if($contrato->condonaciones->count() > 0)
+                                    <button type="button" class="btn btn-info btn-sm" onclick="alert('Ya existe una condonación. ¿Deseas pedir una al administrador?')">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i> Asignar condonación
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#asignar_condonaciones{{ $contrato->id_contrato }}">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i> Asignar condonación
+                                    </button>
+                                @endif
                                 </div>
                             </td>
                             <td>

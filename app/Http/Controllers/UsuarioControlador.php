@@ -6,6 +6,7 @@ use App\Models\RolModelo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UsuarioControlador extends Controller
 {
@@ -32,7 +33,8 @@ class UsuarioControlador extends Controller
     public function store(Request $request)
     {
         //Validaciones del formulario
-        $request->validate([
+        try {
+            $ValidarDatos = $request->validate([
             'name' => 'required|string',
             'username' => 'required|string',
             'email' => 'required|unique:users|email',
@@ -49,9 +51,20 @@ class UsuarioControlador extends Controller
         $usuario ->id_rol = $request->input('id_rol');
         $usuario ->save();
 
-    
-        //Método que nos direcciona a cursos.show una vez guardado
-        return redirect()->route('admin.usuarios.ver_usuarios');
+        //Enviar mensaje de guardado exitoso
+        $mensaje = [
+            'success' => true,
+            'message' => 'Usuario registrado exitosamente',
+        ];
+            //Si no se respeta la validación entonces que muestre excepción
+        } catch (ValidationException $e) {
+            $mensaje = [
+                'success' => false,
+                'errors' => $e->validator->getMessageBag()->toArray(),
+            ];
+        }
+
+        return response()->json($mensaje);
     }
 
     /**
@@ -95,6 +108,8 @@ class UsuarioControlador extends Controller
         $usuario ->id_rol = $request->input('id_rol');        
         $usuario->save();
 
+        flash()->addPreset('registro_guardado');
+
         //Método que nos direcciona a la ruta para ver los usuarios
         return redirect()->route('admin.usuarios.ver_usuarios');
     }
@@ -107,6 +122,7 @@ class UsuarioControlador extends Controller
     {
         $usuario = User::find($id);
         $usuario->delete();
+        flash()->addPreset('registro_eliminado');
 
         return redirect()->route('admin.usuarios.ver_usuarios');
     }

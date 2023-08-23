@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContratosModelo;
 use App\Models\TiposContratoModelo;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class TiposContratoControlador extends Controller
 {
@@ -28,15 +30,31 @@ class TiposContratoControlador extends Controller
      */
     public function store(Request $request)
     {
-        $request -> validate([
-            'nombre' => 'required|unique:tipos_contratos|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/'
-        ]);
-
+        //Validación por el método try para poder pasarlos a AJAX
+        try {
+            $ValidarDatos = $request->validate([
+                'nombre' => 'required|unique:tipos_contratos|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/'
+            ]);
+        
+        //Generar nuevo registro ingresando cada input a registrar
         $TipoContrato = new TiposContratoModelo();
         $TipoContrato ->nombre = $request->input('nombre');
         $TipoContrato->save();
 
-        return redirect()->route('caja.tipos_contrato.ver_tipos_contrato');
+        //Enviar mensaje de guardado exitoso
+        $mensaje = [
+            'success' => true,
+            'message' => 'Tipo de contrato registrado exitosamente',
+        ];
+        //Si no se respeta la validación entonces que muestre excepción
+        } catch (ValidationException $e) {
+            $mensaje = [
+                'success' => false,
+                'errors' => $e->validator->getMessageBag()->toArray(),
+            ];
+        }
+
+        return response()->json($mensaje);
     }
 
     /**
@@ -64,13 +82,14 @@ class TiposContratoControlador extends Controller
     {
         //Método para validar los datos ingresados
         $request -> validate([
-            'nombre' => 'required|unique:tipos_contratos|max:20|alpha'
+            'nombre' => 'required|unique:tipos_contratos|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/'
         ]);
 
         //Método para encontrar el id y poder actualizar sus datos
         $tipos_contrato = TiposContratoModelo::find($id_tipo_contrato);
         $tipos_contrato ->nombre = $request->input('nombre');
         $tipos_contrato->save();
+        flash()->addPreset('registro_guardado');
 
         //Método que nos direcciona a la ruta para ver los tipos de contrato
         return redirect()->route('caja.tipos_contrato.ver_tipos_contrato');
@@ -82,7 +101,20 @@ class TiposContratoControlador extends Controller
     public function destroy($id_tipo_contrato)
     {
         $tipos_contrato = TiposContratoModelo::find($id_tipo_contrato);
-        $tipos_contrato->delete();
+
+        if ($tipos_contrato) {
+            // Verificar si existen claves relacionadas en la tabla "contratos"
+            $ContratosRelacion = ContratosModelo::where('id_tipo_contrato', $id_tipo_contrato)->exists();
+
+            if ($ContratosRelacion) {
+                flash()->addPreset('registro_validado');
+            } else {
+                $tipos_contrato->delete();
+                flash()->addPreset('registro_eliminado');
+            }
+        } else {
+            flash()->error('No se encontró el tipo de contrato que se intentó eliminar.');
+        }
 
         return redirect()->route('caja.tipos_contrato.ver_tipos_contrato');
     }

@@ -30,12 +30,18 @@
                     </a>
                     </li>
                     <li class="breadcrumb-item active">Registro de usuarios</li>
-                </ol>
                 </div>
             </div>
-            </div><!-- /.container-fluid -->
-        </section>
-                <form action="{{url('admin/usuarios')}}" method="post">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{{ route('admin.usuarios.ver_usuarios') }}" class="btn btn-primary">
+                            Ver usuarios registrados
+                        </a>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+                <form id="formulario_usuarios" action="{{url('admin/usuarios')}}" method="post">
                     @csrf
                     <!-- Input addon -->
                     <div class="card card-info">
@@ -132,4 +138,40 @@
 @section('js')
     <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function () {
+    $('#formulario_usuarios').submit(function (e) {
+        e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: response.message,
+                        });
+                        $('#formulario_usuarios')[0].reset();
+                    } else {
+                        let errorHtml = '<ul>';
+                        $.each(response.errors, function (key, value) {
+                            errorHtml += '<li>' + value + '</li>';
+                        });
+                        errorHtml += '</ul>';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de validación',
+                            html: errorHtml,
+                        });
+                    }
+                },
+            });
+        });
+    });
+    </script>
 @stop

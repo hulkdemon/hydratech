@@ -109,11 +109,11 @@
                             </div>
                             <div class="row" >
                                 <div class="col-lg-2">
-                                        <button type="submit" class="btn btn-primary btn-check"><i class="fa fa-bell"></i> Editar</button>
+                                        <button type="submit" class="btn btn-primary "><i class="fa fa-check"></i> Editar</button>
                                         <br>
                             </div>
                             <div class="col-lg-2">
-                                <button type="reset" class="btn btn-danger btn-cancel"><i class="fa fa-bell"></i> Cancelar</button>
+                                <button type="reset" class="btn btn-danger "><i class="fa fa-cancel"></i> Cancelar</button>
                                 <br>
                             </div>
                                     </div>

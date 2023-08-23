@@ -34,9 +34,11 @@ class CondonacionesControlador extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            
-            
+            'descuento' => 'required',
+            'porcentaje' => 'required',
+            'inicio_vigencia' => 'required',
         ]);
+        
         $condonacion = new CondonacionesModelo();
         $condonacion ->id_usuario  = $request->input('id_usuario');
         $condonacion ->id_contrato  = $request->input('id_contrato');
@@ -50,6 +52,7 @@ class CondonacionesControlador extends Controller
         $condonacion->fin_vigencia = $fechaAplicacion->addYear();
 
         $condonacion->save();
+        flash()->addPreset('condonacion');
 
         return redirect()->route('caja.cobros.gestion_contratos');
     }

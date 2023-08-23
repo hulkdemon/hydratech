@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RolModelo;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class RolControlador extends Controller
 {
@@ -28,7 +29,8 @@ class RolControlador extends Controller
      */
     public function store(Request $request)
     {
-        $request -> validate([
+        try {
+            $ValidarDatos = $request->validate([
             'tipo' => 'required|unique:rol|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/'
         ]);
 
@@ -36,7 +38,19 @@ class RolControlador extends Controller
         $rol ->tipo = $request->input('tipo');
         $rol->save();
 
-        return redirect()->route('admin.roles.ver_roles');
+        //Enviar mensaje de guardado exitoso
+        $mensaje = [
+            'success' => true,
+            'message' => 'Rol guardado exitosamente',
+        ];
+        //Si no se respeta la validación entonces que muestre excepción
+        } catch (ValidationException $e) {
+            $mensaje = [
+                'success' => false,
+                'errors' => $e->validator->getMessageBag()->toArray(),
+            ];
+        }
+        return response()->json($mensaje);
     }
 
     /**
@@ -71,6 +85,7 @@ class RolControlador extends Controller
         $rol = RolModelo::find($id_rol);
         $rol ->tipo = $request->input('tipo');
         $rol->save();
+        flash()->addPreset('registro_guardado');
 
         //Método que nos direcciona a la ruta para ver los roles
         return redirect()->route('admin.roles.ver_roles');
@@ -83,6 +98,7 @@ class RolControlador extends Controller
     {
         $rol = RolModelo::find($id_rol);
         $rol->delete();
+        flash()->addPreset('registro_eliminado');
 
         return redirect()->route('admin.roles.ver_roles');
     }
