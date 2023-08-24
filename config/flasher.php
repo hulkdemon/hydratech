@@ -61,6 +61,21 @@ return [
             'message' => 'Condonación añadida al contrato exitosamente.',
             'title' => 'Éxito',
         ],
+        'condonacion_solicitada' => [
+            'type' => 'success',
+            'message' => 'Condonación solicitada al administrador exitosamente.',
+            'title' => 'Éxito',
+        ],
+        'condonacion_aceptada' => [
+            'type' => 'success',
+            'message' => 'Condonación aceptada exitosamente.',
+            'title' => 'Éxito',
+        ],
+        'condonacion_rechazada' => [
+            'type' => 'success',
+            'message' => 'Condonación rechazada exitosamente.',
+            'title' => 'Éxito',
+        ],
     ],
 ];
 

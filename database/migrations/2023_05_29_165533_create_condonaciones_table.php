@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_contrato');
             $table->boolean('descuento');
             $table->float('porcentaje');
+            $table->string('motivo')->nullable();
             $table->string('estado')->default('pendiente');
             $table->date('inicio_vigencia');
             $table->date('fin_vigencia');

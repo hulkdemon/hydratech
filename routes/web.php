@@ -298,17 +298,28 @@ Route::prefix('caja/creditos')->group(function () {
 //Grupo de rutas prefijas con caja para el controlador de condonaciones en caja
 Route::prefix('caja/condonaciones')->group(function () {
 
-    // Ruta para mostrar el formulario de creación de usuarios
-    Route::get('asignar_condonaciones', [CondonacionesControlador::class, 'create'])->name('caja.condonaciones.asignar_condonaciones');
-    
-    // Ruta para mostrar los detalles de datos fiscales específicos
+    // Ruta para mostrar el formulario de creación de condonaciones
+    Route::get('asignar_condonaciones', [CondonacionesControlador::class, 'asignar_condonaciones'])->name('caja.condonaciones.asignar_condonaciones');
+
+    // Ruta para almacenar los datos del formulario de creación de condonaciones
+    Route::post('registrar_condonacion', [CondonacionesControlador::class, 'registrar_condonacion'])->name('caja.condonaciones.registrar_condonacion');
+
+    // Ruta para mostrar el formulario de solicitar condonaciones
+    Route::get('solicitar_condonaciones', [CondonacionesControlador::class, 'solicitar_condonaciones'])->name('caja.condonaciones.solicitar_condonaciones');
+
+    // Ruta para almacenar los datos del formulario de solicitar condonaciones
+    Route::post('guardar_condonacion_solicitada', [CondonacionesControlador::class, 'guardar_condonacion_solicitada'])->name('caja.condonaciones.guardar_condonacion_solicitada');
+
+    // Ruta para mostrar los detalles de condonaciones específicas
     Route::get('{id_condonacion}', [CondonacionesControlador::class, 'show'])->name('caja.condonaciones.show');
 
-    // Ruta para mostrar todos los datos fiscales
+    // Ruta para mostrar todos los datos de condonaciones
     Route::get('ver_condonaciones', [CondonacionesControlador::class, 'show'])->name('caja.condonaciones.ver_condonaciones');
 
-    // Ruta para almacenar los datos del formulario de creación de datos fiscales
-    Route::post('', [CondonacionesControlador::class, 'store'])->name('caja.condonaciones.store');
-    
+    //Ruta para aprobar la condonación del contrato
+    Route::get('{id_condonacion}/aceptar_condonacion', [CondonacionesControlador::class, 'aceptar_condonacion'])->name('caja.condonaciones.aceptar_condonacion');
+
+    //Ruta para rechazar la condonación del contrato
+    Route::get('{id_condonacion}/rechazar_condonacion', [CondonacionesControlador::class, 'rechazar_condonacion'])->name('caja.condonaciones.rechazar_condonacion');
 });
 

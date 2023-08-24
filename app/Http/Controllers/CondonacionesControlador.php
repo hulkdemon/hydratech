@@ -7,6 +7,7 @@ use App\Models\ContratosModelo;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CondonacionesControlador extends Controller
 {
@@ -21,7 +22,14 @@ class CondonacionesControlador extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function asignar_condonaciones()
+    {
+        $users = User::all();
+        $contratos = ContratosModelo::all();
+        return view('caja.conceptos.asignar_condonaciones', ["users"=>$users, "contratos"=>$contratos ]);       
+    }
+
+    public function solicitar_condonaciones()
     {
         $users = User::all();
         $contratos = ContratosModelo::all();
@@ -31,11 +39,14 @@ class CondonacionesControlador extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function registrar_condonacion(Request $request)
     {
         $request->validate([
+            'id_usuario' => 'required',
+            'id_contrato' => 'required',
             'descuento' => 'required',
             'porcentaje' => 'required',
+            'motivo' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/',
             'inicio_vigencia' => 'required',
         ]);
         
@@ -44,6 +55,7 @@ class CondonacionesControlador extends Controller
         $condonacion ->id_contrato  = $request->input('id_contrato');
         $condonacion ->descuento = $request->input('descuento');
         $condonacion ->porcentaje = $request->input('porcentaje');
+        $condonacion ->motivo = $request->input('motivo');
         $condonacion->estado = 'aprobada';
         $condonacion ->inicio_vigencia = $request->input('inicio_vigencia');
 
@@ -57,13 +69,45 @@ class CondonacionesControlador extends Controller
         return redirect()->route('caja.cobros.gestion_contratos');
     }
 
+    public function guardar_condonacion_solicitada(Request $request)
+    {
+        $request->validate([
+            'descuento' => 'required',
+            'porcentaje' => 'required',
+            'motivo' => 'required|string|regex:/^[a-zA-Z\sáéíóúÁÉÍÓÚ]+$/u',
+            'inicio_vigencia' => 'required',
+        ]);
+        
+        $condonacion_solicitar = new CondonacionesModelo();
+        $condonacion_solicitar ->id_usuario  = $request->input('id_usuario');
+        $condonacion_solicitar ->id_contrato  = $request->input('id_contrato');
+        $condonacion_solicitar ->descuento = $request->input('descuento');
+        $condonacion_solicitar ->porcentaje = $request->input('porcentaje');
+        $condonacion_solicitar ->motivo = $request->input('motivo');
+        $condonacion_solicitar ->inicio_vigencia = $request->input('inicio_vigencia');
+
+        // Calcular fecha de vigencia sumando 1 año a la fecha de aplicación
+        $fechaAplicacion = Carbon::parse($request->input('inicio_vigencia'));
+        $condonacion_solicitar->fin_vigencia = $fechaAplicacion->addYear();
+
+        $condonacion_solicitar->save();
+        flash()->addPreset('condonacion_solicitada');
+
+        return redirect()->route('caja.cobros.gestion_contratos');
+    }
+
     /**
      * Display the specified resource.
      */
-    public function show(CondonacionesModelo $condonacionesModelo)
+    public function show()
     {
         $condonaciones = CondonacionesModelo::all();
-        return view('admin.condonaciones.gestion_condonaciones', ['condonaciones' => $condonaciones]); 
+        $condonacionesPendientes = $condonaciones->where('estado', 'pendiente')->count();
+        
+        return view('admin.condonaciones.gestion_condonaciones', [
+            'condonaciones' => $condonaciones,
+            'condonacionesPendientes' => $condonacionesPendientes,
+        ]);
     }
 
     /**
@@ -77,9 +121,24 @@ class CondonacionesControlador extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CondonacionesModelo $condonacionesModelo)
+    public function aceptar_condonacion($id_condonacion)
     {
-        //
+        $condonacion = CondonacionesModelo::find($id_condonacion);
+        $condonacion->estado = "aprobada";
+        $condonacion->save();
+
+        flash()->addPreset('condonacion_aceptada');
+        return redirect()->route('admin.condonaciones.gestion_condonaciones');
+    }
+
+    public function rechazar_condonacion($id_condonacion)
+    {
+        $condonacion = CondonacionesModelo::find($id_condonacion);
+        $condonacion->estado = "rechazada";
+        $condonacion->save();
+
+        flash()->addPreset('condonacion_rechazada');
+        return redirect()->route('admin.condonaciones.gestion_condonaciones');
     }
 
     /**

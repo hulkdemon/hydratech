@@ -79,7 +79,7 @@
                                         </button>
                                     @endif
                                     @if($contrato->condonaciones->count() > 0)
-                                    <button type="button" class="btn btn-info btn-sm" onclick="alert('Ya existe una condonación. ¿Deseas pedir una al administrador?')">
+                                    <button type="button" class="btn btn-info btn-sm" onclick="showConfirmationDialog()">
                                         <i class="fa-solid fa-hand-holding-dollar"></i> Asignar condonación
                                     </button>
                                 @else
@@ -108,6 +108,7 @@
     @include('caja.creditos.registrar_creditos')
     @include('caja.cobros_conceptos.asignar_conceptos')
     @include('caja.condonaciones.asignar_condonaciones')
+    @include('caja.condonaciones.solicitar_condonaciones')
 
 @stop
 
@@ -118,8 +119,26 @@
 @section('js')
     <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @isset($contrato)
+
+    <script>
+        function showConfirmationDialog() {
+            Swal.fire({
+                title: 'Ya existe una condonación a este contrato',
+                text: '¿Deseas solicitar una al administrador?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#solicitar_condonaciones{{ $contrato->id_contrato }}').modal('show');
+                }
+            });
+        }
+    </script>
+    @endisset
 <script>
-    
     $(function () {
     $("#datos").DataTable({
         "responsive": true,
@@ -129,7 +148,7 @@
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
             "sZeroRecords": "No se encontraron resultados",
-            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sEmptyTable": "No hay registros de contratos",
             "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
             "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
             "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",

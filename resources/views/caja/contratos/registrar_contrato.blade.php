@@ -116,6 +116,11 @@
                             </select>                              
                             </div> 
                         </div>
+                        @if (count($tipos_contratos) === 0)
+                            <div class="alert alert-danger">
+                                Para registrar el contrato, primero debe registrar un tipo de contrato.
+                            </div>
+                        @endif
                         <!-- /.form group -->
                             <label>Fecha de vigencia del contrato:</label>
                             <!-- Date mm/dd/yyyy -->

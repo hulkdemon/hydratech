@@ -107,9 +107,15 @@
                                 @foreach ($roles as $rol)
                                     <option value="{{ $rol->id_rol}}">{{ $rol -> tipo}}</option>
                                 @endforeach
-                            </select>                              </div>
+                            </select>                              
+                            </div>
                             <!-- /.input group -->
                             </div>
+                            @if (count($roles) === 0)
+                            <div class="alert alert-danger">
+                                Para registrar el usuario, primero debe registrar un rol.
+                            </div>
+                        @endif
                             <div class="row" >
                                 <div class="col-lg-3">
                                         <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Registrar</button>

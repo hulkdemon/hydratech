@@ -9,7 +9,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{url('caja/condonaciones')}}" method="post">
+            <form action="{{ route('caja.condonaciones.registrar_condonacion') }}" method="post">
                 @csrf
                 <!-- Input addon -->
                 <div class="card card-info">
@@ -36,6 +36,17 @@
                                 <span class="input-group-text"><i class="fa-solid fa-percent"></i></span>
                             </div>
                             <input type="text" name="porcentaje" class="form-control" id="porcentaje" value="{{old('porcentaje')}}" placeholder="Ingrese el porcentaje a registrar">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <label>Ingrese el motivo:</label>
+                        <!-- Date mm/dd/yyyy -->
+                        <div class="form-group">
+                            <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa-solid fa-clipboard-question"></i></span>
+                            </div>
+                            <input type="text" name="motivo" class="form-control" id="motivo" value="{{old('motivo')}}" placeholder="Ingrese el motivo por el cual se solicita la condonación">
                             </div>
                             <!-- /.input group -->
                         </div>

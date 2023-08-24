@@ -14,13 +14,14 @@ class CondonacionesModelo extends Model
     protected $primaryKey = 'id_condonacion';
     public $timestamps = true;
 
-    public function usuario()
+    public function usuarios()
     {
         return $this->belongsTo(User::class, 'id_usuario');
     }
 
-    public function contrato()
+    public function contratos()
     {
         return $this->belongsTo(ContratosModelo::class, 'id_contrato');
     }
+    
 }

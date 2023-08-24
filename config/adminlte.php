@@ -405,11 +405,6 @@ return [
                 ],
             ],
         ], 
-        [
-            'text' => 'Solicitar condonaciones',
-            'url'  => 'caja/condonaciones/solicitar_condonaciones',
-            'icon' => 'fas fa-fw fa-clipboard-check',
-        ],
     ],
 
     /*
