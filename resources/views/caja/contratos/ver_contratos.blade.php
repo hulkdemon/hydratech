@@ -174,19 +174,19 @@
             {
                 extend: 'excelHtml5',
                 exportOptions: {
-                    columns: ':not(.exclude-column)' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
+                    columns: ':visible' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
                 }
             },
             {
                 extend: 'pdfHtml5',
                 exportOptions: {
-                    columns: ':not(.exclude-column)' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
+                    columns: ':visible' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
                 }
             },
             {
                 extend: 'print',
                 exportOptions: {
-                    columns: ':not(.exclude-column)' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
+                    columns: ':visible' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
                 }
             },
             'colvis'
@@ -227,7 +227,7 @@
             }
         }
     });
-    
+
     // Personaliza la exportación de PDF para que se muestren los botones en la tabla
     table.buttons(['.buttons-pdf']).nodes().each(function (button) {
         $(button).removeClass('exclude-column');

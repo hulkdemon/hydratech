@@ -71,8 +71,12 @@
                             <td>{{ $contrato->nombre }} {{ $contrato->apellido }}</td>
                             <td>{{ $contrato->domicilio }}</td>
                             <td>
+                                @if(isset($contrato))
                                 <div class="d-flex justify-content-between">
-                                    <button class="btn btn-primary btn-sm"><i class="fa-solid fa-credit-card"></i>  Realizar cobro</button>
+                                    <a href="{{ route('caja.cobros.registrar_cobro', ['id_contrato' => $contrato->id_contrato]) }}" class="btn btn-primary btn-sm">
+                                        <i class="fa-solid fa-credit-card"></i> Realizar cobro
+                                    </a>                                    
+                                @endif
                                     @if(isset($contrato))
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#registrar_creditos{{ $contrato->id_contrato }}">
                                             <i class="fa-solid fa-wallet"></i> Registrar crédito

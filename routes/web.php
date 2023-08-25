@@ -190,7 +190,7 @@ Route::prefix('caja/cobros')->group(function () {
     Route::get('gestion_contratos', [CobrosControlador::class, 'index'])->name('caja.cobros.gestion_contratos');
 
     // Ruta para mostrar el formulario de creación de cobros
-    Route::get('registrar_cobro', [CobrosControlador::class, 'create'])->name('caja.cobros.registrar_cobro');
+    Route::get('registrar_cobro/{id_contrato}', [CobrosControlador::class, 'create'])->name('caja.cobros.registrar_cobro');
     
     // Ruta para mostrar los detalles de un cobro específico
     Route::get('{id_cobro}', [CobrosControlador::class, 'show'])->name('caja.cobros.show');
