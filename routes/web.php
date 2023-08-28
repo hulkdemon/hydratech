@@ -216,3 +216,8 @@ Route::prefix('caja/condonaciones')->group(function () {
     
 });
 
+Route::prefix('caja/cobro')->group(function () {
+    // Ruta para mostrar el formulario de creación de datos fiscales
+    Route::get('recibo', [CobrosConceptoControlador::class, 'create'])->name('caja.cobros.recibo');
+});
+

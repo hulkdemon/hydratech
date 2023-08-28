@@ -1,0 +1,72 @@
+input[type="text"] {
+    text-align: center;
+    margin-left: 25px; /* Se ajustó el margin-left a 20px */
+    float: left;
+    margin-top: 10px;
+    font-size: 15px;
+    width: 135px; /* Se agregó un ancho más pequeño */
+    border: none;
+}
+
+
+.encabezado {
+    text-align: center;
+    width: 13%;
+    color: #ffff;
+    background-color: lightskyblue;
+    border: 1px solid lightskyblue;
+    float: left;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor-recibo {
+    width: 29cm;
+    height: 21cm;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.espacio{
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.referencia{
+    color: black;
+    border: 1px solid lightskyblue;
+    float: left;
+    margin-top: 10px;
+    font-size: 15px;
+    width: 100px;
+}
+
+.detalle {
+    text-align: center;
+    width: 20%;
+    color: #ffff;
+    background-color: lightskyblue;
+    border: 1px solid lightskyblue;
+    float: left; 
+    margin-top: 10px;
+    margin-left: 80px;
+    font-size: 17px;
+    font-style: bold;
+}
+.concepto {
+    text-align: center;
+    width: 13%;
+    color: #ffff;
+    background-color: lightskyblue;
+    border: 1px solid lightskyblue;
+    float: left;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 15px;
+}
