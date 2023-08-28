@@ -43,8 +43,13 @@
                                 @endforeach
                             </ul>
                         </div>
+                    @else
+                        <div class="alert alert-success" >
+                            <strong>No hay créditos activos:</strong>
+                        </div>
                     @endif
                 </div>
+
                 <div class="col-md-6">
                     @if ($cobros_conceptos->count() > 0)
                         <div class="alert alert-warning" >
@@ -55,8 +60,13 @@
                                 @endforeach
                             </ul>
                         </div>
+                    @else
+                    <div class="alert alert-warning" >
+                        <strong>No hay multas activas:</strong>
+                    </div>
                     @endif
                 </div>
+
                 <div class="col-md-6">
                     @if ($uma)
                         <div class="alert alert-primary">
@@ -67,7 +77,7 @@
                         </div>
                     @endif
                 </div>
-                
+
                 <div class="col-md-6">
                     @if ($condonacionesVigentes->count() > 0)
                         <div class="alert alert-info" >
@@ -78,28 +88,25 @@
                                 @endforeach
                             </ul>
                         </div>
+                        @else 
+                        <div class="alert alert-primary">
+                            <strong>No hay condonaciones activas:</strong>
+                        </div>
                     @endif
                 </div>
             </div>
             
         
-                <form id="formulario_cobros" action="{{url('caja/cobros')}}" method="post">
-                    @csrf
-                    <div class="card card-info">
-                        <div class="card-header">
-                          <h3 class="card-title">Datos del cobro a registrar</h3>
-                        </div>
+            <form id="formulario_cobros" action="{{url('caja/cobros')}}" method="post">
+                @csrf
+                <div class="card card-info">
+             <div class="card-header">
+                <h3 class="card-title">Datos del cobro a registrar</h3>
+            </div>
             <div class="card-body">
                 <input type="hidden" name="id_contrato" value="{{ $contrato->id_contrato }}">
                 <input type="hidden" name="id_usuario" value="{{ auth()->user()->id }}">
                 <input type="hidden" id="uma_valor" value="{{ $uma ? $uma->valor : '' }}">
-                
-                <!-- Fecha del cobro -->
-                <div class="form-group">
-                    <label for="fecha_cobro">Fecha del cobro:</label>
-                    <input type="date" name="fecha_cobro" class="form-control" id="fecha_cobro" value="{{old('fecha_cobro')}}">
-                </div>
-                
                 <!-- Monto a cobrar -->
                 <div class="form-group">
                     <label for="monto">Monto a cobrar:</label>
@@ -114,8 +121,9 @@
                 <!-- Uma activo -->
                 <div class="form-group">
                 @if ($uma)
+                <input type="hidden" name="id_uma" value="{{ $uma->id_uma }}">
                     <label for="uma_valor">Uma del año actual:</label>
-                    <input type="text" class="form-control" disabled id="uma_valor" name="uma_valor" value="{{ $uma->valor }} %">
+                    <input type="text" class="form-control" disabled id="uma_valor" name="uma_valor" value="{{ $uma->valor }} %" >
                 @endif
                 </div>
 
@@ -157,7 +165,7 @@
                 
                 <div class="row">
                     <div class="col-lg-3">
-                        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Registrar</button>
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Registrar cobro</button>
                         <br>
                     </div>
                     <div class="col-lg-3">
@@ -190,6 +198,7 @@
             var creditosTotalInput = $('#creditos_total');
             var multasTotalInput = $('#multas_total');
             var condonacionesTotalInput = $('#condonaciones_total');
+            var umaValorInput = $('#uma_valor'); // Campo para el valor de la UMA
             
             // Función para calcular el total
             function calcularTotal() {
@@ -203,16 +212,19 @@
                     var multasTotal = parseFloat(multasTotalInput.val()) || 0;
                     var condonacionesTotal = parseFloat(condonacionesTotalInput.val()) || 0;
                     
-                    // Calcular el total a pagar incluyendo créditos
-                    var total = precio + iva + multasTotal + condonacionesTotal;
+                    // Obtener el valor de la UMA
+                    var valorUMA = parseFloat(umaValorInput.val()) || 0;
+                    
+                    // Calcular el valor mensual de la UMA
+                    var valorUMAMensual = valorUMA * 30.4;
+                    
+                    // Calcular el total a pagar incluyendo créditos, multas, condonaciones y UMA
+                    var total = precio + iva + multasTotal + condonacionesTotal + valorUMAMensual;
                     
                     // Verificar si los créditos superan el total
                     if (creditosTotal > total) {
                         // Mostrar alerta
                         alert("Los créditos superan al total a pagar. El crédito restante es: " + (creditosTotal - total));
-                        
-                        // Establecer el total en cero
-                        total = 0;
                     } else {
                         // Restar los créditos al total
                         total -= creditosTotal;
@@ -222,52 +234,17 @@
                     ivaInput.val(iva.toFixed(2)); // Redondear a 2 decimales
                     totalInput.val(total.toFixed(2)); // Redondear a 2 decimales
                 } else {
-                    // Si el valor no es válido, restablecer los campos de iva y total
+                    // Si el valor no es válido, restablecer los campos de iva, total y UMA
                     ivaInput.val('');
                     totalInput.val('');
                 }
             }
             
-            // Agregar el evento click al botón Calcular
-            $('#calcular_btn').on('click', function() {
-                calcularTotal();
-            });
+                    // Agregar el evento click al botón Calcular
+                    $('#calcular_btn').on('click', function() {
+                        calcularTotal();
+                    });
         });
     </script>
     
-
-    <script>
-    $(document).ready(function () {
-    $('#formulario_usuarios').submit(function (e) {
-        e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Éxito',
-                            text: response.message,
-                        });
-                        $('#formulario_usuarios')[0].reset();
-                    } else {
-                        let errorHtml = '<ul>';
-                        $.each(response.errors, function (key, value) {
-                            errorHtml += '<li>' + value + '</li>';
-                        });
-                        errorHtml += '</ul>';
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error de validación',
-                            html: errorHtml,
-                        });
-                    }
-                },
-            });
-        });
-    });
-    </script>
 @stop

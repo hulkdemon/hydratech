@@ -108,12 +108,15 @@
         
     </body>
     </html>
+    
+    @foreach ($contratos as $contrato)
     @include('caja.conceptos.registrar_concepto')
     @include('caja.creditos.registrar_creditos')
     @include('caja.cobros_conceptos.asignar_conceptos')
     @include('caja.condonaciones.asignar_condonaciones')
     @include('caja.condonaciones.solicitar_condonaciones')
-
+    @endforeach
+    
 @stop
 
 @section('css')

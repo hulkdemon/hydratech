@@ -50,14 +50,14 @@
                           <h3 class="card-title">Datos del rol a crear</h3>
                         </div>
                         <div class="card-body">
-                        <label>Nombre del rol a crear:</label>
+                        <label>Ingrese el rol a registrar:</label>
                         <!-- Date mm/dd/yyyy -->
                         <div class="form-group">
                             <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa-solid fa-pen"></i></span>
                             </div>
-                            <input type="text" name="tipo" class="form-control" id="tipo" value="{{old('tipo')}}" placeholder="Ingrese el nombre del rol">
+                            <input type="text" name="tipo" class="form-control" id="tipo" value="{{old('tipo')}}" placeholder="Ingrese el rol a registrar">
                             </div>
                             <!-- /.input group -->
                         </div>

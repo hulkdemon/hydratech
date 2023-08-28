@@ -61,9 +61,9 @@
                         <td>{{ $usuario->email }}</td>
                         @if ($usuario->id_rol)
                         <td>{{ $usuario->rol->tipo }}</td>
-                    @else
-                        <td>No tiene rol asignado</td>
-                    @endif
+                        @else
+                            <td>No tiene rol asignado</td>
+                        @endif
                         <td><a href="{{ url('admin/usuarios/'.$usuario->id.'/editar_usuario')}}" class="btn btn-warning btn-sm">Editar</a></td>
                         <td>
                           <form method="POST" action="{{route('admin.usuarios.destroy', $usuario)}}" >

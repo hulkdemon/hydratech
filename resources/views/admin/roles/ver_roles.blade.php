@@ -30,8 +30,7 @@
                 <h3 class="card-title">Tabla con los roles registrados</h3>
               </div>
               <div class="card-header">
-                <a href="{{url('admin/roles/registrar_rol')}}" class="btn btn-primary ">Registrar nuevo rol</a><br><br>
-
+                <a href="{{url('admin/roles/registrar_rol')}}" class="btn btn-primary ">Registrar nuevo rol</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
