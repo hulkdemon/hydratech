@@ -95,7 +95,7 @@
                             </td>
                             <td>
                                 @if(isset($contrato))
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#asignar_conceptos{{ $contrato->id_contrato }}">
+                                <button type="button" class="btn center btn-danger btn-sm" data-toggle="modal" data-target="#asignar_conceptos{{ $contrato->id_contrato }}">
                                     <i class="fa-solid fa-gavel"></i> Aplicar multa
                                 </button>
                             @endif

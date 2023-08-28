@@ -23,14 +23,12 @@
             @endif
             <form action="{{url('caja/cobros_conceptos')}}" method="post">
                 @csrf
-                <!-- Input addon -->
                 <div class="card card-danger">
                     <div class="card-header">
                       <h3 class="card-title">Asignación de multas al contrato</h3>
                     </div>
-        <div class="card-body">
+                    <div class="card-body">
                     <label>Multa a asignar:</label>
-                    <!-- Date mm/dd/yyyy -->
                     <div class="form-group">
                         <div class="input-group">
                         <div class="input-group-prepend">
@@ -43,9 +41,7 @@
                             @endforeach
                         </select>
                         </div>
-                        <!-- /.input group -->
                         </div>
-                    <!-- /.form group -->
                         <input type="hidden" name="id_contrato" value="{{ $contrato->id_contrato }}">
                         </div>
                         <div class="row justify-content-center" >
@@ -57,12 +53,8 @@
                             <br>
                         </div>
                         </div>
-                            <!-- /.card -->
-                        <!-- /btn-group -->
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </form>
             @endif
 
