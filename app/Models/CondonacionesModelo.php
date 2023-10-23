@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
-class CondonacionesModelo extends Model
+class CondonacionesModelo extends Model 
 {
     use HasFactory;
 
@@ -24,4 +24,8 @@ class CondonacionesModelo extends Model
         return $this->belongsTo(ContratosModelo::class, 'id_contrato');
     }
     
+    public function cobro()
+    {
+        return $this->belongsTo(CobrosModelo::class, 'id_cobro');
+    }
 }

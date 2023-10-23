@@ -69,7 +69,7 @@ return [
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
-
+    'url' => 'logos',
     /*
     |--------------------------------------------------------------------------
     | Authentication Logo
@@ -109,7 +109,7 @@ return [
     'preloader' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => '/storage/Hydratech.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -312,16 +312,9 @@ return [
             'can'  => 'manage-blog',
         ],
         //Opciones de administrador para el rol de admin
-        ['header' => 'Configuraciones de usuario'],
-        [
-            'text' => 'Mi perfil',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
         ['header' => 'Opciones de Administrador',
         'icon'    => 'fas fa-fw fa-share'
         ],
-
         [
             'text'    => 'Opciones de usuarios',
             'icon'    => 'fas fa-fw fa-toolbox',
@@ -349,9 +342,20 @@ return [
         ],  
         ],
         [
+            'text'    => 'Opciones de condonaciones',
+            'icon'    => 'fas fa-fw fa-toolbox',
+            'submenu' => [
+        [
+            'text' => 'Asignar condonaciones',
+            'url'  => 'admin/condonaciones/gestion_contratos',
+            'icon' => 'fas fa-fw fa-clipboard-user',
+        ],
+        [
             'text' => 'Administración de condonaciones',
             'url'  => 'admin/condonaciones/gestion_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
+        ],
+        ],
         ],
         [
             'text' => 'Capturar Valor de UMA',
@@ -389,21 +393,10 @@ return [
                 ],
             ],
         ], 
-        [
-            'text'    => 'Gestión de cobros',
-            'icon'    => 'fas fa-fw fa-toolbox',
-            'submenu' => [
                 [
                     'text' => 'Realizar cobros y administración',
                     'icon'    => 'fas fa-fw fa-money-bill',
                     'url'  => 'caja/cobros/gestion_contratos',
-                ],
-                [
-                    'text' => 'Gestión de recibos',
-                    'icon'    => 'fas fa-fw fa-eye',
-                    'url'  => '#',
-                ],
-            ],
         ], 
     ],
 

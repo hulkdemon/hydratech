@@ -9,8 +9,12 @@ use App\Models\CondonacionesModelo;
 use App\Models\ContratosModelo;
 use App\Models\CreditosModelo;
 use App\Models\UmaModelo;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\View;
 class CobrosControlador extends Controller
 {
     /**
@@ -21,11 +25,13 @@ class CobrosControlador extends Controller
         $contratos = ContratosModelo::with('condonaciones')->get();
         $conceptos = ConceptosModelo::all();
         $creditos = CreditosModelo::all();
-        
+        $contratos_cobros = ContratosModelo::whereHas('cobros')->get();
+
         return view("caja.cobros.gestion_contratos", [
             "contratos" => $contratos,
             "conceptos" => $conceptos,
             "creditos" => $creditos,
+            "contratos_cobros" => $contratos_cobros,
         ]);
     }
     
@@ -50,12 +56,17 @@ class CobrosControlador extends Controller
 
         // Obtener las condonaciones vigentes
         $condonacionesVigentes = CondonacionesModelo::where('id_contrato', $id_contrato)
-            ->whereDate('fin_vigencia', '>=', now())
-            ->get();
+        ->where('estado', 'aprobada')
+        ->whereDate('fin_vigencia', '>=', now())
+        ->get();
     
         // Obtener las multas asociadas al usuario
-        $cobros_conceptos = CobrosConceptoModelo::where('id_contrato', $contrato->id_contrato)->get();
-    
+        $cobros_conceptos = CobrosConceptoModelo::where('id_contrato', $contrato->id_contrato)
+        ->whereHas('concepto', function ($multas) {
+            $multas->where('activo', 1);
+        })
+        ->get();
+
         return view("caja.cobros.registrar_cobro", [
             "contrato" => $contrato,
             "condonacionesVigentes" => $condonacionesVigentes,
@@ -65,7 +76,6 @@ class CobrosControlador extends Controller
             "cobros_conceptos" => $cobros_conceptos,
             "creditosActivos" => $creditosActivos,
         ]);
-        
     }
 
     /**
@@ -73,7 +83,12 @@ class CobrosControlador extends Controller
      */
     public function store(Request $request)
     {
-        // Obtener los datos del formulario
+        try {
+        $ValidarDatos = $request->validate([
+            'id_contrato' => 'required',
+            'id_usuario' => 'required',
+            'id_uma' => 'required',
+        ]);
         $id_contrato = $request->input('id_contrato');
         $id_usuario = $request->input('id_usuario');
         $monto = $request->input('monto');
@@ -94,23 +109,28 @@ class CobrosControlador extends Controller
         $creditosTotal = 0;
         $multasTotal = 0;
         $condonacionesTotal = 0;
-        
+        $condonacionesTotal = $condonacionesTotal / 100;
+
         // Verificar si los campos de créditos, multas y condonaciones están presentes
         if ($request->has('creditos_total')) {
             $creditosTotal = $request->input('creditos_total');
         }
-        
+
         if ($request->has('multas_total')) {
-            $multasTotal = $request->input('multas_total');
+            $multasTotal = floatval($request->input('multas_total'));
         }
         
         if ($request->has('condonaciones_total')) {
-            $condonacionesTotal = $request->input('condonaciones_total');
+            $condonacionesTotal = floatval($request->input('condonaciones_total'));
         }
-        
+
         // Calcular el total a pagar incluyendo créditos, multas, condonaciones, etc.
-        $total = $monto + $iva + $multasTotal + $condonacionesTotal + ($uma_valor * 30.4) - $creditosTotal;
-        
+        $total = $monto + $iva + $multasTotal - ($monto * ($condonacionesTotal / 100)) + ($uma_valor * 30.4);
+
+        //Este es para poder ingresar el id_cobro al crearlo por medio de Eloquent, es importante este 
+        DB::beginTransaction();
+
+        try {
         // Crear el registro en la base de datos
         $cobro = new CobrosModelo();
         $cobro->id_contrato = $id_contrato;
@@ -120,22 +140,152 @@ class CobrosControlador extends Controller
         $cobro->monto = $monto;
         $cobro->iva = $iva;
         $cobro->total = $total;
-        $cobro->recibo_formato = $recibo_formato;
-        $cobro->estado = 'activo'; // Puedes ajustar el estado según tus requerimientos
-        $cobro->save();
         
-        // Retornar respuesta
-        return response()->json(['success' => true, 'message' => 'Cobro registrado con éxito']);
+        $cobro->estado = 'activo'; 
+        // Guardar el cobro sin asignar el ID
+        $cobro->save();
+
+        // Obtén el ID del cobro recién creado
+        $id_cobro = $cobro->id_cobro;
+        
+        // Verificar si se utilizaron condonaciones
+        if ($condonacionesTotal > 0) {
+        // Marcar las condonaciones como utilizadas en la base de datos
+        CondonacionesModelo::where('id_contrato', $id_contrato)
+            ->where('estado', 'aprobada')
+            ->limit($condonacionesTotal)
+            ->update(['estado' => 'utilizada']);
+
+        // Luego, asigna el ID del cobro a las condonaciones
+        CondonacionesModelo::where('id_contrato', $id_contrato)
+            ->where('estado', 'utilizada')
+            ->limit($condonacionesTotal)
+            ->update(['id_cobro' => $id_cobro]);
+        }
+
+        // Verificar si se utilizaron multas
+        if ($multasTotal > 0) {
+            // Obtener los IDs de los conceptos relacionados con las multas en la tabla cobrosconcepto
+            $conceptoIDs = CobrosConceptoModelo::where('id_contrato', $id_contrato)
+                ->whereHas('concepto', function ($activo) {
+                    $activo->where('activo', 1); // Filtrar conceptos activos
+                })
+                ->take($multasTotal) // Tomar la cantidad adecuada de registros
+                ->pluck('id_concepto'); // Obtener los IDs de los conceptos
+
+            // Actualizar el campo 'activo' en la tabla 'conceptos'
+            ConceptosModelo::whereIn('id_concepto', $conceptoIDs)
+                ->update(['activo' => 0]);
+
+            // Luego, asigna el ID del cobro a las multas en la tabla cobrosconcepto
+            CobrosConceptoModelo::whereIn('id_concepto', $conceptoIDs)
+                ->update(['id_cobro' => $cobro->id_cobro]); // Usar el ID del cobro recién creado
+        }
+
+        $cobro->save();
+        // Commit (confirmar) la transacción
+        DB::commit();
+        } catch (\Exception $e) {
+            // En caso de error, revertir la transacción
+            DB::rollback();
+            throw $e; // Puedes manejar el error según tus necesidades
+        }
+        // Obtener todos los créditos disponibles para el contrato
+        $creditosDisponibles = CreditosModelo::where('id_contrato', $id_contrato)
+        ->where('activo', 1)
+        ->orderBy('id_credito')
+        ->get();
+
+        // Recorre los créditos disponibles y resta los montos utilizados al total
+        foreach ($creditosDisponibles as $credito) {
+        if ($credito->monto >= $total) {
+            // El crédito es suficiente para cubrir el total, lo marcamos como utilizado parcialmente
+            $credito->monto -= $total;
+            $credito->save();
+            $total = 0;
+            break;
+        } else {
+            // El crédito no es suficiente para el total, lo marcamos como utilizado completamente
+            $total -= $credito->monto;
+            $credito->monto = 0;
+            $credito->activo = 0;
+            $credito->save();
+        }
+        }
+
+        //Enviar mensaje de guardado exitoso
+        $mensaje = [
+            'success' => true,
+            'message' => 'Cobro realizado exitosamente',
+        ];
+        //Si no se respeta la validación entonces que muestre excepción
+        } catch (ValidationException $e) {
+            $mensaje = [
+                'success' => false,
+                'errors' => $e->validator->getMessageBag()->toArray(),
+            ];
+        }
+        return view('caja/cobros/generando_recibo')->with('id_cobro', $cobro->id_cobro);
+
     }
     
+
+
+
+
+    public function generar_pdf($id_cobro)
+    { // Obtén los datos necesarios para el recibo
+        $cobros = CobrosModelo::find($id_cobro);
+    
+        // Verifica si el cobro existe
+        if (!$cobros) {
+            abort(404); // O muestra un mensaje de error personalizado
+        }
+    
+        // Crea una instancia del objeto PDF
+        $pdf = PDF::loadView('caja.cobros.recibo', compact('cobros'));
+    
+        // Guarda el PDF en la ruta deseada
+        $pdf->save(public_path('caja/cobros/recibos/recibo.pdf'));
+    
+        // Puedes también devolver el PDF como respuesta para descargarlo directamente si lo prefieres
+        return $pdf->download('recibo.pdf');
+
+        // Devuelve una respuesta para descargar el PDF si lo deseas
+        return redirect()->route('caja.cobros.recibo', $id_cobro)->with('success', 'PDF generado y guardado correctamente.');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.
      */
-    public function show(CobrosModelo $cobrosModelo)
+    public function show($id_contrato)
     {
-        //
-    }
+        $cobros = CobrosModelo::where('id_contrato', $id_contrato)->where('estado', 'activo')->get();
+        $contrato = ContratosModelo::find($id_contrato);
+
+        return view('caja.cobros.ver_cobros', ['cobros' => $cobros, 'contrato' => $contrato]);    
+    }  
+
+    public function recibo($id_cobro)
+    {
+        $cobros = CobrosModelo::find($id_cobro);
+
+        return view('caja.cobros.recibo', ['cobros' => $cobros]);    
+    }  
 
     /**
      * Show the form for editing the specified resource.

@@ -50,17 +50,6 @@
                             </div>
                             <!-- /.input group -->
                         </div>
-                        <label>Ingrese la fecha inicio de vigencia:</label>
-                        <!-- Date mm/dd/yyyy -->
-                        <div class="form-group">
-                            <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-                            </div>
-                            <input type="date" name="inicio_vigencia" class="form-control" id="inicio_vigencia" value="{{old('inicio_vigencia')}}" >
-                            </div>
-                            <!-- /.input group -->
-                        </div>
                         <input type="hidden" name="id_usuario" value="{{ auth()->user()->id }}">
                         <input type="hidden" name="id_contrato" value="{{ $contrato->id_contrato }}">
                     </div>

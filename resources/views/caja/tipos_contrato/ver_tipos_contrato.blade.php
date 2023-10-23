@@ -24,26 +24,25 @@
             </div>
             </div><!-- /.container-fluid -->
         </section>
-         <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Tabla con los tipos de contrato registrados</h3>
-              </div>
-              <div class="card-header">
-                <a href="{{url('caja/tipos_contrato/registrar_tipo_contrato')}}" class="btn btn-primary ">Registrar nuevo tipo de contrato</a>
-
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="datos" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Nombre del tipo de contrato</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
-                  </tr>
-                  </thead>
-                  <tbody>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Tabla con los tipos de contrato registrados</h3>
+                </div>
+                <div class="card-header">
+                    <a href="{{url('caja/tipos_contrato/registrar_tipo_contrato')}}" class="btn btn-primary ">Registrar nuevo tipo de contrato</a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="datos" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre del tipo de contrato</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     @if ($tipos_contrato->isEmpty())
                         <tr>
                             <td colspan="10">No hay tipos de contratos registrados</td>
@@ -55,19 +54,19 @@
                         <td>{{ $tipo_contrato->nombre }}</td>
                         <td><a href="{{ url('caja/tipos_contrato/'.$tipo_contrato->id_tipo_contrato.'/editar_tipos_contrato')}}" class="btn btn-warning btn-sm">Editar</a></td>
                         <td>
-                          <form method="POST" action="{{route('caja.tipos_contrato.destroy', $tipo_contrato)}}" >
+                            <form method="POST" action="{{route('caja.tipos_contrato.destroy', $tipo_contrato)}}" >
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
-                      </td>
+                        </td>
                     </tr>
                     @endforeach
                     @endif
                 </tbody>
                 </table>
-              </div>
-              <!-- /.card-body -->
+                </div>
+            <!-- /.card-body -->
             </div>
     </body>
     </html>

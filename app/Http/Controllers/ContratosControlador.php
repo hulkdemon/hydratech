@@ -34,13 +34,11 @@ class ContratosControlador extends Controller
     //Validación por el método try para poder pasarlos a AJAX
     try {
         $ValidarDatos = $request->validate([
-            'numero_contrato' => 'required|numeric|unique:contratos|digits:12',
-            'nombre' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/',
-            'apellido' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/',            
-            'domicilio' => 'required|string|regex:/^[a-zA-Z0-9\s]+$/',         
+            'nombre' => 'required|string|regex:/^[\pL\s]+$/u',
+            'apellido' => 'required|string|regex:/^[\pL\s]+$/u',
+            'domicilio' => 'required|string|regex:/^[\pL\d\s]+$/u',
             'correo_electronico' => 'nullable|unique:contratos|email',
             'tipo_contrato' => 'required',
-            'fecha_vigencia' => 'required|date',
         ]);
         
         //Función que realiza todo de crear, obtener y guardar
@@ -51,7 +49,7 @@ class ContratosControlador extends Controller
         $contrato ->domicilio = $request->input('domicilio');
         $contrato ->correo_electronico = $request->input('correo_electronico');
         $contrato ->id_tipo_contrato = $request->input('tipo_contrato');
-        $contrato ->fecha_vigencia = $request->input('fecha_vigencia');
+        $contrato->fecha_vigencia = now()->toDateString();        
         $contrato ->save();
 
         //Enviar mensaje de guardado exitoso

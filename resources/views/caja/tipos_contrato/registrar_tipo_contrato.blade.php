@@ -37,7 +37,7 @@
                     <!-- Input addon -->
                     <div class="card card-info">
                         <div class="card-header">
-                          <h3 class="card-title">Datos del tipo de contrato a registrar</h3>
+                            <h3 class="card-title">Datos del tipo de contrato a registrar</h3>
                         </div>
                 <div class="card-body">
                     <label>Tipo de contrato:</label>
@@ -72,7 +72,6 @@
                 </form>
             </div>
     </body>
-    </html>
 @stop
 
 @section('css')

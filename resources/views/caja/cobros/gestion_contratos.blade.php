@@ -13,7 +13,7 @@
                     @endforeach
                 </ul>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             @endif  
@@ -41,15 +41,14 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                         <i class="fa-solid fa-tools"></i> Opciones de Gestión
-                      </button>
-                      <ul class="dropdown-menu">
+                    </button>
+                        <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="{{url ("caja/contratos/registrar_contrato")}}"><i class="fa-solid fa-file-signature"></i> Registrar contrato</a></li>
                         <li class="dropdown-item"><a href="{{url ("caja/tipos_contrato/registrar_tipo_contrato")}}"><i class="fa-solid fa-folder-open"></i> Registrar tipo de contrato</a></li>
                         <li class="dropdown-item"><a class="primary button cursor-pointer" style="cursor: pointer;" data-toggle="modal" data-target="#registrar_concepto"><i class="fa-regular fa-circle-xmark" ></i> Registrar concepto </a></li>
                     </ul>                
                 </div>
             </div>
-           
             <div class="card-body">
                 <h5 class="mb-2">Realizar búsqueda por nombre, apellido, domicilio o número de contrato</h5>
                 <table id="datos" class="table table-bordered table-striped">
@@ -60,7 +59,7 @@
                             <th>Nombre de la persona</th>
                             <th>Domicilio</th>
                             <th class="text-center">Acciones para el contrato</th>
-                            <th class="text-center">Penalizaciones</th>
+                            <th class="text-center">Conceptos</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,47 +72,48 @@
                             <td>
                                 @if(isset($contrato))
                                 <div class="d-flex justify-content-between">
-                                    <a href="{{ route('caja.cobros.registrar_cobro', ['id_contrato' => $contrato->id_contrato]) }}" class="btn btn-primary btn-sm">
+                                    <a href="{{ route('caja.cobros.registrar_cobro', ['id_contrato' => $contrato->id_contrato]) }}" class="btn btn-primary btn-sm realizarCobroBtn">
                                         <i class="fa-solid fa-credit-card"></i> Realizar cobro
-                                    </a>                                    
+                                    </a>
+                                    <a href="{{ url('caja/cobros/'.$contrato->id_contrato.'/ver_cobros')}}" class="btn btn-success btn-sm verCobrosBtn" style="display: none;">
+                                        <i class="fa-solid fa-eye"></i> Ver cobros
+                                    </a>
+                                    <div class="switch-icon">
+                                        <i class="fa-solid fa-toggle-off switch"></i>
+                                    </div>  
                                 @endif
                                     @if(isset($contrato))
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#registrar_creditos{{ $contrato->id_contrato }}">
                                             <i class="fa-solid fa-wallet"></i> Registrar crédito
                                         </button>
                                     @endif
-                                    @if($contrato->condonaciones->count() > 0)
+                                    @if(isset($contrato))
                                     <button type="button" class="btn btn-info btn-sm" onclick="showConfirmationDialog()">
-                                        <i class="fa-solid fa-hand-holding-dollar"></i> Asignar condonación
+                                        <i class="fa-solid fa-hand-holding-dollar"></i> Solicitar condonación
                                     </button>
-                                @else
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#asignar_condonaciones{{ $contrato->id_contrato }}">
-                                        <i class="fa-solid fa-hand-holding-dollar"></i> Asignar condonación
-                                    </button>
-                                @endif
+                                    @endif
                                 </div>
                             </td>
                             <td>
+                                <div class="d-flex justify-content-center">
                                 @if(isset($contrato))
                                 <button type="button" class="btn center btn-danger btn-sm" data-toggle="modal" data-target="#asignar_conceptos{{ $contrato->id_contrato }}">
-                                    <i class="fa-solid fa-gavel"></i> Aplicar multa
+                                    <i class="fa-solid fa-gavel"></i> Aplicar concepto
                                 </button>
                             @endif
+                        </div>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        
     </body>
-    </html>
     
     @foreach ($contratos as $contrato)
     @include('caja.conceptos.registrar_concepto')
     @include('caja.creditos.registrar_creditos')
     @include('caja.cobros_conceptos.asignar_conceptos')
-    @include('caja.condonaciones.asignar_condonaciones')
     @include('caja.condonaciones.solicitar_condonaciones')
     @endforeach
     
@@ -131,8 +131,7 @@
     <script>
         function showConfirmationDialog() {
             Swal.fire({
-                title: 'Ya existe una condonación a este contrato',
-                text: '¿Deseas solicitar una al administrador?',
+                title: '¿Deseas solicitar una condonación al administrador',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Sí',
@@ -144,6 +143,30 @@
             });
         }
     </script>
+        
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const realizarCobroBtns = document.querySelectorAll(".realizarCobroBtn");
+        const verCobrosBtns = document.querySelectorAll(".verCobrosBtn");
+        const switchIcons = document.querySelectorAll(".switch-icon");
+
+        switchIcons.forEach((switchIcon, index) => {
+            switchIcon.addEventListener("click", function () {
+                if (realizarCobroBtns[index].style.display === "none") {
+                    realizarCobroBtns[index].style.display = "block";
+                    verCobrosBtns[index].style.display = "none";
+                    switchIcon.innerHTML = '<i class="fa-solid fa-toggle-off switch"></i>';
+                } else {
+                    realizarCobroBtns[index].style.display = "none";
+                    verCobrosBtns[index].style.display = "block";
+                    switchIcon.innerHTML = '<i class="fa-solid fa-toggle-on switch"></i>';
+                }
+            });
+        });
+    });
+
+    </script>
+
     @endisset
 <script>
     $(function () {

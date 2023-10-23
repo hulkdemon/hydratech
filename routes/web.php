@@ -117,6 +117,15 @@ Route::prefix('admin/condonaciones')->group(function () {
     // Ruta para mostrar la vista de la gestión de condonaciones
     Route::get('gestion_condonaciones', [CondonacionesControlador::class, 'show'])->name('admin.condonaciones.gestion_condonaciones');
 
+    // Ruta para mostrar la vista de la gestión de contratos para asignar condonaciones
+    Route::get('gestion_contratos', [CondonacionesControlador::class, 'gestion_contratos'])->name('admin.condonaciones.gestion_contratos');
+
+    // Ruta para mostrar el formulario de creación de condonaciones
+    Route::get('asignar_condonaciones', [CondonacionesControlador::class, 'asignar_condonaciones'])->name('admin.condonaciones.asignar_condonaciones');
+
+    // Ruta para almacenar los datos del formulario de creación de condonaciones
+    Route::post('registrar_condonacion', [CondonacionesControlador::class, 'registrar_condonacion'])->name('admin.condonaciones.registrar_condonacion');
+
 });
 
 
@@ -124,7 +133,7 @@ Route::prefix('admin/condonaciones')->group(function () {
 
 
 //Grupo de rutas prefijas con caja para el controlador de tipos de contrato
-Route::prefix('caja/contratos')->middleware('auth')->group(function () {
+Route::prefix('caja/tipos_contrato')->middleware('auth')->group(function () {
 
     // Ruta para mostrar el formulario de creación de tipos de contrato
     Route::get('registrar_tipo_contrato', [TiposContratoControlador::class, 'create'])->name('caja.tipos_contrato.registrar_tipo_contrato');
@@ -186,11 +195,14 @@ Route::prefix('caja/cobros')->middleware('auth')->group(function () {
     Route::get('{id_cobro}', [CobrosControlador::class, 'show'])->name('caja.cobros.show');
 
     // Ruta para mostrar todos los cobros
-    Route::get('ver_cobros', [CobrosControlador::class, 'show'])->name('caja.cobros.ver_cobros');
+    Route::get('{id_contrato}/ver_cobros', [CobrosControlador::class, 'show'])->name('caja.cobros.show');
 
     // Ruta para almacenar los datos del formulario de creación de cobros
     Route::post('', [CobrosControlador::class, 'store'])->name('caja.cobros.store');
-    
+
+    Route::get('{id_cobro}/recibo', [CobrosControlador::class, 'recibo'])->name('caja.cobros.recibo');
+
+
 });
 
 
@@ -287,12 +299,6 @@ Route::prefix('caja/creditos')->middleware('auth')->group(function () {
     
 //Grupo de rutas prefijas con caja para el controlador de condonaciones en caja
 Route::prefix('caja/condonaciones')->middleware('auth')->group(function () {
-
-    // Ruta para mostrar el formulario de creación de condonaciones
-    Route::get('asignar_condonaciones', [CondonacionesControlador::class, 'asignar_condonaciones'])->name('caja.condonaciones.asignar_condonaciones');
-
-    // Ruta para almacenar los datos del formulario de creación de condonaciones
-    Route::post('registrar_condonacion', [CondonacionesControlador::class, 'registrar_condonacion'])->name('caja.condonaciones.registrar_condonacion');
 
     // Ruta para mostrar el formulario de solicitar condonaciones
     Route::get('solicitar_condonaciones', [CondonacionesControlador::class, 'solicitar_condonaciones'])->name('caja.condonaciones.solicitar_condonaciones');

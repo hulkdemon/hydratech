@@ -42,7 +42,7 @@
             <div class="container-fluid">
     <div class="row">
         <!-- Columna de izquierda pa condonaciones pendientes -->
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="card-header bg-primary text-white">
                 <h5 class=" font-weight-bold">Hay {{ $condonacionesPendientes }} solicitud(es) de condonaciones pendientes</h5>
               </div>
@@ -82,7 +82,7 @@
         </div>
         </div>
         <!-- Columna con tabla de registros de condonaciones aceptadas o rechazadas -->
-        <div class="col-md-6">
+        <div class="col-md-7">
         <div class="card">
             <div class="card-header">
             <h3 class="card-title ">Registros de condonaciones procesadas</h3>
@@ -93,8 +93,8 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Cajero:</th>
-                    <th>Persona:</th>
+                    <th>Registrado por:</th>
+                    <th>Solicitado por:</th>
                     <th>Descuento</th>
                     <th>Estado</th>
                     <th class="text-center">Motivo</th>
@@ -110,7 +110,13 @@
                     @if ($condonacion->estado === 'aprobada' || $condonacion->estado === 'rechazada')
                     <tr>
                         <td>{{$condonacion->id_condonacion}}</td>
-                        <td>{{$condonacion->usuarios->name}}</td>
+                        <td>
+                            @if ($condonacion->usuarios->rol->tipo === 'Admin')
+                            admin: {{ $condonacion->usuarios->name }}
+                        @elseif ($condonacion->usuarios->rol->tipo === 'Caja')
+                            cajero: {{ $condonacion->usuarios->name }}
+                        @endif
+                        </td>                       
                         <td>{{$condonacion->contratos->nombre}}</td>
                         <td>{{$condonacion->descuento}}</td>
                         <td>

@@ -82,7 +82,7 @@ class TiposContratoControlador extends Controller
     {
         //Método para validar los datos ingresados
         $request -> validate([
-            'nombre' => 'required|unique:tipos_contratos|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/'
+            'nombre' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/|unique:tipos_contratos,nombre,' . $id_tipo_contrato . ',id_tipo_contrato',
         ]);
 
         //Método para encontrar el id y poder actualizar sus datos
@@ -115,7 +115,6 @@ class TiposContratoControlador extends Controller
         } else {
             flash()->error('No se encontró el tipo de contrato que se intentó eliminar.');
         }
-
         return redirect()->route('caja.tipos_contrato.ver_tipos_contrato');
     }
 }

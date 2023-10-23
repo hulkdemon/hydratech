@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RolModelo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -78,7 +79,7 @@ class RolControlador extends Controller
     {
         //Método para validar los datos ingresados
         $request -> validate([
-            'tipo' => 'required|unique:rol|max:20|alpha'
+            'tipo' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/|unique:rol,tipo,' . $id_rol . ',id_rol',
         ]);
 
         //Método para encontrar el id y poder actualizar sus datos
@@ -97,8 +98,20 @@ class RolControlador extends Controller
     public function destroy($id_rol)
     {
         $rol = RolModelo::find($id_rol);
-        $rol->delete();
-        flash()->addPreset('registro_eliminado');
+
+        if ($rol) {
+            // Verificar si existen claves relacionadas en la tabla "contratos"
+            $rolRelacionado = User::where('id_rol', $id_rol)->exists();
+
+            if ($rolRelacionado) {
+                flash()->addPreset('registro_validado');
+            } else {
+                $rol->delete();
+                flash()->addPreset('registro_eliminado');
+            }
+        } else {
+            flash()->error('No se encontró el rol que se intentó eliminar.');
+        }
 
         return redirect()->route('admin.roles.ver_roles');
     }

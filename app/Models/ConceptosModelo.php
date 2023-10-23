@@ -13,4 +13,8 @@ class ConceptosModelo extends Model
     protected $primaryKey = 'id_concepto';
     public $timestamps = true;
 
+    public function cobrosConceptos()
+{
+    return $this->hasMany(CobrosConceptoModelo::class, 'id_concepto', 'id_concepto');
+}
 }

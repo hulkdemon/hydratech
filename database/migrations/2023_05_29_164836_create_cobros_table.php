@@ -16,11 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('id_contrato');
             $table->unsignedBigInteger('id_usuario');
             $table->unsignedBigInteger('id_uma');
+            $table->string('folio', 12)->unique();
             $table->date('fecha_cobro');
             $table->float('monto');
             $table->float('iva');
             $table->float('total');
-            $table->string('recibo_formato');
+            $table->string('recibo_formato')->nullable();
             $table->string('estado');
             $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
             $table->foreign('id_usuario')->references('id')->on('users');

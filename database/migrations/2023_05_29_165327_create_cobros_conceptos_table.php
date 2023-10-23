@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id('id_cobro_concepto');
             $table->unsignedBigInteger('id_contrato');
             $table->unsignedBigInteger('id_concepto');
+            $table->unsignedBigInteger('id_cobro')->nullable();
             $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
             $table->foreign('id_concepto')->references('id_concepto')->on('conceptos');
+            $table->foreign('id_cobro')->references('id_cobro')->on('cobros');
             $table->timestamps();
         });
     }

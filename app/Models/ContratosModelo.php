@@ -22,4 +22,22 @@ class ContratosModelo extends Model
     {
         return $this->hasMany(CondonacionesModelo::class, 'id_contrato');
     }
+
+    public function cobros()
+    {
+        return $this->hasMany(CobrosModelo::class, 'id_contrato');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($contrato) {
+            do {
+                $numero_contrato = str_pad(mt_rand(1, 999999999999), 12, '0', STR_PAD_LEFT);
+            } while (static::where('numero_contrato', $numero_contrato)->exists());
+
+            $contrato->numero_contrato = $numero_contrato;
+        });
+    }
 }

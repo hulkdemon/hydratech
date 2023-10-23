@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Registro de conceptos (multas) al contrato registrado a nombre de: {{$contrato->nombre}} {{$contrato->apellido}}</h4>
+            <h4 class="modal-title">Registro de conceptos al contrato registrado a nombre de: {{$contrato->nombre}} {{$contrato->apellido}}</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -25,20 +25,22 @@
                 @csrf
                 <div class="card card-danger">
                     <div class="card-header">
-                      <h3 class="card-title">Asignación de multas al contrato</h3>
+                      <h3 class="card-title">Asignación de conceptos al contrato</h3>
                     </div>
                     <div class="card-body">
-                    <label>Multa a asignar:</label>
+                    <label>Concepto a asignar:</label>
                     <div class="form-group">
                         <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-gavel"></i></span>
                         </div>
                         <select name="id_concepto" id="id_concepto" class="form-control">
-                            <option value="">Seleccione la multa a registrar al contrato</option>
+                            <option value="">Seleccione el concepto a registrar al contrato</option>
                             @foreach ($conceptos as $conceptos)
+                            @if ($conceptos->activo == 1 && !$conceptos->cobrosConceptos->count())
                                 <option value="{{ $conceptos->id_concepto}}">{{ $conceptos -> descripcion}}</option>
-                            @endforeach
+                                @endif
+                                @endforeach
                         </select>
                         </div>
                         </div>

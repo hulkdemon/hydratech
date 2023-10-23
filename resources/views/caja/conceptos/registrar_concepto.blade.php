@@ -1,11 +1,11 @@
 <div class="modal fade" id="registrar_concepto" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-      <div class="modal-content">
+        <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Registro de conceptos para los cobros</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+            </button>
         </div>
         <div class="modal-body">
             
@@ -14,7 +14,7 @@
                 <!-- Input addon -->
                 <div class="card card-info">
                     <div class="card-header">
-                      <h3 class="card-title">Datos del concepto a registrar</h3>
+                        <h3 class="card-title">Datos del concepto a registrar</h3>
                     </div>
                 <div class="card-body">
                 <label>Descripción del concepto:</label>
@@ -24,19 +24,19 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-circle-info"></i></span>
                         </div>
-                        <input type="text" name="descripcion" class="form-control" id="descripcion" value="{{old('descripcion')}}" placeholder="Ingrese el motivo de la multa">
+                        <input type="text" name="descripcion" class="form-control" id="descripcion" value="{{old('descripcion')}}" placeholder="Ingrese el motivo del concepto">
                         </div>
                         <!-- /.input group -->
                     </div>
                     <!-- /.form group -->
-                <label>Monto de la multa: </label>
+                <label>Monto del concepto: </label>
                 <!-- Date mm/dd/yyyy -->
                 <div class="form-group">
                     <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa-solid fa-money-bill"></i></span>
                     </div>
-                    <input type="text" name="precio" class="form-control" id="precio" value="{{old('precio')}}" placeholder="Ingrese el monto a pagar por la multa">
+                    <input type="text" name="precio" class="form-control" id="precio" value="{{old('precio')}}" placeholder="Ingrese el monto a pagar por el concepto">
                     </div>
                     <!-- /.input group -->
                 </div>

@@ -76,6 +76,11 @@ return [
             'message' => 'Condonación rechazada exitosamente.',
             'title' => 'Éxito',
         ],
+        'cobro_realizado' => [
+            'type' => 'success',
+            'message' => 'Cobro realizado exitosamente.',
+            'title' => 'Éxito',
+        ],
     ],
 ];
 

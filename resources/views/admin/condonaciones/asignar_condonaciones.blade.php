@@ -1,20 +1,20 @@
 @if(isset($contrato))
 <div class="modal fade" id="asignar_condonaciones{{ $contrato->id_contrato}}">
     <div class="modal-dialog modal-xl">
-      <div class="modal-content">
+        <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Asignación de condonaciones al contrato registrado a nombre de: {{$contrato->nombre}} {{$contrato->apellido}}</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+            </button>
         </div>
         <div class="modal-body">
-            <form action="{{ route('caja.condonaciones.registrar_condonacion') }}" method="post">
+            <form id="formulario_asignar_condonaciones" action="{{ route('admin.condonaciones.registrar_condonacion') }}" method="post">
                 @csrf
                 <!-- Input addon -->
                 <div class="card card-info">
                     <div class="card-header">
-                      <h3 class="card-title">Asignación de condonaciones al contrato</h3>
+                        <h3 class="card-title">Asignación de condonaciones al contrato</h3>
                     </div>
         <div class="card-body">
                         <label>Ingrese el descuento:</label>
@@ -50,17 +50,6 @@
                             </div>
                             <!-- /.input group -->
                         </div>
-                        <label>Ingrese la fecha inicio de vigencia:</label>
-                        <!-- Date mm/dd/yyyy -->
-                        <div class="form-group">
-                            <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-                            </div>
-                            <input type="date" name="inicio_vigencia" class="form-control" id="inicio_vigencia" value="{{old('inicio_vigencia')}}" >
-                            </div>
-                            <!-- /.input group -->
-                        </div>
                         <input type="hidden" name="id_usuario" value="{{ auth()->user()->id }}">
                         <input type="hidden" name="id_contrato" value="{{ $contrato->id_contrato }}">
                     </div>
@@ -81,7 +70,48 @@
                 <!-- /.card -->
             </form>
             @endif
+            @section('js')
+                <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+            <script>
+            $(document).ready(function () {
+                $('#formulario_asignar_condonaciones').submit(function (e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Éxito',
+                                    text: response.message,
+                                });
+                                $('#formulario_asignar_condonaciones')[0].reset();
+                            } else {
+                                let errorHtml = '<ul>';
+                                $.each(response.errors, function (key, value) {
+                                    errorHtml += '<li>' + value + '</li>';
+                                });
+                                errorHtml += '</ul>';
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error de validación',
+                                    html: errorHtml,
+                                });
+                            }
+                        },
+                        
+                    });
+                });
+            });
+            </script>
+            @stop
         </div>
       </div>
       <!-- /.modal-content -->

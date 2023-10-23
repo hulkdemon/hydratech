@@ -24,63 +24,137 @@
             </div>
             </div><!-- /.container-fluid -->
         </section>
-        
-         <div class="card">
-                <div class="card-body">
-                    <h5 class="m-1">Opciones para los contratos</h5>
-                    <table id="contratos" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Número del contrato</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Domicilio</th>
-                                <th>Correo electrónico</th>
-                                <th>Fecha vigencia</th>
-                                <th>Tipo de contrato</th>
-                                <th>Editar Contrato</th>
-                                <th>Registrar datos fiscales</th>
-                            </tr>
-                        </thead>
-                  <tbody>
-                    @if ($contratos->isEmpty())
-                        <tr>
-                            <td colspan="10">No hay contratos registrados</td>
-                        </tr>
-                    @else
-                        @foreach ($contratos as $contrato)
-                            <tr>
-                                <td>{{ $contrato->id_contrato}}</td>
-                                <td>{{ $contrato->numero_contrato }}</td>
-                                <td>{{ $contrato->nombre }}</td>
-                                <td>{{ $contrato->apellido }}</td>
-                                <td>{{ $contrato->domicilio }}</td>
-                                @if ($contrato->correo_electronico)
-                                    <td>{{ $contrato->correo_electronico}}</td>
-                                @else
-                                    <td>No hay correo registrado</td>
-                                @endif
-                                <td>{{ $contrato->fecha_vigencia }}</td>
-                                <td>{{ $contrato->tipos_contratos->nombre}}</td>
-                                <td class="exclude-column"><a href="{{ url('caja/contratos/'.$contrato->id_contrato.'/editar_contrato')}}"  class="btn btn-warning ">Editar</a></td>                     
-                                <td class="exclude-column">  
-                                    @if(isset($contrato))
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrar_datos_fiscales{{ $contrato->id_contrato }}">
-                                            Registrar
-                                        </button>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>                
-                </table>
-              </div>
-              <!-- /.card-body -->
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="tabla_datos-tab" data-toggle="tab" href="#tabla_datos" role="tab" aria-controls="tabla_datos" aria-selected="true">Filtrar por datos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tabla_fechas-tab" data-toggle="tab" href="#tabla_fechas" role="tab" aria-controls="tabla_fechas" aria-selected="false">Filtrar entre fechas</a>
+                    </li>
+                </ul>
             </div>
+            <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                    <!-- Tabla para filtrar datos entre número contrato o nombre -->
+                    <div class="tab-pane fade show active" id="tabla_datos" role="tabpanel" aria-labelledby="tabla_datos-tab">
+                        <table id="contratos" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <h5>Funciones para los contratos</h5>
+                                    <th>#</th>
+                                    <th>Número del contrato</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Domicilio</th>
+                                    <th>Correo electrónico</th>
+                                    <th>Fecha vigencia</th>
+                                    <th>Tipo de contrato</th>
+                                    <th>Editar Contrato</th>
+                                    <th>Registrar datos fiscales</th>
+                                </tr>
+                            </thead>
+                    <tbody>
+                        @if ($contratos->isEmpty())
+                            <tr>
+                                <td colspan="10">No hay contratos registrados</td>
+                            </tr>
+                        @else
+                            @foreach ($contratos as $contrato)
+                                <tr>
+                                    <td>{{ $contrato->id_contrato}}</td>
+                                    <td>{{ $contrato->numero_contrato }}</td>
+                                    <td>{{ $contrato->nombre }}</td>
+                                    <td>{{ $contrato->apellido }}</td>
+                                    <td>{{ $contrato->domicilio }}</td>
+                                    @if ($contrato->correo_electronico)
+                                        <td>{{ $contrato->correo_electronico}}</td>
+                                    @else
+                                        <td>No hay correo registrado</td>
+                                    @endif
+                                    <td>{{ $contrato->fecha_vigencia }}</td>
+                                    <td>{{ $contrato->tipos_contratos->nombre}}</td>
+                                    <td class="exclude-column"><a href="{{ url('caja/contratos/'.$contrato->id_contrato.'/editar_contrato')}}"  class="btn btn-warning ">Editar</a></td>                     
+                                    <td class="exclude-column">  
+                                        @if(isset($contrato))
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrar_datos_fiscales{{ $contrato->id_contrato }}">
+                                                Registrar
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>            
+                        </table>
+                    </div>
+                    <!-- Tabla para filtrar datos entre fechas -->
+                    <div class="tab-pane fade" id="tabla_fechas" role="tabpanel" aria-labelledby="tabla_fechas-tab">
+                        <table border="0" cellspacing="5" cellpadding="5">
+                            <tbody><tr><h5>Filtrar entre fechas los contratos</h5>
+                                <td>Fecha Inicio:</td>
+                                <td><input type="text" id="min" name="min"></td>
+                            </tr>
+                            <tr>
+                                <td>Fecha Fin:</td>
+                                <td><input type="text"  id="max" name="max"></td>
+                            </tr>
+                        </tbody></table><br>
+                        <table id="contratos_fechas" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <h5>Funciones para los contratos</h5>
+                                    <th>#</th>
+                                    <th>Número del contrato</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Domicilio</th>
+                                    <th>Correo electrónico</th>
+                                    <th>Fecha vigencia</th>
+                                    <th>Tipo de contrato</th>
+                                    <th>Editar Contrato</th>
+                                    <th>Registrar datos fiscales</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                        @if ($contratos->isEmpty())
+                            <tr>
+                                <td colspan="10">No hay contratos registrados</td>
+                            </tr>
+                        @else
+                            @foreach ($contratos as $contrato)
+                                <tr>
+                                    <td>{{ $contrato->id_contrato}}</td>
+                                    <td>{{ $contrato->numero_contrato }}</td>
+                                    <td>{{ $contrato->nombre }}</td>
+                                    <td>{{ $contrato->apellido }}</td>
+                                    <td>{{ $contrato->domicilio }}</td>
+                                    @if ($contrato->correo_electronico)
+                                        <td>{{ $contrato->correo_electronico}}</td>
+                                    @else
+                                        <td>No hay correo registrado</td>
+                                    @endif
+                                    <td>{{ $contrato->fecha_vigencia }}</td>
+                                    <td>{{ $contrato->tipos_contratos->nombre}}</td>
+                                    <td class="exclude-column"><a href="{{ url('caja/contratos/'.$contrato->id_contrato.'/editar_contrato')}}"  class="btn btn-warning ">Editar</a></td>                     
+                                    <td class="exclude-column">  
+                                        @if(isset($contrato))
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrar_datos_fiscales{{ $contrato->id_contrato }}">
+                                                Registrar
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
-    </html>
     @include('caja.datos_fiscales.registrar_datos_fiscales')
 
 @stop
@@ -91,10 +165,9 @@
 <!-- DataTables Buttons CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 
-<!--DISEÑOS PARA LAS FECHAS 
+<!--DISEÑOS PARA LAS FECHAS-->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.5.1/css/dataTables.dateTime.min.css">
--->
 @stop
 
 @section('js')
@@ -116,22 +189,24 @@
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
 
-<!--FILTRADO ENTRE FECHAS SCRIPT
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!--FILTRADO ENTRE FECHAS SCRIPT-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.5.1/js/dataTables.dateTime.min.js"></script>
--->
 
-<!---
+
+<!---nada--->
+@if ($contratos->isEmpty())
+
+@else
+
 <script>
     let minDate, maxDate;
+    let table = null;
 
-    // Custom filtering function which will search data in column four between two values
     DataTable.ext.search.push(function (settings, data, dataIndex) {
         let min = minDate.val();
         let max = maxDate.val();
-        let date = new Date(data[4]);
+        let date = new Date(data[6]); 
 
         if (
             (min === null && max === null) ||
@@ -144,24 +219,62 @@
         return false;
     });
 
-    // Create date inputs
     minDate = new DateTime('#min', {
-        format: 'MMMM Do YYYY'
+        format: 'D [de] MMMM [de] YYYY',
+        locale: 'es'
     });
     maxDate = new DateTime('#max', {
-        format: 'MMMM Do YYYY'
+        format: 'D [de] MMMM [de] YYYY',
+        locale: 'es'
     });
 
-    // DataTables initialisation
-    let table = new DataTable('#contratos');
+    table = $("#contratos_fechas").DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": true,
+        "dom": '<"top"Bfi>rt<"bottom"lp><"clear">',
+        "buttons": [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible:not(.exclude-column)'
+                },
+                text: 'Exportar a Excel',
+                className: 'btn btn-success' 
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible:not(.exclude-column)'
+                },
+                text: 'Exportar a PDF', 
+                className: 'btn btn-danger' 
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible:not(.exclude-column)'
+                },
+                text: 'Imprimir', 
+                className: 'btn btn-primary' 
+            },
+        ],
+        "columnDefs": [
+            {
+                "targets": [8, 9],
+                "className": "exclude-column"
+            }
+        ],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+        }
+    });
 
-    // Refilter the table
     document.querySelectorAll('#min, #max').forEach((el) => {
         el.addEventListener('change', () => table.draw());
     });
-</script>
---->
 
+</script>
 
 <script>
     $(function () {
@@ -174,68 +287,45 @@
             {
                 extend: 'excelHtml5',
                 exportOptions: {
-                    columns: ':visible' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
-                }
+                    columns: ':visible:not(.exclude-column)' 
+                },
+                text: 'Exportar a Excel',
             },
             {
                 extend: 'pdfHtml5',
                 exportOptions: {
-                    columns: ':visible' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
-                }
+                    columns: ':visible:not(.exclude-column)' 
+                },
+                text: 'Exportar a PDF',
             },
             {
                 extend: 'print',
                 exportOptions: {
-                    columns: ':visible' // Selecciona todas las columnas excepto las marcadas con la clase 'exclude-column'
-                }
+                    columns: ':visible:not(.exclude-column)' 
+                },
+                text: 'Imprimir',
             },
             'colvis'
         ],
         "columnDefs": [
             {
-                "targets": [8, 9], // Índices de las columnas de "Editar Contrato" y "Registrar datos fiscales"
-                "className": "exclude-column" // Agrega la clase 'exclude-column' a estas columnas
+                "targets": [8, 9], 
+                "className": "exclude-column" 
             }
         ],
         "language": {
-            "sProcessing": "Procesando...",
-            "sLengthMenu": "Mostrar _MENU_ registros", // Cambia MENU a _MENU_
-            "sZeroRecords": "No se encontraron resultados",
-            "sEmptyTable": "Ningún dato disponible en esta tabla",
-            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", // Cambia START, END, TOTAL
-            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)", // Cambia MAX
-            "sInfoPostFix": "",
-            "sSearch": "Buscar:",
-            "sUrl": "",
-            "sInfoThousands": ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            },
-            "buttons": {
-                "copy": "Copiar",
-                "print": "Imprimir",
-                "colvis": "Visibilidad"
-            }
+            "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
         }
     });
 
-    // Personaliza la exportación de PDF para que se muestren los botones en la tabla
     table.buttons(['.buttons-pdf']).nodes().each(function (button) {
         $(button).removeClass('exclude-column');
     });
 });
     </script>
 
-
+    
+@endif
 
 
 

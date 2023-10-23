@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CobrosModelo;
 use App\Models\RolModelo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,8 +36,8 @@ class UsuarioControlador extends Controller
         //Validaciones del formulario
         try {
             $ValidarDatos = $request->validate([
-            'name' => 'required|string',
-            'username' => 'required|string',
+            'name' => 'required|string|regex:/^[\pL\s]+$/u',
+            'username' => 'required|string|regex:/^[\pL\s]+$/u',
             'email' => 'required|unique:users|email',
             'password' => 'required|string',
             'id_rol' => 'required',
@@ -92,9 +93,9 @@ class UsuarioControlador extends Controller
     {
         //Validaciones del formulario
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|regex:/^[\pL\s]+$/u',
             'username' => 'required|string',
-            'email' => 'required|unique:users|email',
+            'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'required|string',
             'id_rol' => 'required',
         ]);
@@ -121,9 +122,20 @@ class UsuarioControlador extends Controller
     public function destroy($id)
     {
         $usuario = User::find($id);
-        $usuario->delete();
-        flash()->addPreset('registro_eliminado');
 
+        if ($usuario) {
+            // Verificar si existen claves relacionadas en la tabla "contratos"
+            $usuarioRelacionado = CobrosModelo::where('id_usuario', $id)->exists();
+
+            if ($usuarioRelacionado) {
+                flash()->addPreset('registro_validado');
+            } else {
+                $usuario->delete();
+                flash()->addPreset('registro_eliminado');
+            }
+        } else {
+            flash()->error('No se encontró el tipo de contrato que se intentó eliminar.');
+        }
         return redirect()->route('admin.usuarios.ver_usuarios');
     }
 }

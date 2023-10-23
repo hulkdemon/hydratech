@@ -44,18 +44,6 @@
                           <h3 class="card-title">Datos del contrato a registrar</h3>
                         </div>
             <div class="card-body">
-                    <label>Número del contrato:</label>
-                        <!-- Date mm/dd/yyyy -->
-                        <div class="form-group">
-                            <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
-                            </div>
-                            <input type="text" name="numero_contrato" class="form-control" id="numero_contrato" value="{{old('numero_contrato')}}" placeholder="Ingrese el número del contrato">
-                            </div>
-                            <!-- /.input group -->
-                        </div>
-                        <!-- /.form group -->
                     <label>Nombres de la persona</label>
                     <!-- Date mm/dd/yyyy -->
                     <div class="form-group">
@@ -121,19 +109,6 @@
                                 Para registrar el contrato, primero debe registrar un tipo de contrato.
                             </div>
                         @endif
-                        <!-- /.form group -->
-                            <label>Fecha de vigencia del contrato:</label>
-                            <!-- Date mm/dd/yyyy -->
-                            <div class="form-group">
-                                <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                                </div>
-                                <input type="date" name="fecha_vigencia" class="form-control" id="fecha_vigencia" value="{{old('fecha_vigencia')}}">
-                                </div>
-                                <!-- /.input group -->
-                            </div>
-                            <!-- /.input group -->
                             </div>
                             <div class="row" >
                                 <div class="col-lg-3">

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConceptosModelo;
 use App\Models\CondonacionesModelo;
 use App\Models\ContratosModelo;
+use App\Models\CreditosModelo;
+use App\Models\RolModelo;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CondonacionesControlador extends Controller
@@ -26,7 +30,7 @@ class CondonacionesControlador extends Controller
     {
         $users = User::all();
         $contratos = ContratosModelo::all();
-        return view('caja.conceptos.asignar_condonaciones', ["users"=>$users, "contratos"=>$contratos ]);       
+        return view('admin.condonaciones.asignar_condonaciones', ["users"=>$users, "contratos"=>$contratos ]);       
     }
 
     public function solicitar_condonaciones()
@@ -41,13 +45,13 @@ class CondonacionesControlador extends Controller
      */
     public function registrar_condonacion(Request $request)
     {
-        $request->validate([
+        try {
+            $ValidarDatos = $request->validate([            
             'id_usuario' => 'required',
             'id_contrato' => 'required',
-            'descuento' => 'required',
-            'porcentaje' => 'required',
-            'motivo' => 'required|string|regex:/^[a-zA-Z]+(\s[a-zA-Z]+)?$/',
-            'inicio_vigencia' => 'required',
+            'descuento' => 'required|numeric',
+            'porcentaje' => 'required|numeric|between:0,100',
+            'motivo' => 'required|string|regex:/^[a-zA-Z\sáéíóúÁÉÍÓÚ]+$/u',
         ]);
         
         $condonacion = new CondonacionesModelo();
@@ -57,25 +61,34 @@ class CondonacionesControlador extends Controller
         $condonacion ->porcentaje = $request->input('porcentaje');
         $condonacion ->motivo = $request->input('motivo');
         $condonacion->estado = 'aprobada';
-        $condonacion ->inicio_vigencia = $request->input('inicio_vigencia');
+        $condonacion->inicio_vigencia = now()->toDateString();
 
         // Calcular fecha de vigencia sumando 1 año a la fecha de aplicación
-        $fechaAplicacion = Carbon::parse($request->input('inicio_vigencia'));
-        $condonacion->fin_vigencia = $fechaAplicacion->addYear();
-
+        $fechaActual = now();
+        $condonacion->fin_vigencia = $fechaActual->addYear();
         $condonacion->save();
-        flash()->addPreset('condonacion');
-
-        return redirect()->route('caja.cobros.gestion_contratos');
+        
+        //Enviar mensaje de guardado exitoso
+        $mensaje = [
+            'success' => true,
+            'message' => 'Condonación asignada correctamente',
+        ];
+         //Si no se respeta la validación entonces que muestre excepción
+        } catch (ValidationException $e) {
+            $mensaje = [
+                'success' => false,
+                'errors' => $e->validator->getMessageBag()->toArray(),
+            ];
+        }
+        return response()->json($mensaje);
     }
 
     public function guardar_condonacion_solicitada(Request $request)
     {
         $request->validate([
-            'descuento' => 'required',
-            'porcentaje' => 'required',
+            'descuento' => 'required|numeric',
+            'porcentaje' => 'required|numeric|between:0,100',
             'motivo' => 'required|string|regex:/^[a-zA-Z\sáéíóúÁÉÍÓÚ]+$/u',
-            'inicio_vigencia' => 'required',
         ]);
         
         $condonacion_solicitar = new CondonacionesModelo();
@@ -84,11 +97,11 @@ class CondonacionesControlador extends Controller
         $condonacion_solicitar ->descuento = $request->input('descuento');
         $condonacion_solicitar ->porcentaje = $request->input('porcentaje');
         $condonacion_solicitar ->motivo = $request->input('motivo');
-        $condonacion_solicitar ->inicio_vigencia = $request->input('inicio_vigencia');
+        $condonacion_solicitar->inicio_vigencia = now()->toDateString();
 
         // Calcular fecha de vigencia sumando 1 año a la fecha de aplicación
-        $fechaAplicacion = Carbon::parse($request->input('inicio_vigencia'));
-        $condonacion_solicitar->fin_vigencia = $fechaAplicacion->addYear();
+        $fechaActual = now();
+        $condonacion_solicitar->fin_vigencia = $fechaActual->addYear();
 
         $condonacion_solicitar->save();
         flash()->addPreset('condonacion_solicitada');
@@ -101,12 +114,26 @@ class CondonacionesControlador extends Controller
      */
     public function show()
     {
-        $condonaciones = CondonacionesModelo::all();
+        $condonaciones = CondonacionesModelo::with('usuarios.rol')->get();
+
         $condonacionesPendientes = $condonaciones->where('estado', 'pendiente')->count();
         
         return view('admin.condonaciones.gestion_condonaciones', [
             'condonaciones' => $condonaciones,
             'condonacionesPendientes' => $condonacionesPendientes,
+        ]);
+    }
+
+    public function gestion_contratos()
+    {
+        $contratos = ContratosModelo::with('condonaciones')->get();
+        $conceptos = ConceptosModelo::all();
+        $creditos = CreditosModelo::all();
+        
+        return view("admin.condonaciones.gestion_contratos", [
+            "contratos" => $contratos,
+            "conceptos" => $conceptos,
+            "creditos" => $creditos,
         ]);
     }
 

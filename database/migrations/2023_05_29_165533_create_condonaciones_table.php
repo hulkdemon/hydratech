@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_condonacion');
             $table->unsignedBigInteger('id_usuario')->nullable();
             $table->unsignedBigInteger('id_contrato');
+            $table->unsignedBigInteger('id_cobro')->nullable();
             $table->boolean('descuento');
             $table->float('porcentaje');
             $table->string('motivo')->nullable();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->date('fin_vigencia');
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
+            $table->foreign('id_cobro')->references('id_cobro')->on('cobros');
             $table->timestamps();
         });
     }

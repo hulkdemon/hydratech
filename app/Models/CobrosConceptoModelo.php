@@ -20,6 +20,12 @@ class CobrosConceptoModelo extends Model
 
     public function concepto()
     {
-        return $this->belongsTo(ConceptosModelo::class, 'id_concepto');
+        return $this->belongsTo(ConceptosModelo::class, 'id_concepto', 'id_concepto');
     }
+
+    public function cobro()
+    {
+        return $this->belongsTo(CobrosModelo::class, 'id_cobro');
+    }
+    
 }

@@ -95,8 +95,12 @@
                             </div>
                             <!-- /.input group -->
                         </div>
+                            @if (count($roles) === 0)
+                            <div class="alert alert-danger">
+                                Para registrar el usuario, primero debe registrar un rol.
+                            </div>
+                        @else
                         <label>Rol del usuario:</label>
-                        <!-- Date mm/dd/yyyy -->
                         <div class="form-group">
                             <div class="input-group">
                             <div class="input-group-prepend">
@@ -109,11 +113,6 @@
                                 @endforeach
                             </select>                              
                             </div>
-                            <!-- /.input group -->
-                            </div>
-                            @if (count($roles) === 0)
-                            <div class="alert alert-danger">
-                                Para registrar el usuario, primero debe registrar un rol.
                             </div>
                         @endif
                             <div class="row" >

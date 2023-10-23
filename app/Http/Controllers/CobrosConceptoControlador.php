@@ -23,7 +23,7 @@ class CobrosConceptoControlador extends Controller
     public function create()
     {
         $contratos = ContratosModelo::all();
-        $conceptos = ConceptosModelo::all();
+        $conceptos = ConceptosModelo::where('activo', 1)->get();
         return view('caja.conceptos.asignar_concepto', ["contratos"=>$contratos, "conceptos"=>$conceptos ]);   
     }
 
