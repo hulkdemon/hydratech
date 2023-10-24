@@ -103,7 +103,7 @@
             <div class="form-group">
                 <label for="monto">Monto a cobrar:</label>
                 <div class="input-group">
-                    <input type="number" name="monto" class="form-control" id="monto" value="{{old('monto')}}" placeholder="Ingrese el monto a cobrar" min="1" pattern="^[1-9]\d*(\.\d+)?$" >
+                    <input type="number" name="monto" class="form-control" id="monto" onkeypress="return valideKey(event);" value="{{old('monto')}}" placeholder="Ingrese el monto a cobrar" min="1" pattern="^[1-9]\d*(\.\d+)?$" >
                 <div class="input-group-append">
                     <button type="button" id="calcular_btn" class="btn btn-primary">Calcular</button>
                 </div>
@@ -190,6 +190,19 @@
                 var precio = parseFloat(precioInput.val()); // Convertir a número
                 
                 if (!isNaN(precio)) {
+
+                    if (precio <= 0 ) {
+                    // Mostrar un mensaje de error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Monto Negativo',
+                        text: 'El monto no puede ser negativo o cero.',
+                        confirmButtonText: 'OK',
+                        allowOutsideClick: false
+                    });
+                    return;
+                }
+
                     var iva = precio * 0.16; // 16% de IVA
                     
                     // Calcular los totales de créditos, multas y condonaciones
@@ -282,6 +295,18 @@
         return false;
     });
         });
-        
+        function valideKey(evt){
+            
+            // code is the decimal ASCII representation of the pressed key.
+            var code = (evt.which) ? evt.which : evt.keyCode;
+            
+            if(code==8) { // backspace.
+            return true;
+            } else if(code>=48 && code<=57) { // is a number.
+            return true;
+            } else{ // other keys.
+            return false;
+            }
+                }
 </script>
 @stop

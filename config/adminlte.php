@@ -305,55 +305,60 @@ return [
         [
             'type' => 'sidebar-menu-search',
             'text' => 'Buscar',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'search' => '',
         ],
         //Opciones de administrador para el rol de admin
         ['header' => 'Opciones de Administrador',
-        'icon'    => 'fas fa-fw fa-share'
+        'icon'    => 'fas fa-fw fa-share',
+        'can' => 'Administrador',
         ],
         [
             'text'    => 'Opciones de usuarios',
             'icon'    => 'fas fa-fw fa-toolbox',
+            'can' => 'Administrador',
             'submenu' => [
         [
             'text' => 'Registrar usuario',
             'url'  => 'admin/usuarios/registrar_usuario',
             'icon' => 'fas fa-fw fa-user-plus',
+            'can' => 'Administrador',
         ],
         [
             'text' => 'Registrar nuevo rol',
             'url'  => 'admin/roles/registrar_rol',
             'icon' => 'fas fa-fw fa-suitcase',
+            'can' => 'Administrador',
         ],
         [
             'text' => 'Ver usuarios registrados',
             'url'  => 'admin/usuarios/ver_usuarios',
             'icon' => 'fas fa-fw fa-users',
+            'can' => 'Administrador',
         ],
         [
             'text' => 'Ver roles registrados',
             'url'  => 'admin/roles/ver_roles',
             'icon' => 'fas fa-fw fa-suitcase',
+            'can' => 'Administrador',
         ],
         ],  
         ],
         [
             'text'    => 'Opciones de condonaciones',
             'icon'    => 'fas fa-fw fa-toolbox',
+            'can' => 'Administrador',
             'submenu' => [
         [
             'text' => 'Asignar condonaciones',
             'url'  => 'admin/condonaciones/gestion_contratos',
             'icon' => 'fas fa-fw fa-clipboard-user',
+            'can' => 'Administrador',
         ],
         [
             'text' => 'Administración de condonaciones',
             'url'  => 'admin/condonaciones/gestion_condonaciones',
             'icon' => 'fas fa-fw fa-clipboard-check',
+            'can' => 'Administrador',
         ],
         ],
         ],
@@ -361,35 +366,42 @@ return [
             'text' => 'Capturar Valor de UMA',
             'url'  => 'admin/uma/registrar_uma',
             'icon' => 'fas fa-fw fa-coins',
+            'can' => 'Administrador',
         ],
 
         //Opciones de caja para el rol de caja
         ['header' => 'Opciones de Caja',
-        'icon'    => 'fas fa-fw fa-share'
+        'icon'    => 'fas fa-fw fa-share',
+        'can' => 'Cajero',
         ],
         [
             'text'    => 'Manejo de Contratos',
             'icon'    => 'fas fa-fw fa-file-signature',
+            'can' => 'Cajero',
             'submenu' => [
                 [
                     'text' => 'Registrar contrato',
                     'icon'    => 'fas fa-fw fa-file-signature',
                     'url'  => 'caja/contratos/registrar_contrato',
+                    'can' => 'Cajero',
                 ],
                 [
                     'text' => 'Registrar tipo de contrato',
                     'icon'    => 'fas fa-fw fa-folder-open',
                     'url'  => 'caja/tipos_contrato/registrar_tipo_contrato',
+                    'can' => 'Cajero',
                 ], 
                 [
                     'text' => 'Ver contratos registrados',
                     'icon'    => 'fas fa-fw fa-file-contract',
                     'url'  => 'caja/contratos/ver_contratos',
+                    'can' => 'Cajero',
                 ],
                 [
                     'text' => 'Ver tipos de contrato registrados',
                     'icon'    => 'fas fa-fw fa-file-contract',
                     'url'  => 'caja/tipos_contrato/ver_tipos_contrato',
+                    'can' => 'Cajero',
                 ],
             ],
         ], 
@@ -397,6 +409,7 @@ return [
                     'text' => 'Realizar cobros y administración',
                     'icon'    => 'fas fa-fw fa-money-bill',
                     'url'  => 'caja/cobros/gestion_contratos',
+                    'can' => 'Cajero',
         ], 
     ],
 

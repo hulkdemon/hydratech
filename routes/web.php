@@ -45,7 +45,7 @@ Route::middleware([
 //--------------------------------------------RUTAS PARA ADMINISTRADOR----------------------------------------------
 
 //Grupo de rutas prefijas con admin para el controlador de Rol
-Route::prefix('admin/roles')->middleware('auth')->group(function () {
+Route::prefix('admin/roles')->middleware(['auth', 'can:administrar-roles'])->group(function () {
     // Ruta para mostrar el formulario de creación de roles
     Route::get('registrar_rol', [RolControlador::class, 'create'])->name('admin.roles.registrar_rol');
     
@@ -87,7 +87,7 @@ Route::prefix('admin/uma')->middleware('auth')->group(function () {
 
 
 //Grupo de rutas prefijas con admin para el controlador de Usuario
-Route::prefix('admin/usuarios')->middleware('auth')->group(function () {
+Route::prefix('admin/usuarios')->middleware('auth' )->group(function () {
     // Ruta para mostrar el formulario de creación de usuarios
     Route::get('registrar_usuario', [UsuarioControlador::class, 'create'])->name('admin.usuarios.registrar_usuario');
     

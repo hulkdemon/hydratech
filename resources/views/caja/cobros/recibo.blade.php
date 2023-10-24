@@ -161,9 +161,30 @@
 @stop
 
 @section('js')
+<script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script>
     document.getElementById("imprimirBtn").addEventListener("click", function() {
         window.print();
     });
+    </script>
+
+    <script>
+        Swal.fire({
+            title: '¿Estás seguro de realizar este cobro?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No',
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir a la ruta de registro del cobro
+                $('#formulario_cobros').submit();
+            }
+        });
     </script>
 @stop
