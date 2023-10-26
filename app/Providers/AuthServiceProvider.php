@@ -35,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
 
             //Ruta para ingresar a las funciones de roles como administrador
             Gate::define('administrar-roles', function ($user) {
-                return $user->rol->tipo === 'Administrador';
+                return $user->rol->tipo === 'Cajero';
             });
     
         });

@@ -9,7 +9,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{url('caja/creditos')}}" method="post">
+            <form action="{{url('caja/creditos')}}" id="formulario_creditos" method="post">
                 @csrf
                 <!-- Input addon -->
                 <div class="card card-success">
@@ -33,7 +33,7 @@
                         </div>
                         <div class="row justify-content-center" >
                             <div class="col-lg-3">
-                            <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Registrar</button>
+                            <button type="submit" id="submitBtn" name="submitted" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Registrar</button>
                         </div>
                         <div class="col-lg-3">
                             <button type="reset" class="btn btn-danger btn-block" data-dismiss="modal"><i class="fa fa-cancel"></i> Cerrar</button>
@@ -56,3 +56,16 @@
     <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const creditForm = document.getElementById('formulario_creditos');
+        const submitBtn = creditForm.querySelector('button[type="submit"]');
+        const processingMessage = document.getElementById('processingMessage');
+
+        creditForm.addEventListener('submit', function (event) {
+            submitBtn.disabled = true; // Deshabilita el botón
+            processingMessage.style.display = 'block'; // Muestra el mensaje de procesamiento
+        });
+    });
+</script>
+

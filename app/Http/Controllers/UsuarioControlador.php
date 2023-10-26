@@ -39,7 +39,7 @@ class UsuarioControlador extends Controller
             'name' => 'required|string|regex:/^[\pL\s]+$/u',
             'username' => 'required|string|regex:/^[\pL\s]+$/u',
             'email' => 'required|unique:users|email',
-            'password' => 'required|string',
+            'password' => 'required|string|regex:/^[a-zA-Z0-9]+$/',
             'id_rol' => 'required',
         ]);
         

@@ -1,7 +1,7 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Historial de cobros del contrato a nombre de ' . $contrato->nombre)
+@section('title', 'Historial de cobros de ' . $contrato->nombre)
 
 @section('content')
     <body> 
@@ -84,7 +84,7 @@
                                     @endif
                                     </td>                                    
                                     <td>$ {{ $cobro->total}}</td>
-                                    <td>
+                                    <td class="exclude-column">
                                         @if(isset($contrato))
                                         <div class="d-flex justify-content-between align-items-center">
                                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -172,7 +172,7 @@
                                     @endif
                                     </td>                                    
                                     <td>$ {{ $cobro->total}}</td>
-                                    <td>
+                                    <td class="exclude-column">
                                         @if(isset($contrato))
                                         <div class="d-flex justify-content-between align-items-center">
                                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -244,7 +244,7 @@
 <!--FILTRADO ENTRE FECHAS SCRIPT-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.5.1/js/dataTables.dateTime.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.js"></script>
 
 <!---nada--->
     
@@ -259,24 +259,30 @@
             {
                 extend: 'excelHtml5',
                 exportOptions: {
-                    columns: ':visible' 
+                    columns: ':visible:not(.exclude-column)' 
                 },
                 text: 'Exportar a Excel',
             },
             {
                 extend: 'pdfHtml5',
                 exportOptions: {
-                    columns: ':visible' 
+                    columns: ':visible:not(.exclude-column)' 
                 },
                 text: 'Exportar a PDF',
             },
             {
                 extend: 'print',
                 exportOptions: {
-                    columns: ':visible' 
+                    columns: ':visible:not(.exclude-column)' 
                 },
                 text: 'Imprimir cobros',
             },
+        ],
+        "columnDefs": [
+            {
+                "targets": [9],
+                "className": "exclude-column"
+            }
         ],
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
@@ -324,7 +330,7 @@
             {
                 extend: 'excelHtml5',
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':visible:not(.exclude-column)'
                 },
                 text: 'Exportar a Excel',
                 className: 'btn btn-success' 
@@ -332,7 +338,7 @@
             {
                 extend: 'pdfHtml5',
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':visible:not(.exclude-column)'
                 },
                 text: 'Exportar a PDF', 
                 className: 'btn btn-danger' 
@@ -340,16 +346,21 @@
             {
                 extend: 'print',
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':visible:not(.exclude-column)'
                 },
                 text: 'Imprimir histórico', 
                 className: 'btn btn-primary' 
             },
         ],
+        "columnDefs": [
+            {
+                "targets": [9],
+                "className": "exclude-column"
+            }
+        ],
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-        },
-        "searching": false
+        }
     });
 
     document.querySelectorAll('#min, #max').forEach((el) => {

@@ -305,7 +305,6 @@ return [
         [
             'type' => 'sidebar-menu-search',
             'text' => 'Buscar',
-            'search' => '',
         ],
         //Opciones de administrador para el rol de admin
         ['header' => 'Opciones de Administrador',

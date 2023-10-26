@@ -12,6 +12,7 @@ class RolModelo extends Model
     protected $table = 'rol';
     protected $primaryKey = 'id_rol';
     public $timestamps = true;
+    protected $fillable = ['tipo'];
 
     public function usuarios()
     {

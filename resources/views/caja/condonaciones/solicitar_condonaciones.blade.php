@@ -9,14 +9,14 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{ route('caja.condonaciones.guardar_condonacion_solicitada') }}" method="post">
+            <form action="{{ route('caja.condonaciones.guardar_condonacion_solicitada') }}" id="formulario_condonaciones" method="post">
                 @csrf
                 <!-- Input addon -->
                 <div class="card card-info">
                     <div class="card-header">
-                      <h3 class="card-title">Solicitar de condonaciones al contrato</h3>
+                        <h3 class="card-title">Solicitar de condonaciones al contrato</h3>
                     </div>
-        <div class="card-body">
+                    <div class="card-body">
                         <label>Ingrese el descuento:</label>
                         <!-- Date mm/dd/yyyy -->
                         <div class="form-group">
@@ -55,7 +55,7 @@
                     </div>
                         <div class="row justify-content-center" >
                             <div class="col-lg-3">
-                            <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Solicitar</button>
+                            <button type="submit" id="submitBtn" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Solicitar</button>
                         </div>
                         <div class="col-lg-3">
                             <button type="reset" class="btn btn-danger btn-block" data-dismiss="modal"><i class="fa fa-cancel"></i> Cerrar</button>
@@ -70,11 +70,22 @@
                 <!-- /.card -->
             </form>
             @endif
-
         </div>
-      </div>
-      <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+    <!-- /.modal -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const condonacionesForm = document.getElementById('formulario_condonaciones');
+        const submitBtn = document.getElementById('submitBtn');
+        const processingMessage = document.getElementById('processingMessage');
+
+        condonacionesForm.addEventListener('submit', function (event) {
+            submitBtn.disabled = true; // Deshabilita el botón
+            processingMessage.style.display = 'block'; // Muestra el mensaje de procesamiento
+        });
+    });
+</script>

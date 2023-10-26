@@ -45,7 +45,7 @@ Route::middleware([
 //--------------------------------------------RUTAS PARA ADMINISTRADOR----------------------------------------------
 
 //Grupo de rutas prefijas con admin para el controlador de Rol
-Route::prefix('admin/roles')->middleware(['auth', 'can:administrar-roles'])->group(function () {
+Route::prefix('admin/roles')->middleware(['auth', 'can:Administrador'])->group(function () {
     // Ruta para mostrar el formulario de creación de roles
     Route::get('registrar_rol', [RolControlador::class, 'create'])->name('admin.roles.registrar_rol');
     
@@ -70,7 +70,7 @@ Route::prefix('admin/roles')->middleware(['auth', 'can:administrar-roles'])->gro
 
 
 //Grupo de rutas prefijas con admin para el controlador de UMA
-Route::prefix('admin/uma')->middleware('auth')->group(function () {
+Route::prefix('admin/uma')->middleware(['auth', 'can:Administrador'])->group(function () {
     // Ruta para mostrar el formulario de registro de UMA
     Route::get('registrar_uma', [UmaControlador::class, 'create'])->name('admin.uma.registrar_uma');
     
@@ -87,7 +87,7 @@ Route::prefix('admin/uma')->middleware('auth')->group(function () {
 
 
 //Grupo de rutas prefijas con admin para el controlador de Usuario
-Route::prefix('admin/usuarios')->middleware('auth' )->group(function () {
+Route::prefix('admin/usuarios')->middleware(['auth', 'can:Administrador'])->group(function () {
     // Ruta para mostrar el formulario de creación de usuarios
     Route::get('registrar_usuario', [UsuarioControlador::class, 'create'])->name('admin.usuarios.registrar_usuario');
     
@@ -112,7 +112,7 @@ Route::prefix('admin/usuarios')->middleware('auth' )->group(function () {
 
 
 //Grupo de rutas prefijas con admin para el controlador de Usuario
-Route::prefix('admin/condonaciones')->group(function () {
+Route::prefix('admin/condonaciones')->middleware(['auth', 'can:Administrador'])->group(function () {
     
     // Ruta para mostrar la vista de la gestión de condonaciones
     Route::get('gestion_condonaciones', [CondonacionesControlador::class, 'show'])->name('admin.condonaciones.gestion_condonaciones');
@@ -133,7 +133,7 @@ Route::prefix('admin/condonaciones')->group(function () {
 
 
 //Grupo de rutas prefijas con caja para el controlador de tipos de contrato
-Route::prefix('caja/tipos_contrato')->middleware('auth')->group(function () {
+Route::prefix('caja/tipos_contrato')->middleware(['auth', 'can:Cajero'])->group(function () {
 
     // Ruta para mostrar el formulario de creación de tipos de contrato
     Route::get('registrar_tipo_contrato', [TiposContratoControlador::class, 'create'])->name('caja.tipos_contrato.registrar_tipo_contrato');
@@ -161,7 +161,7 @@ Route::prefix('caja/tipos_contrato')->middleware('auth')->group(function () {
 
 //Grupo de rutas prefijas con caja para el controlador de Contratos
 
-Route::prefix('caja/contratos')->middleware('auth')->group(function () {
+Route::prefix('caja/contratos')->middleware(['auth', 'can:Cajero'])->group(function () {
     // Ruta para mostrar el formulario de creación de contratos
     Route::get('registrar_contrato', [ContratosControlador::class, 'create'])->name('caja.contratos.registrar_contrato');
     
@@ -183,7 +183,7 @@ Route::prefix('caja/contratos')->middleware('auth')->group(function () {
 });
 
 //Grupo de rutas prefijas con caja para el controlador de cobros
-Route::prefix('caja/cobros')->middleware('auth')->group(function () {
+Route::prefix('caja/cobros')->middleware(['auth', 'can:Cajero'])->group(function () {
 
     // Ruta para mostrar el formulario de búsqueda para asignar cobros
     Route::get('gestion_contratos', [CobrosControlador::class, 'index'])->name('caja.cobros.gestion_contratos');
@@ -231,7 +231,7 @@ Route::prefix('caja/datos_fiscales')->middleware('auth')->group(function () {
 
 //Grupo de rutas prefijas con caja para el controlador de Conceptos
 
-Route::prefix('caja/conceptos')->middleware('auth')->group(function () {
+Route::prefix('caja/conceptos')->middleware(['auth', 'can:Cajero'])->group(function () {
     // Ruta para mostrar el formulario de creación de datos fiscales
     Route::get('registrar_concepto', [ConceptosControlador::class, 'create'])->name('caja.conceptos.registrar_concepto');
     
@@ -247,7 +247,7 @@ Route::prefix('caja/conceptos')->middleware('auth')->group(function () {
 });
 
 //Grupo de rutas prefijas de caja para el controlador de Asignar Conceptos
-Route::prefix('caja/cobros_conceptos')->middleware('auth')->group(function () {
+Route::prefix('caja/cobros_conceptos')->middleware(['auth', 'can:Cajero'])->group(function () {
     // Ruta para mostrar el formulario de creación de datos fiscales
     Route::get('asignar_conceptos', [CobrosConceptoControlador::class, 'create'])->name('caja.cobros_conceptos.asignar_conceptos');
     
@@ -264,7 +264,7 @@ Route::prefix('caja/cobros_conceptos')->middleware('auth')->group(function () {
 
 //Grupo de rutas prefijas con caja para el controlador de Creditos
 
-Route::prefix('caja/creditos')->middleware('auth')->group(function () {
+Route::prefix('caja/creditos')->middleware(['auth', 'can:Cajero'])->group(function () {
     // Ruta para mostrar el formulario de creación de datos fiscales
     Route::get('registrar_creditos', [CreditosControlador::class, 'create'])->name('caja.creditos.registrar_creditos');
     
@@ -282,7 +282,7 @@ Route::prefix('caja/creditos')->middleware('auth')->group(function () {
 
 //Grupo de rutas prefijas con caja para el controlador de Cobros Concepto
 
-Route::prefix('caja/creditos')->middleware('auth')->group(function () {
+Route::prefix('caja/creditos')->middleware(['auth', 'can:Cajero'])->group(function () {
     // Ruta para mostrar el formulario de registro de créditos
     Route::get('registrar_creditos', [CreditosControlador::class, 'create'])->name('caja.creditos.registrar_creditos');
     
@@ -298,7 +298,7 @@ Route::prefix('caja/creditos')->middleware('auth')->group(function () {
 });
     
 //Grupo de rutas prefijas con caja para el controlador de condonaciones en caja
-Route::prefix('caja/condonaciones')->middleware('auth')->group(function () {
+Route::prefix('caja/condonaciones')->middleware(['auth', 'can:Cajero'])->group(function () {
 
     // Ruta para mostrar el formulario de solicitar condonaciones
     Route::get('solicitar_condonaciones', [CondonacionesControlador::class, 'solicitar_condonaciones'])->name('caja.condonaciones.solicitar_condonaciones');

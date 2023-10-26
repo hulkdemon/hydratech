@@ -41,10 +41,10 @@
                     <!-- Input addon -->
                     <div class="card card-info">
                         <div class="card-header">
-                          <h3 class="card-title">Datos del contrato a registrar</h3>
+                            <h3 class="card-title">Datos del contrato a registrar</h3>
                         </div>
             <div class="card-body">
-                    <label>Nombres de la persona</label>
+                    <label>Nombres:</label>
                     <!-- Date mm/dd/yyyy -->
                     <div class="form-group">
                         <div class="input-group">
@@ -78,7 +78,7 @@
                             <!-- /.input group -->
                     </div>
                         <!-- /.form group -->
-                        <label>Correo:</label>
+                        <label>Correo electrónico:</label>
                         <!-- Date mm/dd/yyyy -->
                         <div class="form-group">
                             <div class="input-group">

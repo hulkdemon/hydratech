@@ -21,7 +21,6 @@ return new class extends Migration
             $table->float('monto');
             $table->float('iva');
             $table->float('total');
-            $table->string('recibo_formato')->nullable();
             $table->string('estado');
             $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
             $table->foreign('id_usuario')->references('id')->on('users');

@@ -6,6 +6,7 @@ use App\Models\ContratosModelo;
 use Illuminate\Http\Request;
 use App\Models\TiposContratoModelo;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rule;
 
 class ContratosControlador extends Controller
 {
@@ -33,10 +34,11 @@ class ContratosControlador extends Controller
     {
     //Validación por el método try para poder pasarlos a AJAX
     try {
+
         $ValidarDatos = $request->validate([
             'nombre' => 'required|string|regex:/^[\pL\s]+$/u',
             'apellido' => 'required|string|regex:/^[\pL\s]+$/u',
-            'domicilio' => 'required|string|regex:/^[\pL\d\s]+$/u',
+            'domicilio' => 'required|unique:contratos|string|regex:/^[\pL\d\s]+$/u',
             'correo_electronico' => 'nullable|unique:contratos|email',
             'tipo_contrato' => 'required',
         ]);
