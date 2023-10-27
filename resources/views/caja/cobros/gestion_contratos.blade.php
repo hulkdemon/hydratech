@@ -68,7 +68,7 @@
                             <td style="width: 10;">{{ $contrato->id_contrato }}</td>
                             <td style="width: 80px;">{{ $contrato->numero_contrato }}</td>
                             <td>{{ $contrato->nombre }} {{ $contrato->apellido }}</td>
-                            <td>{{ $contrato->domicilio }}</td>
+                            <td style="width: 100px;">{{ $contrato->domicilio }}</td>
                             <td>
                                 @if(isset($contrato))
                                 <div class="d-flex justify-content-between">

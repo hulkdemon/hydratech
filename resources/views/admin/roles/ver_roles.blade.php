@@ -53,7 +53,13 @@
                     <tr>
                         <td>{{ $rol->id_rol }}</td>
                         <td>{{ $rol->tipo }}</td>
+                        @if ($rol->tipo="Administrador". "Cajero")
+                        <td><a href="{{ url('admin/roles/'.$rol->id_rol.'/editar_roles')}}" class="btn disabled btn-warning btn-sm">Editar</a></td>
+
+                        @else 
                         <td><a href="{{ url('admin/roles/'.$rol->id_rol.'/editar_roles')}}" class="btn btn-warning btn-sm">Editar</a></td>
+
+                        @endif
                         <td>
                           <form method="POST" action="{{route('admin.roles.destroy', $rol)}}" >
                             @csrf
