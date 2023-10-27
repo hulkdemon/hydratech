@@ -33,6 +33,7 @@ class UmaControlador extends Controller
         $request->validate([
             'valor' => 'required|regex:/^\d{1,8}(\.\d{1,2})?$/',
             'fecha_aplicacion' => 'required|date',
+            'before_or_equal:' . now()->toDateString(),
         ]);
     
         // Obtener el año actual

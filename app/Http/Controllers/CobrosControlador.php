@@ -8,6 +8,7 @@ use App\Models\ConceptosModelo;
 use App\Models\CondonacionesModelo;
 use App\Models\ContratosModelo;
 use App\Models\CreditosModelo;
+use App\Models\FacturasModelo;
 use App\Models\UmaModelo;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
@@ -228,46 +229,6 @@ class CobrosControlador extends Controller
         return view('caja/cobros/generando_recibo')->with('id_cobro', $cobro->id_cobro);
 
     }
-    
-
-
-
-
-    public function generar_pdf($id_cobro)
-    { // Obtén los datos necesarios para el recibo
-        $cobros = CobrosModelo::find($id_cobro);
-    
-        // Verifica si el cobro existe
-        if (!$cobros) {
-            abort(404); // O muestra un mensaje de error personalizado
-        }
-    
-        // Crea una instancia del objeto PDF
-        $pdf = PDF::loadView('caja.cobros.recibo', compact('cobros'));
-    
-        // Guarda el PDF en la ruta deseada
-        $pdf->save(public_path('caja/cobros/recibos/recibo.pdf'));
-    
-        // Puedes también devolver el PDF como respuesta para descargarlo directamente si lo prefieres
-        return $pdf->download('recibo.pdf');
-
-        // Devuelve una respuesta para descargar el PDF si lo deseas
-        return redirect()->route('caja.cobros.recibo', $id_cobro)->with('success', 'PDF generado y guardado correctamente.');
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Display the specified resource.
@@ -280,11 +241,20 @@ class CobrosControlador extends Controller
         return view('caja.cobros.ver_cobros', ['cobros' => $cobros, 'contrato' => $contrato]);    
     }  
 
+    public function ver_cobros_desactivados($id_contrato)
+    {
+        $cobros = CobrosModelo::where('id_contrato', $id_contrato)->where('estado', 'inactivo')->get();
+        $contrato = ContratosModelo::find($id_contrato);
+
+        return view('caja.cobros.ver_cobros_desactivados', ['cobros' => $cobros, 'contrato' => $contrato]);    
+    }  
+
     public function recibo($id_cobro)
     {
         $cobros = CobrosModelo::find($id_cobro);
+        $facturaGenerada = FacturasModelo::where('id_cobro', $id_cobro)->exists();
 
-        return view('caja.cobros.recibo', ['cobros' => $cobros]);    
+        return view('caja.cobros.recibo', ['cobros' => $cobros, 'facturaGenerada' => $facturaGenerada]);    
     }  
 
     /**
@@ -301,6 +271,28 @@ class CobrosControlador extends Controller
     public function update(Request $request, CobrosModelo $cobrosModelo)
     {
         //
+    }
+
+    //Función para desactivar el cobro
+    public function desactivar_cobro($id_cobro)
+    {
+        $cobro = CobrosModelo::find($id_cobro);
+        $cobro->estado = 'inactivo';
+        $cobro->save();
+
+        return back()->with('success', 'Cobro desactivado correctamente');
+        
+    }
+
+    //Función para desactivar el cobro
+    public function activar_cobro($id_cobro)
+    {
+        $cobro = CobrosModelo::find($id_cobro);
+        $cobro->estado = 'activo';
+        $cobro->save();
+
+        return back()->with('success', 'Cobro activado correctamente');
+        
     }
 
     /**

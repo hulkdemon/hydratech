@@ -34,6 +34,13 @@
                 </ol>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ route('caja.contratos.ver_contratos') }}" class="btn btn-primary">
+                        Ver contratos registrados
+                    </a>
+                </div>
+            </div>
             </div><!-- /.container-fluid -->
         </section>
                 <form id="formulario_contrato" action="{{url('caja/contratos')}}" method="post">

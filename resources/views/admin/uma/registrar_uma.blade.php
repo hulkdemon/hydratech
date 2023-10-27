@@ -149,22 +149,23 @@ use Carbon\Carbon;
 <script src="https://kit.fontawesome.com/42813926db.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    //coders free
-    document.addEventListener("DOMContentLoaded", function () {
-        const rows = document.querySelectorAll(".uma-row");
-        const currentYear = new Date().getFullYear();
+   document.addEventListener("DOMContentLoaded", function () {
+    const rows = document.querySelectorAll(".uma-row");
+    const currentYear = new Date().getFullYear();
 
-        rows.forEach(row => {
-            const fechaVigencia = new Date(row.dataset.fechaVigencia);
-            const fechaActual = new Date();
+    rows.forEach(row => {
+        const fechaVigencia = new Date(row.dataset.fechaVigencia);
+        const fechaActual = new Date();
 
-            // Redondear las fechas al principio del día
-            fechaVigencia.setHours(0, 0, 0, 0);
-            fechaActual.setHours(0, 0, 0, 0);
+        // Redondear las fechas al principio del día
+        fechaVigencia.setHours(0, 0, 0, 0);
+        fechaActual.setHours(0, 0, 0, 0);
 
-            const oneDay = 24 * 60 * 60 * 1000; // Milisegundos en un día
-            const oneWeek = 7 * oneDay; // Milisegundos en una semana
+        const oneDay = 24 * 60 * 60 * 1000; // Milisegundos en un día
+        const oneWeek = 7 * oneDay; // Milisegundos en una semana
 
+        // Verifica si el año de vigencia es igual al año actual
+        if (fechaVigencia.getFullYear() === currentYear) {
             // Calcula la diferencia en días entre la fecha de vigencia y la fecha actual
             const daysRemaining = Math.floor((fechaVigencia - fechaActual) / oneDay);
 
@@ -179,7 +180,8 @@ use Carbon\Carbon;
                 // Muestra el mensaje de alerta en una alerta emergente
                 alert(alertMessage);
             }
-        });
+        }
     });
+});
 </script>
 @stop

@@ -22,8 +22,7 @@
                     @auth
                         <a href="{{ url('admin/') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Entrar a HydraTech</a>
                     @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Iniciar sesión</a>
-
+                    <h1><a href="{{ route('login') }}" class="font-semibold text-xl text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Iniciar sesión</a></h1>
                     @endauth
                 </div>
             @endif

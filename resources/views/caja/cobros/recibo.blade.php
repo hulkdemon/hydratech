@@ -41,7 +41,11 @@
                     <address>
                         <strong>{{ $cobros->contratos->nombre . ' ' . $cobros->contratos->apellido }}</strong><br>
                         Domicilio: {{$cobros->contratos->domicilio}}<br>
-                        Correo: {{$cobros->contratos->correo_electronico}}<br>
+                        @if ($cobros->contratos->correo_electronico)
+                            Correo: {{ $cobros->contratos->correo_electronico }}<br>
+                        @else
+                            No registró correo electrónico.
+                        @endif
                     </address>
                     </div>
                     <!-- /.col -->
@@ -147,17 +151,6 @@
 @stop
 
 @section('css')
-<style>
-@media print {
-    body * {
-        visibility: hidden;
-    }
-    #contenedorParaImprimir, #contenedorParaImprimir * {
-        visibility: visible;
-    }
-}
-</style>
-
 @stop
 
 @section('js')
@@ -166,25 +159,28 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+@if (!$facturaGenerada)
 <script>
-    document.getElementById("imprimirBtn").addEventListener("click", function() {
-        window.print();
-    });
-    </script>
+    Swal.fire({
+        title: '¿Deseas generar una factura electrónica?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No',
+        allowOutsideClick: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Obtener el valor de id_cobro
+            const idCobro = '{{ $cobros->id_cobro }}';
 
-    <script>
-        Swal.fire({
-            title: '¿Estás seguro de realizar este cobro?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Sí',
-            cancelButtonText: 'No',
-            allowOutsideClick: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirigir a la ruta de registro del cobro
-                $('#formulario_cobros').submit();
-            }
-        });
-    </script>
+            // Redirigir a la página de factura en una nueva ventana o pestaña
+            const url = `/caja/cobros/${idCobro}/factura`;
+            window.open(url, '_blank');
+        }
+    });
+</script>
+@endif
+
+
+
 @stop

@@ -12,6 +12,8 @@ class FacturasModelo extends Model
     protected $table = 'facturas';
     protected $primaryKey = 'id_factura';
     public $timestamps = true;
+    protected $fillable = ['id_contrato', 'id_cobro', 'xml', 'ruta'];
+
 
         public function contrato()
         {

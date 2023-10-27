@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_factura');
             $table->unsignedBigInteger('id_contrato');
             $table->unsignedBigInteger('id_cobro');
-            $table->string('xml');
+            $table->string('xml')->nullable();
             $table->string('ruta');
             $table->foreign('id_contrato')->references('id_contrato')->on('contratos');
             $table->foreign('id_cobro')->references('id_cobro')->on('cobros');

@@ -9,9 +9,9 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="mb-3">Cobros activos registrados al contrato</h1>
-                        <a href="{{ route('caja.cobros.ver_cobros_desactivados', ['id_contrato' => $contrato->id_contrato]) }}" class="btn btn-secondary">
-                            Ver cobros desactivados
+                        <h1 class="mb-3">Cobros desactivados registrados al contrato</h1>
+                        <a href="{{ route('caja.cobros.show', ['id_contrato' => $contrato->id_contrato]) }}" class="btn btn-success">
+                            Ver cobros activos
                         </a>
                     </div>
                     <div class="col-sm-6">
@@ -60,7 +60,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cobros->where('estado', 'activo') as $cobro)
+                                @foreach ($cobros->where('estado', 'inactivo') as $cobro)
                                 <tr>
                                     <td>{{ $cobro->id_cobro}}</td>
                                     <td>{{ $cobro->folio }}</td>
@@ -105,8 +105,8 @@
                                                     </a>
                                                 </li>
                                                 <li class="dropdown-item">
-                                                    <a href="{{ route('caja.cobros.desactivar_cobro', ['id_cobro' => $cobro->id_cobro]) }}" id="desactivar_cobro" >
-                                                        <i class="fa-solid fa-ban"></i> Desactivar cobro
+                                                    <a href="{{ route('caja.cobros.activar_cobro', ['id_cobro' => $cobro->id_cobro]) }}" id="activar_cobro" >
+                                                        <i class="fa-solid fa-check"></i> Activar cobro
                                                     </a>
                                                 </li>
                                                 </ul>                
@@ -148,7 +148,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cobros->where('estado', 'activo') as $cobro)
+                                @foreach ($cobros->where('estado', 'inactivo') as $cobro)
                                 <tr>
                                     <td>{{ $cobro->id_cobro}}</td>
                                     <td>{{ $cobro->folio }}</td>

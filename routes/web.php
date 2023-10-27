@@ -197,11 +197,23 @@ Route::prefix('caja/cobros')->middleware(['auth', 'can:Cajero'])->group(function
     // Ruta para mostrar todos los cobros
     Route::get('{id_contrato}/ver_cobros', [CobrosControlador::class, 'show'])->name('caja.cobros.show');
 
+    // Ruta para mostrar todos los cobros desactivados
+    Route::get('{id_contrato}/ver_cobros_desactivados', [CobrosControlador::class, 'ver_cobros_desactivados'])->name('caja.cobros.ver_cobros_desactivados');
+
     // Ruta para almacenar los datos del formulario de creación de cobros
     Route::post('', [CobrosControlador::class, 'store'])->name('caja.cobros.store');
 
+    // Ruta para desactivar un cobro
+    Route::get('{id_cobro}/desactivar_cobro', [CobrosControlador::class, 'desactivar_cobro'])->name('caja.cobros.desactivar_cobro');
+
+    // Ruta para activar un cobro
+    Route::get('{id_cobro}/activar_cobro', [CobrosControlador::class, 'activar_cobro'])->name('caja.cobros.activar_cobro');
+
+
+
     Route::get('{id_cobro}/recibo', [CobrosControlador::class, 'recibo'])->name('caja.cobros.recibo');
 
+    Route::get('{id_cobro}/factura', [FacturasControlador::class, 'factura'])->name('caja.cobros.factura');
 
 });
 
@@ -313,9 +325,13 @@ Route::prefix('caja/condonaciones')->middleware(['auth', 'can:Cajero'])->group(f
     Route::get('ver_condonaciones', [CondonacionesControlador::class, 'show'])->name('caja.condonaciones.ver_condonaciones');
 
     //Ruta para aprobar la condonación del contrato
-    Route::get('{id_condonacion}/aceptar_condonacion', [CondonacionesControlador::class, 'aceptar_condonacion'])->name('caja.condonaciones.aceptar_condonacion');
 
     //Ruta para rechazar la condonación del contrato
     Route::get('{id_condonacion}/rechazar_condonacion', [CondonacionesControlador::class, 'rechazar_condonacion'])->name('caja.condonaciones.rechazar_condonacion');
 });
+
+    //Rutas necesarias sin permisos para sus procesos
+    Route::get('{id_condonacion}/aceptar_condonacion', [CondonacionesControlador::class, 'aceptar_condonacion'])->name('caja.condonaciones.aceptar_condonacion');
+
+
 

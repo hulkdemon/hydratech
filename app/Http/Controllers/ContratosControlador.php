@@ -38,7 +38,7 @@ class ContratosControlador extends Controller
         $ValidarDatos = $request->validate([
             'nombre' => 'required|string|regex:/^[\pL\s]+$/u',
             'apellido' => 'required|string|regex:/^[\pL\s]+$/u',
-            'domicilio' => 'required|unique:contratos|string|regex:/^[\pL\d\s]+$/u',
+            'domicilio' => 'required|unique:contratos|string|regex:/^[\pL\d\s\.,]+$/u',
             'correo_electronico' => 'nullable|unique:contratos|email',
             'tipo_contrato' => 'required',
         ]);
