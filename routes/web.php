@@ -326,12 +326,11 @@ Route::prefix('caja/condonaciones')->middleware(['auth', 'can:Cajero'])->group(f
 
     //Ruta para aprobar la condonación del contrato
 
-    //Ruta para rechazar la condonación del contrato
-    Route::get('{id_condonacion}/rechazar_condonacion', [CondonacionesControlador::class, 'rechazar_condonacion'])->name('caja.condonaciones.rechazar_condonacion');
 });
 
     //Rutas necesarias sin permisos para sus procesos
     Route::get('{id_condonacion}/aceptar_condonacion', [CondonacionesControlador::class, 'aceptar_condonacion'])->name('caja.condonaciones.aceptar_condonacion');
 
-
+    //Ruta para rechazar la condonación del contrato
+    Route::get('{id_condonacion}/rechazar_condonacion', [CondonacionesControlador::class, 'rechazar_condonacion'])->name('caja.condonaciones.rechazar_condonacion');
 

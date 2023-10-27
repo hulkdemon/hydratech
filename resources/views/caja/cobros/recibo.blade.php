@@ -8,7 +8,7 @@
         <section class="content">
         <div class="container-fluid">
             <div class="row">
-            <div class="center col-11">
+            <div class="center col-12">
                 <!-- Main content -->
                 <div id="contenedorParaImprimir">
                 <div class="invoice p-3 mb-3 printable-content">
@@ -151,6 +151,7 @@
 @stop
 
 @section('css')
+
 @stop
 
 @section('js')
@@ -158,8 +159,17 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    // Esperar a que se cargue completamente la página
+    window.onload = function () {
+        const imprimirBtn = document.getElementById("imprimirBtn");
 
-@if (!$facturaGenerada)
+        imprimirBtn.addEventListener("click", function () {
+            window.print(); // Imprimir la página actual
+        });
+    };
+</script>
+@if (!$facturaGenerada && isset($cobros->contratos->correo_electronico))
 <script>
     Swal.fire({
         title: '¿Deseas generar una factura electrónica?',
